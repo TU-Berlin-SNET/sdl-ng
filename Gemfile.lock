@@ -1,0 +1,17 @@
+GEM
+  specs:
+    activemodel (3.2.13)
+      activesupport (= 3.2.13)
+      builder (~> 3.0.0)
+    activesupport (3.2.13)
+      i18n (= 0.6.1)
+      multi_json (~> 1.0)
+    builder (3.0.4)
+    i18n (0.6.1)
+    multi_json (1.7.7)
+
+PLATFORMS
+  x86-mingw32
+
+DEPENDENCIES
+  activemodel
