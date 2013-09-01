@@ -8,6 +8,8 @@ require_relative 'model/model_attribute'
 class ServiceCompendium
   attr :fact_classes
   attr :types
+  attr :type_instances
+  attr :services
 
   def initialize
     @fact_classes, @types = [], []
