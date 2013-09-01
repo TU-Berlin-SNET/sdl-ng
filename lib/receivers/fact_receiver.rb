@@ -1,15 +1,14 @@
 class FactReceiver
   include ActiveSupport::Inflector
 
-  attr_reader :fact_class
-  attr_reader :subclasses
+  attr :fact_class
+  attr :fact_classes
 
   def initialize(sym)
     @fact_class = Class.new(Fact)
-
     Object.const_set(sym.to_s.camelize, @fact_class)
 
-    @subclasses = []
+    @fact_classes = [@fact_class]
   end
 
   def better(sym)
@@ -22,7 +21,7 @@ class FactReceiver
     receiver = ModelAttributeReceiver.new(model_attribute)
     receiver.instance_eval &attribute_definition if block_given?
 
-    fact_class.class_eval do
+    @fact_class.class_eval do
       model_attributes << model_attribute
     end
   end
@@ -31,11 +30,7 @@ class FactReceiver
     receiver = FactReceiver.new(sym)
     receiver.instance_eval(&fact_type_definition) if block_given?
 
-    subclasses.concat(receiver.classes)
-  end
-
-  def classes
-    [@fact_class, @subclasses].flatten
+    fact_classes.concat(receiver.fact_classes)
   end
 
   def method_missing(name, *args, &block)

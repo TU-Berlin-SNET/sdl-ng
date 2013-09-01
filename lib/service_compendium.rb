@@ -26,7 +26,7 @@ class ServiceCompendium
   def fact(sym, &fact_definition)
     receiver = FactReceiver.new(sym)
     receiver.instance_eval &fact_definition if block_given?
-    @fact_classes.concat(receiver.classes)
+    @fact_classes.concat(receiver.fact_classes)
   end
 
   def type(sym, &type_definition)
