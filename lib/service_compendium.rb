@@ -35,7 +35,7 @@ class FactsDefinitionReceiver
   def fact(sym, &fact_definition)
     receiver = FactDefinitionReceiver.new(sym)
     receiver.instance_eval &fact_definition if block_given?
-    [receiver.fact_class, receiver.subclasses].flatten.each do |c| @compendium.fact_classes << c end
+    @compendium.fact_classes.concat(receiver.classes)
   end
 
   def type(sym, &type_definition)
@@ -78,12 +78,16 @@ class FactDefinitionReceiver
     receiver = FactDefinitionReceiver.new(sym)
     receiver.instance_eval(&fact_type_definition) if block_given?
 
-    [receiver.fact_class, receiver.subclasses].flatten.each do |c| subclasses << c end
+    subclasses.concat(receiver.classes)
+  end
+
+  def classes
+    [@fact_class, @subclasses].flatten
   end
 
   def method_missing(name, *args, &block)
     if name =~ /list_of_/ then
-      list block
+      list(args[0], &block)
     end
   end
 end
@@ -99,6 +103,10 @@ class ModelAttributeDefinitionReceiver
 
   def type(sym)
     @model_attribute.type = sym.to_s.camelize.constantize
+  end
+
+  def better(sym)
+
   end
 end
 

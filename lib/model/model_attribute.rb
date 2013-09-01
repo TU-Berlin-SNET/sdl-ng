@@ -3,7 +3,7 @@ class ModelAttribute
   attr :type
 
   def initialize(name, type)
-    @name = name
+    @name = name.to_s
     @type = type
   end
 end
