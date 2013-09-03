@@ -1,15 +1,15 @@
+require_relative 'attribute_definitions'
+
 class TypeReceiver
   include ActiveSupport::Inflector
+  include AttributeDefinitions
+
+  define_attributes_for :type_class
 
   attr :type_class
 
   def initialize(sym)
     @type_class = Class.new(Type)
-
-    Object.const_set(sym.to_s.camelize, @type_class)
-  end
-
-  def string(sym)
-    @type_class.model_attributes << ModelAttribute.new(sym, String)
+    @type_class.local_name = sym.to_s.camelize
   end
 end

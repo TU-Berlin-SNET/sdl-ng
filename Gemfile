@@ -1,1 +1,1 @@
-gem 'activemodel'
+gem 'activesupport', '4.0.0'

@@ -1,12 +1,17 @@
+require_relative 'attribute_definitions'
+
 class FactReceiver
   include ActiveSupport::Inflector
+  include AttributeDefinitions
 
   attr :fact_class
   attr :fact_classes
 
+  define_attributes_for :fact_class
+
   def initialize(sym)
     @fact_class = Class.new(Fact)
-    Object.const_set(sym.to_s.camelize, @fact_class)
+    @fact_class.local_name = sym.to_s.camelize
 
     @fact_classes = [@fact_class]
   end
@@ -15,27 +20,10 @@ class FactReceiver
 
   end
 
-  def list(sym, &attribute_definition)
-    model_attribute = ModelAttribute.new(sym, Array)
-
-    receiver = ModelAttributeReceiver.new(model_attribute)
-    receiver.instance_eval &attribute_definition if block_given?
-
-    @fact_class.class_eval do
-      model_attributes << model_attribute
-    end
-  end
-
   def subfact(sym, &fact_type_definition)
     receiver = FactReceiver.new(sym)
     receiver.instance_eval(&fact_type_definition) if block_given?
 
     fact_classes.concat(receiver.fact_classes)
-  end
-
-  def method_missing(name, *args, &block)
-    if name =~ /list_of_/ then
-      list(args[0], &block)
-    end
   end
 end

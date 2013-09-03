@@ -1,4 +1,6 @@
-name "Salesfoce Sales Cloud"
+has_name {
+  name "Salesfoce Sales Cloud"
+}
 
 has_rest_interface
 

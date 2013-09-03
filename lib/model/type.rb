@@ -3,9 +3,7 @@ require_relative 'model_attributes'
 class Type
   include ModelAttributes
 
-  attr :name
-
-  def initialize(sym)
-    @name = sym.to_s
+  class << self
+    attr_accessor :namespace, :local_name
   end
 end

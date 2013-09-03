@@ -1,3 +1,9 @@
 class Service
-  attr :facts, :facades
+  attr_accessor :facts, :facades, :symbolic_name
+
+  def initialize(symbolic_name)
+    @symbolic_name = symbolic_name
+
+    @facts, @facades = [], []
+  end
 end

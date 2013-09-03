@@ -3,11 +3,12 @@ require_relative 'model_attributes'
 class Fact
   include ModelAttributes
 
-  attr :namespace
-  attr :name
+  class << self
+    attr_accessor :namespace, :local_name
+  end
 
-  def initialize(sym)
-    @name = sym.to_s
+  def receiver
+    FactInstanceReceiver.new(self)
   end
 
   def attributes
