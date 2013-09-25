@@ -1,0 +1,7 @@
+= Service Description Language Framework
+
+This is a framework for business services description. It supports defining a description vocabulary and using this
+vocabulary to create service descriptions.
+
+The framework contains classes to allow a the definition of a Domain Specific Service Language, which can be used to
+describe services concisely.

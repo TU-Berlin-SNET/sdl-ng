@@ -1,11 +1,7 @@
-has_name {
-  name "Salesfoce Sales Cloud"
-}
+name "Salesfoce Sales Cloud"
 
 has_rest_interface
-
 has_soap_interface
-
 has_xmlrpc_interface
 
 #has_browser_interface {

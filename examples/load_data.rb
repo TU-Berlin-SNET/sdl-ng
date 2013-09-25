@@ -1,6 +1,6 @@
-require_relative '../lib/service_compendium'
+require_relative '../lib/sdl'
 
-compendium = ServiceCompendium.new
+compendium = SDL::Base::ServiceCompendium.new
 
 # Load SDL
 Dir.glob(File.join(__dir__, '**', '*.sdl.rb')) do |filename|
@@ -17,3 +17,5 @@ Dir.glob(File.join(__dir__, '**', '*.service.rb')) do |filename|
 end
 
 compendium.register_classes_globally
+
+puts compendium
