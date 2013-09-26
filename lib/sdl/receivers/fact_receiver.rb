@@ -9,7 +9,7 @@ module SDL
       attr :fact_class
       attr :fact_classes
 
-      define_attributes_for :fact_class
+      define_properties_for :fact_class
 
       def initialize(sym, superclass = nil)
         @fact_class = Class.new(superclass || SDL::Base::Fact)

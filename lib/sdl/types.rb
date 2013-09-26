@@ -1,6 +1,7 @@
 require_relative 'types/sdl_type_registry'
 require_relative 'types/sdl_type'
 require_relative 'types/sdl_string'
+require_relative 'types/sdl_number'
 require_relative 'types/sdl_duration'
 
 module SDL

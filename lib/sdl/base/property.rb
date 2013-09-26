@@ -9,10 +9,14 @@ module SDL
       # The Property Type
       attr :type
 
+      # Is this Property multi-valued
+      attr :multi
+
       # Define a property by its name and type
-      def initialize(name, type)
+      def initialize(name, type, multi = false)
         @name = name.to_s
         @type = type
+        @multi = multi
       end
     end
   end
