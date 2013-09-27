@@ -16,6 +16,10 @@ module SDL
         #
         # The ServiceCompendium#register_classes_globally method makes this class accessible by a constant of this name
         attr_accessor :local_name
+
+        def to_s
+          @local_name
+        end
       end
 
       ##
@@ -23,7 +27,12 @@ module SDL
       #
       # The Receiver is used within the definition of a Service to state that this fact is known about the Service.
       def receiver
-        FactInstanceReceiver.new(self)
+        SDL::Receivers::FactInstanceReceiver.new(self)
+      end
+
+      def to_s
+        # TODO Description of the meaning of facts
+        self.to_s
       end
     end
   end

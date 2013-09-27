@@ -30,6 +30,7 @@ module SDL
       private
         def add_property(sym, type, multi)
           target_class.class_eval do
+            # TODO Allow more than a simple accessor for property values
             attr_accessor sym
 
             properties << SDL::Base::Property.new(sym, type, multi)

@@ -5,8 +5,12 @@ module SDL
     module Properties
       def self.included(base)
         base.class_eval do
-          def self.properties
-            @properties ||= []
+          def self.properties(including_super = false)
+            if including_super && superclass.respond_to?(:properties)
+              self.properties + superclass.properties(true)
+            else
+              @properties ||= []
+            end
           end
         end
       end
