@@ -32,7 +32,7 @@ module SDL
 
       def to_s
         # TODO Description of the meaning of facts
-        self.to_s
+        self.class.to_s
       end
     end
   end

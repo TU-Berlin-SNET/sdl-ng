@@ -7,8 +7,10 @@ module SDL
       define_properties_for :type_class
 
       attr :type_class
+      attr :compendium
 
-      def initialize(sym)
+      def initialize(sym, compendium)
+        @compendium = compendium
         @type_class = Class.new(SDL::Base::Type)
         @type_class.local_name = sym.to_s.camelize
         @type_class.class_eval do

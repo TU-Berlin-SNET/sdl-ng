@@ -1,4 +1,5 @@
 require_relative '../base/service'
+
 module SDL
   module Receivers
     class ServiceReceiver
@@ -21,12 +22,14 @@ module SDL
       end
 
       private
-        def add_fact(fact_class, value)
+        def add_fact(fact_class, value, &block)
           fact_instance = fact_class.new
 
           set_value(fact_class, fact_instance, value) if value
 
-          fact_instance.receiver.instance_eval &block if block_given?
+          if block_given?
+            fact_instance.receiver.instance_eval &block
+          end
 
           @service.facts << fact_instance
         end

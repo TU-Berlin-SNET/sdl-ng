@@ -79,4 +79,16 @@ describe 'The service compendium' do
       expect(subject.services.first.facts.first).to be_an(ExampleFact)
     end
   end
+
+  context 'with a new service type' do
+    subject do
+      compendium = SDL::Base::ServiceCompendium.new
+      compendium.type :example_type
+      compendium
+    end
+
+    it 'registers the code for the example type with its #sdltype_codes' do
+      expect(subject.sdltype_codes[:example_type]).to be subject.types.first
+    end
+  end
 end

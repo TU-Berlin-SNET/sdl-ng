@@ -8,6 +8,9 @@ module SDL
           ## The Ruby type, which is to be wrapped
           attr :wrapped_type
 
+          ## The codes, which are to be used to refer to this type
+          attr :codes
+
           ##
           # Sets the wrapped Ruby type
           def self.wraps(type)
@@ -17,9 +20,13 @@ module SDL
           ##
           # Registers the codes +syms+ to be used to refer to this type
           def self.codes(*symbols)
-            symbols.each do |sym|
-              SDL::Types.registry[sym] = self
-            end
+            @codes = symbols
+          end
+
+          ##
+          # Designates this SDLType to be a default type, i.e., to be loaded by all ServiceCompendiums automatically
+          def self.default_type
+            SDL::Base::ServiceCompendium.default_sdltypes << self
           end
         end
       end

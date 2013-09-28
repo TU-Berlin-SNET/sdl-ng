@@ -9,15 +9,23 @@ module SDL
         end
       end
 
+      ##
+      # Define a list of a type, which is defined in the block.
+      def list(name, &block)
+        list_type = @compendium.type name.to_sym, &block
+
+        add_property name.to_sym, list_type, true
+      end
+
       def method_missing(name, *args, &block)
         sym = args[0]
 
         if name =~ /list_of_/
           multi = true
-          type = SDL::Types.registry[name.to_s.gsub('list_of_', '').singularize.to_sym]
+          type = @compendium.sdltype_codes[name.to_s.gsub('list_of_', '').singularize.to_sym]
         else
           multi = false
-          type = SDL::Types.registry[name.to_sym]
+          type = @compendium.sdltype_codes[name.to_sym]
         end
 
         if type

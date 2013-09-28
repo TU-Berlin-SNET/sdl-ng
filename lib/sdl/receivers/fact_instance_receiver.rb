@@ -6,9 +6,9 @@ module SDL
       def initialize(instance)
         @instance = instance
 
-        instance.class.properties(true).each do |model_attr|
-          define_singleton_method model_attr.name do |value|
-            instance.send "#{model_attr.name}=", value
+        instance.class.properties(true).each do |property|
+          define_singleton_method property.name do |value = nil, &block|
+            instance.send "#{property.name}=", block != nil ? SDL::Receivers::PropertyValueReceiver.new(property).instance_exec(&block) : value
           end
         end
       end

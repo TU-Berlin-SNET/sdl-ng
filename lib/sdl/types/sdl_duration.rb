@@ -5,6 +5,7 @@ module SDL
     class SDLDuration
       include SDLType
 
+      default_type
       wraps ActiveSupport::Duration
       codes :duration
     end
