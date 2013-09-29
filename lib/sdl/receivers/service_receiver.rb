@@ -25,7 +25,7 @@ module SDL
         def add_fact(fact_class, value, &block)
           fact_instance = fact_class.new
 
-          set_value(fact_class, fact_instance, value) if value
+          SDL::Receivers.set_value(fact_class, fact_instance, value) if value
 
           if block_given?
             fact_instance.receiver.instance_eval &block
@@ -33,24 +33,6 @@ module SDL
 
           @service.facts << fact_instance
         end
-
-      # If a value is given, search for all SDL::Base::Fact ancestor classes until a
-      # property is found, which has the same name as its class. Set it using the receiver.
-      def set_value(fact_class, fact_instance, value)
-        fact_class.ancestors.each do |ancestor_class|
-          break if ancestor_class.eql? SDL::Base::Fact
-
-          ancestor_class.properties.each do |property|
-            if property.name.eql? ancestor_class.local_name.underscore
-              fact_instance.receiver.send("#{ancestor_class.local_name.underscore}", value)
-
-              return
-            end
-          end
-        end
-
-        raise "I didn't know what property of class #{fact_class.local_name} to set to value #{value}."
-      end
     end
   end
 end

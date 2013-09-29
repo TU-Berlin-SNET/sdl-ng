@@ -23,11 +23,11 @@ module SDL
       end
 
       ##
-      # Returns the #FactInstanceReceiver for this Fact instance.
+      # Returns the #FactTypeInstanceReceiver for this Fact instance.
       #
       # The Receiver is used within the definition of a Service to state that this fact is known about the Service.
       def receiver
-        SDL::Receivers::FactInstanceReceiver.new(self)
+        SDL::Receivers::FactTypeInstanceReceiver.new(self)
       end
 
       def to_s

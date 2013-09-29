@@ -18,7 +18,7 @@ module SDL
           end
 
           ##
-          # Registers the codes +syms+ to be used to refer to this type
+          # Registers the codes +symbols+ to be used to refer to this type
           def self.codes(*symbols)
             @codes = symbols
           end

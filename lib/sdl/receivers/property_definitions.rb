@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 module SDL
   module Receivers
     module PropertyDefinitions
@@ -12,7 +14,7 @@ module SDL
       ##
       # Define a list of a type, which is defined in the block.
       def list(name, &block)
-        list_type = @compendium.type name.to_sym, &block
+        list_type = @compendium.type name.to_s.singularize.to_sym, &block
 
         add_property name.to_sym, list_type, true
       end
@@ -36,13 +38,23 @@ module SDL
       end
 
       private
+        ##
+        # Adds accessors to set the property to the target class.
         def add_property(sym, type, multi)
-          target_class.class_eval do
-            # TODO Allow more than a simple accessor for property values
-            attr_accessor sym
-
-            properties << SDL::Base::Property.new(sym, type, multi)
+          unless multi
+            target_class.class_eval do
+              attr_accessor sym
+            end
+          else
+            # Define accessor method for lists
+            target_class.class_eval do
+              define_method sym do
+                eval "@#{sym} ||= []"
+              end
+            end
           end
+
+          target_class.properties << SDL::Base::Property.new(sym, type, multi)
         end
 
         def target_class
