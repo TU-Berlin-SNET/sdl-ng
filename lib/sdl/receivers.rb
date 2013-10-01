@@ -10,13 +10,13 @@ module SDL
   module Receivers
     # If a value is given, search for all Fact or Type ancestor classes until a
     # property is found, which has the same name as its class. Set it using its receiver.
-    def self.set_value(klass, instance, value)
+    def self.set_value(klass, instance, value, compendium)
       klass.ancestors.each do |ancestor_class|
         break if ancestor_class.eql?(SDL::Base::Fact) || ancestor_class.eql?(SDL::Base::Type)
 
         ancestor_class.properties.each do |property|
           if property.name.eql? ancestor_class.local_name.underscore
-            instance.receiver.send("#{ancestor_class.local_name.underscore}", value)
+            FactTypeInstanceReceiver.new(instance, compendium).send("#{ancestor_class.local_name.underscore}", value)
 
             return
           end

@@ -9,6 +9,13 @@ Dir.glob(File.join(__dir__, '**', '*.sdl.rb')) do |filename|
   end
 end
 
+# Load Types
+Dir.glob(File.join(__dir__, '**', '*.sdl-data.rb')) do |filename|
+  compendium.type_instances_definition do
+    eval(File.read(filename), binding, filename)
+  end
+end
+
 compendium.register_classes_globally
 
 # Load Service Definitions

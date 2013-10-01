@@ -12,6 +12,16 @@ module SDL
       # Is this Property multi-valued
       attr :multi
 
+      # Is this Property single-valued
+      def single?
+        !@multi
+      end
+
+      # Is this Property multi-valued
+      def multi?
+        @multi
+      end
+
       # Define a property by its name and type
       def initialize(name, type, multi = false)
         @name = name.to_s

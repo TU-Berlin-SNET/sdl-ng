@@ -1,5 +1,7 @@
 module SDL
   module Receivers
+    ##
+    # Receiver for property values
     class PropertyValueReceiver
       attr_accessor :property
 

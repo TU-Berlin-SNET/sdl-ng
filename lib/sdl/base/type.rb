@@ -6,10 +6,6 @@ module SDL
       class << self
         attr_accessor :namespace, :local_name
       end
-
-      def receiver
-        SDL::Receivers::FactTypeInstanceReceiver.new(self)
-      end
     end
   end
 end
