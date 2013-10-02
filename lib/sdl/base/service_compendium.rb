@@ -36,18 +36,18 @@ module SDL
       def fact(sym, &fact_definition)
         receiver = SDL::Receivers::FactReceiver.new(sym, self)
         receiver.instance_eval &fact_definition if block_given?
-        @fact_classes.concat(receiver.fact_classes)
+        @fact_classes.concat(receiver.subclasses)
       end
 
       # Defines a new type and returns it
       def type(sym, &type_definition)
         receiver = SDL::Receivers::TypeReceiver.new(sym, self)
         receiver.instance_eval &type_definition if block_given?
-        register_sdltype_codes(receiver.type_class)
-        register_sdltype(receiver.type_class)
-        @types << receiver.type_class
-        @type_instances[receiver.type_class] = {}
-        receiver.type_class
+        register_sdltype_codes(receiver.klass)
+        register_sdltype(receiver.klass)
+        @types << receiver.klass
+        @type_instances[receiver.klass] = {}
+        receiver.klass
       end
 
       # Defines a new service and returns it

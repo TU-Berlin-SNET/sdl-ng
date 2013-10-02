@@ -1,35 +1,15 @@
-require_relative 'property_definitions'
-
 module SDL
   module Receivers
-    class FactReceiver
-      include ActiveSupport::Inflector
-      include PropertyDefinitions
-
-      attr :fact_class
-      attr :fact_classes
-      attr :compendium
-
-      define_properties_for :fact_class
-
-      def initialize(sym, compendium, superclass = nil)
-        @compendium = compendium
-        @fact_class = Class.new(superclass || SDL::Base::Fact)
-        @fact_class.local_name = sym.to_s.camelize
-
-        @fact_classes = [@fact_class]
+    class FactReceiver < TypeReceiver
+      def base_class
+        SDL::Base::Fact
       end
 
-      def better(sym)
-
+      def register_sdltype(type)
+        false
       end
 
-      def subfact(sym, &fact_type_definition)
-        receiver = FactReceiver.new(sym, @compendium, @fact_class)
-        receiver.instance_eval(&fact_type_definition) if block_given?
-
-        @fact_classes.concat(receiver.fact_classes)
-      end
+      alias :subfact :subtype
     end
   end
 end

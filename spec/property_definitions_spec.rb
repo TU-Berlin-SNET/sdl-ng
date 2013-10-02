@@ -11,7 +11,7 @@ describe 'The definition of properties' do
   it 'allows the definition of properties' do
     subject.string :my_string_property
 
-    defined_property = subject.type_class.properties.first
+    defined_property = subject.klass.properties.first
 
     expect(defined_property.name).to eq "my_string_property"
     expect(defined_property.type).to be SDL::Types::SDLString
@@ -21,7 +21,7 @@ describe 'The definition of properties' do
   it 'allows the definition of list properties' do
     subject.list_of_integers :my_integer_list
 
-    defined_property = subject.type_class.properties.first
+    defined_property = subject.klass.properties.first
 
     expect(defined_property.name).to eq("my_integer_list")
     expect(defined_property.type).to be SDL::Types::SDLNumber
