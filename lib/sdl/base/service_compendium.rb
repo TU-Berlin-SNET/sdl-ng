@@ -72,7 +72,7 @@ module SDL
         # Define a method, which adds the type instance defined in the block to this compendium and adds it as a
         # constant the the type class
         self.class.send(:define_method, type.local_name.underscore) do |identifier, &block|
-          receiver = SDL::Receivers::FactTypeInstanceReceiver.new(type.new, self)
+          receiver = SDL::Receivers::TypeInstanceReceiver.new(type.new, self)
 
           receiver.instance_eval &block if block != nil
 

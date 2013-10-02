@@ -1,4 +1,4 @@
-require_relative 'receivers/fact_type_instance_receiver'
+require_relative 'receivers/type_instance_receiver'
 require_relative 'receivers/fact_receiver'
 require_relative 'receivers/property_definitions'
 require_relative 'receivers/property_receiver'
@@ -16,7 +16,7 @@ module SDL
 
         ancestor_class.properties.each do |property|
           if property.name.eql? ancestor_class.local_name.underscore
-            FactTypeInstanceReceiver.new(instance, compendium).send("#{ancestor_class.local_name.underscore}", value)
+            TypeInstanceReceiver.new(instance, compendium).send("#{ancestor_class.local_name.underscore}", value)
 
             return
           end

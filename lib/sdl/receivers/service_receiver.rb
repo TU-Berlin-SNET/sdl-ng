@@ -30,7 +30,7 @@ module SDL
           SDL::Receivers.set_value(fact_class, fact_instance, value, @compendium) if value
 
           if block_given?
-            SDL::Receivers::FactTypeInstanceReceiver.new(fact_instance, @compendium).instance_eval &block
+            SDL::Receivers::TypeInstanceReceiver.new(fact_instance, @compendium).instance_eval &block
           end
 
           @service.facts << fact_instance

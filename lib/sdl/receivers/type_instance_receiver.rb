@@ -3,8 +3,8 @@ require 'active_support/inflector'
 module SDL
   module Receivers
     ##
-    # Receiver for setting the properties of Fact and Type instances
-    class FactTypeInstanceReceiver
+    # Receiver for setting the properties of Type instances
+    class TypeInstanceReceiver
       attr_accessor :instance
 
       attr_accessor :compendium

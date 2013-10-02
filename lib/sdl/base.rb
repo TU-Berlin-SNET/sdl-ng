@@ -1,7 +1,6 @@
-require_relative 'base/properties'
+require_relative 'base/type'
 require_relative 'base/fact'
 require_relative 'base/property'
-require_relative 'base/type'
 require_relative 'base/service'
 require_relative 'base/service_compendium'
 
