@@ -29,4 +29,4 @@ puts compendium
 
 exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
 
-File.open(__dir__ + '/xml_output/schema.xsd', 'w') {|f| f.write(exporter.export) }
+File.open(__dir__ + '/xml_output/schema.xsd', 'w') {|f| f.write(exporter.export_schema) }

@@ -46,7 +46,7 @@ module SDL
       end
 
       def method_missing(name, *args, &block)
-        sym = args[0]
+        sym = args[0] || name.to_sym
 
         if name =~ /list_of_/
           multi = true

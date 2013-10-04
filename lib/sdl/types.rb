@@ -1,6 +1,7 @@
 require_relative 'types/sdl_type'
 require_relative 'types/sdl_default_type'
 require_relative 'types/sdl_string'
+require_relative 'types/sdl_description'
 require_relative 'types/sdl_number'
 require_relative 'types/sdl_duration'
 require_relative 'types/sdl_url'

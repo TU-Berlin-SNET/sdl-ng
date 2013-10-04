@@ -1,6 +1,6 @@
 module SDL
-  module Base
-    module ServiceExporter
+  module Exporters
+    class ServiceExporter
 
     end
   end
