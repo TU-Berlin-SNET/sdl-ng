@@ -16,11 +16,15 @@ module SDL
         end
 
         def properties(including_super = false)
-          if including_super && superclass.respond_to?(:properties)
+          if including_super && is_sub?
             self.properties + superclass.properties(true)
           else
             @properties ||= []
           end
+        end
+
+        def is_sub?
+          not [SDL::Base::Type, SDL::Base::Fact].include? superclass
         end
       end
 

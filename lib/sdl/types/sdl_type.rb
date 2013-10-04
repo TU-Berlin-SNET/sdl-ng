@@ -4,30 +4,26 @@ module SDL
     # An SDLType is a wrapper around a basic Ruby type
     module SDLType
       def self.included(base)
-        base.class_eval do
-          ## The Ruby type, which is to be wrapped
-          attr :wrapped_type
+        base.extend ClassMethods
+      end
 
-          ## The codes, which are to be used to refer to this type
-          attr :codes
+      module ClassMethods
+        ## The Ruby type, which is to be wrapped
+        attr :wrapped_type
 
-          ##
-          # Sets the wrapped Ruby type
-          def self.wraps(type)
-            @wrapped_type = type
-          end
+        ## The codes, which are to be used to refer to this type
+        attr :codes
 
-          ##
-          # Registers the codes +symbols+ to be used to refer to this type
-          def self.codes(*symbols)
-            @codes = symbols
-          end
+        ##
+        # Sets the wrapped Ruby type
+        def wraps(type)
+          @wrapped_type = type
+        end
 
-          ##
-          # Designates this SDLType to be a default type, i.e., to be loaded by all ServiceCompendiums automatically
-          def self.default_type
-            SDL::Base::ServiceCompendium.default_sdltypes << self
-          end
+        ##
+        # Registers the codes +symbols+ to be used to refer to this type
+        def codes(*symbols)
+          @codes = symbols
         end
       end
     end

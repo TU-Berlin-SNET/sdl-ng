@@ -2,10 +2,9 @@ require 'uri'
 
 module SDL
   module Types
-    class SDLUrl
+    class SDLUrl < SDLDefaultType
       include SDLType
 
-      default_type
       wraps URI
       codes :uri, :url
     end

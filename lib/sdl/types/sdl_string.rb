@@ -1,9 +1,8 @@
 module SDL
   module Types
-    class SDLString
+    class SDLString < SDLDefaultType
       include SDLType
 
-      default_type
       wraps String
       codes :string, :str
     end

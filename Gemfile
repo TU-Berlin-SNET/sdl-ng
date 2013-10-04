@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'activesupport', '4.0.0'
+gem 'nokogiri', '1.6.0'
 
 group :test do
   gem 'rspec', '2.14.1'
