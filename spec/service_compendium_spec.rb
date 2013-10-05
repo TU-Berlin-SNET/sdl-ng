@@ -37,7 +37,8 @@ describe 'The service compendium' do
   it 'allows the definition of services' do
     subject.service :example_service
 
-    expect(subject.services.first).to be_a(SDL::Base::Service)
+    expect(subject.services[:example_service]).to be_a(SDL::Base::Service)
+    expect(subject.services[:example_service]).to eq(subject.services.first[1])
   end
 
   it 'can register defined classes globally' do
@@ -76,7 +77,7 @@ describe 'The service compendium' do
         has_example_fact
       end
 
-      expect(subject.services.first.facts.first).to be_an(ExampleFact)
+      expect(subject.services[:example_service].facts.first).to be_an(ExampleFact)
     end
   end
 

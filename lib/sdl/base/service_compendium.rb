@@ -18,7 +18,7 @@ module SDL
       attr :services
 
       def initialize
-        @fact_classes, @types, @services = [], [], [], []
+        @fact_classes, @types, @services = [], [], {}
         @type_instances, @sdltype_codes = {}, {}
 
         register_default_types
@@ -54,7 +54,7 @@ module SDL
       def service(sym, &service_definition)
         receiver = SDL::Receivers::ServiceReceiver.new(sym, self)
         receiver.instance_eval &service_definition if block_given?
-        @services << receiver.service
+        @services[sym] = receiver.service
         receiver.service
       end
 

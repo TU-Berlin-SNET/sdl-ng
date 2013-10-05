@@ -13,21 +13,21 @@ module SDL
         @compendium = compendium
 
         compendium.fact_classes.each do |fact_class|
-          define_singleton_method("has_#{fact_class.local_name.underscore}") do |value = nil, &block|
-            add_fact fact_class, value, &block
+          define_singleton_method("has_#{fact_class.local_name.underscore}") do |*args, &block|
+            add_fact fact_class, *args, &block
           end
 
-          define_singleton_method("#{fact_class.local_name.underscore}") do |value = nil, &block|
-            add_fact fact_class, value, &block
+          define_singleton_method("#{fact_class.local_name.underscore}") do |*args, &block|
+            add_fact fact_class, *args, &block
           end
         end
       end
 
       private
-        def add_fact(fact_class, value, &block)
+        def add_fact(fact_class, *property_values, &block)
           fact_instance = fact_class.new
 
-          SDL::Receivers.set_value(fact_class, fact_instance, value, @compendium) if value
+          SDL::Receivers.set_value(fact_class, fact_instance, *property_values, @compendium)
 
           if block_given?
             SDL::Receivers::TypeInstanceReceiver.new(fact_instance, @compendium).instance_eval &block

@@ -18,6 +18,16 @@ describe 'The definition of properties' do
     expect(defined_property.multi).to be_false
   end
 
+  it 'allows the definition of properties, omitting the name if it should be the same as the type' do
+    subject.url
+
+    defined_property = subject.klass.properties.first
+
+    expect(defined_property.name).to eq 'url'
+    expect(defined_property.type).to be SDL::Types::SDLUrl
+    expect(defined_property.multi).to be_false
+  end
+
   it 'allows the definition of list properties' do
     subject.list_of_integers :my_integer_list
 

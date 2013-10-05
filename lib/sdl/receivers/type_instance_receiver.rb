@@ -26,21 +26,22 @@ module SDL
             end
           else
             # Multi-valued properties are added to by their singular name
-            define_singleton_method property.name.singularize do |value = nil, &block|
+            define_singleton_method property.name.singularize do |*property_values, &block|
               existing_list = instance.send "#{property.name}"
               new_list_item = property.type.new
 
-              if value != nil
-                SDL::Receivers.set_value(property.type, new_list_item, value, @compendium)
-              end
-              if block != nil
-                self.class.new(new_list_item, @compendium).instance_exec(&block)
-              end
+              SDL::Receivers.set_value(property.type, new_list_item, *property_values, @compendium) unless property_values.empty?
+
+              self.class.new(new_list_item, @compendium).instance_exec(&block) unless block.nil?
 
               existing_list << new_list_item
             end
           end
         end
+      end
+
+      def annotation(value)
+        @instance.annotations << value
       end
 
       def self.const_missing(name)

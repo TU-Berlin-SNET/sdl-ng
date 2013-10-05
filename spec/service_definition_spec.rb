@@ -25,7 +25,7 @@ describe 'The definition of services' do
       has_simple_fact
     end
 
-    example_service = example_compendium.services.first
+    example_service = example_compendium.services[:example_service]
     example_fact_instance = example_service.facts.first
 
     expect(example_fact_instance).to be_a(example_compendium.fact_classes.first)
@@ -36,7 +36,7 @@ describe 'The definition of services' do
       simple_fact
     end
 
-    example_service = example_compendium.services.first
+    example_service = example_compendium.services[:example_service]
     example_fact_instance = example_service.facts.first
 
     expect(example_fact_instance).to be_a(example_compendium.fact_classes.first)
@@ -50,7 +50,7 @@ describe 'The definition of services' do
       my_inherited_value "BCD"
     end
 
-    example_service = compendium.services.first
+    example_service = compendium.services[:example_service]
     my_inherited_value_fact = example_service.facts.last
 
     expect(my_inherited_value_fact).to be_a(compendium.fact_classes.last)

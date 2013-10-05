@@ -32,6 +32,10 @@ module SDL
         # TODO Description of the meaning of facts
         self.class.to_s
       end
+
+      def annotations
+        @annotations ||= []
+      end
     end
   end
 end
