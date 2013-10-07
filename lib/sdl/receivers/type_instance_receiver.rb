@@ -22,19 +22,30 @@ module SDL
             define_singleton_method property.name do |value = nil, &block|
               value = compendium.type_instances[property.type][value] if value.is_a? Symbol
 
-              instance.send "#{property.name}=", block != nil ? SDL::Receivers::PropertyValueReceiver.new(property).instance_exec(&block) : value
+              instance.send "#{property.name}=", value
             end
           else
             # Multi-valued properties are added to by their singular name
             define_singleton_method property.name.singularize do |*property_values, &block|
               existing_list = instance.send "#{property.name}"
-              new_list_item = property.type.new
 
-              SDL::Receivers.set_value(property.type, new_list_item, *property_values, @compendium) unless property_values.empty?
+              unless property_values.empty?
+                if property_values.length == 1 && property_values[0].is_a?(Symbol)
+                  predefined_value = compendium.type_instances[property.type][property_values[0]]
 
-              self.class.new(new_list_item, @compendium).instance_exec(&block) unless block.nil?
+                  raise "Could not find instance :#{property_values[0]} in predefined #{property.type.name} types" unless predefined_value
 
-              existing_list << new_list_item
+                  existing_list << compendium.type_instances[property.type][property_values[0]]
+                else
+                  new_list_item = property.type.new
+
+                  SDL::Receivers.set_value(property.type, new_list_item, *property_values, @compendium)
+
+                  self.class.new(new_list_item, @compendium).instance_exec(&block) unless block.nil?
+
+                  existing_list << new_list_item
+                end
+              end
             end
           end
         end
@@ -42,10 +53,6 @@ module SDL
 
       def annotation(value)
         @instance.annotations << value
-      end
-
-      def self.const_missing(name)
-        puts name
       end
     end
   end

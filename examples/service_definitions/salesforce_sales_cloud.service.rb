@@ -13,10 +13,17 @@ has_browser_interface do
   compatible_browser :safari, '5', annotation: 'on Mac'
 end
 
+has_data_capability 'export' do
+  format :csv
+  format :xls
+end
+
+is_billed :monthly
+
 features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview/', '.slide h3 + p'
 
-feature 'Mobile', features[0]
-feature 'Contact Management', features[1]
-feature 'Opportunity Management', features[2]
-feature 'Chatter', features[3]
-feature 'Email Integration', features[4]
+has_feature 'Mobile', features[0]
+has_feature 'Contact Management', features[1]
+has_feature 'Opportunity Management', features[2]
+has_feature 'Chatter', features[3]
+has_feature 'Email Integration', features[4]

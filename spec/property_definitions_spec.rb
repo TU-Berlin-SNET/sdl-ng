@@ -35,7 +35,7 @@ describe 'The definition of properties' do
 
     expect(defined_property.name).to eq("my_integer_list")
     expect(defined_property.type).to be SDL::Types::SDLNumber
-    expect(defined_property.multi).to be_true
+    expect(defined_property.multi?).to be_true
   end
 
   it 'does not handle unknown types' do

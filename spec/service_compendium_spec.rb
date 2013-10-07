@@ -49,11 +49,6 @@ describe 'The service compendium' do
 
     expect(Kernel.const_get('ExampleFact')).to be < SDL::Base::Fact
     expect(Kernel.const_get('ExampleType')).to be < SDL::Base::Type
-
-    #Cleanup
-    %w[ExampleFact ExampleType].each do |const_name|
-      Object.send(:remove_const, const_name.to_sym)
-    end
   end
 
   it 'has a #facts_definition shortcut' do

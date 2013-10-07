@@ -84,6 +84,7 @@ module SDL
       # Registers all classes by their #local_name to be used in all scopes
       def register_classes_globally
         (@fact_classes + @types).each do |defined_class|
+          Object.send(:remove_const, defined_class.local_name) if Object.const_defined? defined_class.local_name.to_sym
           Object.const_set defined_class.local_name, defined_class
         end
       end

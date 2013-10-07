@@ -1,3 +1,5 @@
+require 'verbs'
+
 require_relative '../base/service'
 
 module SDL
@@ -13,6 +15,10 @@ module SDL
         @compendium = compendium
 
         compendium.fact_classes.each do |fact_class|
+          define_singleton_method("is_#{fact_class.local_name.underscore.verb.conjugate(:tense => :past, :person => :third, :plurality => :singular, :aspect => :perfective)}") do |*args, &block|
+            add_fact fact_class, *args, &block
+          end
+
           define_singleton_method("has_#{fact_class.local_name.underscore}") do |*args, &block|
             add_fact fact_class, *args, &block
           end
