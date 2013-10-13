@@ -1,6 +1,6 @@
 module SDL
   module Exporters
-    class ServiceExporter
+    class ServiceExporter < Exporter
 
     end
   end

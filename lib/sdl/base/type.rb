@@ -1,6 +1,12 @@
 module SDL
   module Base
     class Type
+      ##
+      # Gets the values of all properties
+      def property_values
+        Hash[self.class.properties(true).map{|p| [p, send(p.name)]}]
+      end
+
       class << self
         ## The namespace URL of this Fact class
         attr_accessor :namespace

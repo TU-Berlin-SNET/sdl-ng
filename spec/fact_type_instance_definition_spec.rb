@@ -37,6 +37,14 @@ describe 'The definition of type instances' do
       color :green do
         hex_value '#0F0'
       end
+
+      color :blue do
+        hex_value '#00F'
+      end
+
+      color :yellow do
+        hex_value '#FF0'
+      end
     end
 
     compendium.register_classes_globally
@@ -71,6 +79,12 @@ describe 'The definition of type instances' do
         color :the_colour_of_magic
       end
     end}.to raise_exception
+
+    expect do
+      compendium.service :second_invalid_service do
+        has_color :the_colour_of_magic
+      end
+    end.to raise_exception
   end
 
   it 'can be done through multiple arguments and associative hashes' do

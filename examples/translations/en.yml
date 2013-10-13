@@ -1,0 +1,19 @@
+en:
+  fact:
+    rest_interface:
+      short_description: 'REST interface'
+      long_description: 'The service can be accessed by a REST interface.'
+    browser_interface:
+      short_description: 'Browser interface'
+      long_description: 'The service has a regular browser-based web interface.'
+      properties:
+        compatible_browsers:
+          short_description: 'Compatible browsers'
+          long_description: 'The list of browsers, which are compatible to the service.'
+          properties:
+            compatible_browser:
+              short_description: 'Browser'
+            min_version:
+              short_description: 'Min version'
+        required_plugins:
+          short_description: 'Required plugins'

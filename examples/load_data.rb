@@ -27,6 +27,24 @@ end
 
 puts compendium
 
-exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
+schema_exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
+File.open(__dir__ + '/xml_output/schema.xsd', 'w') {|f| f.write(schema_exporter.export_schema) }
 
-File.open(__dir__ + '/xml_output/schema.xsd', 'w') {|f| f.write(exporter.export_schema) }
+service_exporter = SDL::Exporters::XMLServiceExporter.new(compendium)
+compendium.services.each do |name, service|
+  File.open(__dir__ + "/xml_output/#{name}.xml", 'w') do |f|
+    f.write(service_exporter.export_service(service))
+  end
+end
+
+xsd = Nokogiri::XML::Schema(File.read(__dir__ + '/xml_output/schema.xsd'))
+compendium.services.each do |name, service|
+  xsd.validate(Nokogiri::XML(File.read(__dir__ + "/xml_output/#{name}.xml"))).each do |error|
+    puts error.message
+  end
+end
+
+rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
+compendium.services.each do |name, service|
+  puts rdf_exporter.export_service service
+end

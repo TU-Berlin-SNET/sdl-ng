@@ -20,7 +20,9 @@ module SDL
           if property.single?
             # Single valued properties are set by their name
             define_singleton_method property.name do |value = nil, &block|
-              value = compendium.type_instances[property.type][value] if value.is_a? Symbol
+              if value.is_a? Symbol
+                value = compendium.type_instances[property.type][value] || raise("Could not find instance :#{value.to_s} in predefined #{property.type.name} types")
+              end
 
               instance.send "#{property.name}=", value
             end

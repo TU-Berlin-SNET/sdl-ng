@@ -1,4 +1,4 @@
-name "Salesfoce Sales Cloud"
+name "Salesforce Sales Cloud"
 
 has_documentation 'Overview', url: 'http://www.salesforce.com/sales-cloud/overview/'
 
@@ -13,7 +13,7 @@ has_browser_interface do
   compatible_browser :safari, '5', annotation: 'on Mac'
 end
 
-has_data_capability 'export' do
+has_data_capability :export do
   format :csv
   format :xls
 end

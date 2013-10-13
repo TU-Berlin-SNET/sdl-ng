@@ -32,6 +32,7 @@ module SDL
       private
         def add_fact(fact_class, *property_values, &block)
           fact_instance = fact_class.new
+          fact_instance.service = @service
 
           SDL::Receivers.set_value(fact_class, fact_instance, *property_values, @compendium)
 

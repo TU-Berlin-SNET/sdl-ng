@@ -2,42 +2,22 @@ require 'active_support/inflector'
 require 'nokogiri'
 
 module SDL
-  module Base
-    class Type
-      class << self
-        def xsd_type_name
-          local_name
-        end
-      end
-    end
-  end
-
-  module Types
-    module SDLType
-      module ClassMethods
-        def xml_type
-          if self < SDL::Base::Type
-            wrapped_type.xsd_type_name
-          else
-            'ns:string'
-          end
-        end
-      end
-    end
-  end
-
   module Exporters
     class XSDSchemaExporter < SchemaExporter
       def export_schema
         builder = Nokogiri::XML::Builder.new do |xml|
-          xml['ns'].schema('xmlns:ns' => 'http://www.w3.org/2001/XMLSchema') do
+          xml['ns'].schema('xmlns' => 'http://www.open-service-compendium.org', 'targetNamespace' => 'http://www.open-service-compendium.org', 'xmlns:ns' => 'http://www.w3.org/2001/XMLSchema', 'elementFormDefault' => 'qualified') do
             (@compendium.fact_classes + @compendium.types).each do |fact_class|
               xml['ns'].complexType :name => fact_class.xsd_type_name do
                 extend_if_sub(fact_class, xml) do
                   unless fact_class.properties.empty?
                     xml['ns'].sequence do
                       fact_class.properties.each do |property|
-                        xml['ns'].element :name => property.name, :type => property.type.xml_type
+                        if property.multi?
+                          xml['ns'].element :name => property.name.singularize, :type => property.type.xml_type, :minOccurs => 0, :maxOccurs => 'unbounded'
+                        else
+                          xml['ns'].element :name => property.name, :type => property.type.xml_type, :minOccurs => 0
+                        end
                       end
                     end
                   end
@@ -47,11 +27,9 @@ module SDL
 
             xml['ns'].element :name => 'service' do
               xml['ns'].complexType do
-                xml['ns'].sequence :maxOccurs => 'unbounded' do
-                  xml['ns'].choice do
-                    @compendium.fact_classes.each do |fact_class|
-                      xml['ns'].element :name => fact_class.local_name.camelize(:lower), :type => fact_class.xsd_type_name
-                    end
+                xml['ns'].choice :maxOccurs => 'unbounded' do
+                  @compendium.fact_classes.each do |fact_class|
+                    xml['ns'].element :name => fact_class.xsd_element_name, :type => fact_class.xsd_type_name
                   end
                 end
               end
