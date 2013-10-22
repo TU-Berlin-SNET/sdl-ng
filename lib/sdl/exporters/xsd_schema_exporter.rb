@@ -9,14 +9,17 @@ module SDL
           xml['ns'].schema('xmlns' => 'http://www.open-service-compendium.org', 'targetNamespace' => 'http://www.open-service-compendium.org', 'xmlns:ns' => 'http://www.w3.org/2001/XMLSchema', 'elementFormDefault' => 'qualified') do
             (@compendium.fact_classes + @compendium.types).each do |fact_class|
               xml['ns'].complexType :name => fact_class.xsd_type_name do
+                xml['ns'].annotation do
+                  xml['ns'].documentation fact_class.documentation
+                end
                 extend_if_sub(fact_class, xml) do
                   unless fact_class.properties.empty?
                     xml['ns'].sequence do
                       fact_class.properties.each do |property|
-                        if property.multi?
-                          xml['ns'].element :name => property.name.singularize, :type => property.type.xml_type, :minOccurs => 0, :maxOccurs => 'unbounded'
-                        else
-                          xml['ns'].element :name => property.name, :type => property.type.xml_type, :minOccurs => 0
+                        extend_property(property, xml) do
+                          xml['ns'].annotation do
+                            xml['ns'].documentation property.documentation
+                          end
                         end
                       end
                     end
@@ -50,6 +53,19 @@ module SDL
           end
         else
           yield
+        end
+      end
+
+      # Creates an xml element corresponding to the SDL property
+      def extend_property(property, xml)
+        if property.multi?
+          xml['ns'].element :name => property.name.singularize, :type => property.type.xml_type, :minOccurs => 0, :maxOccurs => 'unbounded' do
+            yield
+          end
+        else
+          xml['ns'].element :name => property.name, :type => property.type.xml_type, :minOccurs => 0 do
+            yield
+          end
         end
       end
     end

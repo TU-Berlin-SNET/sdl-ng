@@ -1,19 +1,22 @@
 en:
-  fact:
-    rest_interface:
-      short_description: 'REST interface'
-      long_description: 'The service can be accessed by a REST interface.'
-    browser_interface:
-      short_description: 'Browser interface'
-      long_description: 'The service has a regular browser-based web interface.'
-      properties:
-        compatible_browsers:
-          short_description: 'Compatible browsers'
-          long_description: 'The list of browsers, which are compatible to the service.'
-          properties:
-            compatible_browser:
-              short_description: 'Browser'
-            min_version:
-              short_description: 'Min version'
-        required_plugins:
-          short_description: 'Required plugins'
+  sdl:
+    types:
+      name: 'The name of the service.'
+      charge_unit: 'The unit of service charging, e.g. "per user".'
+      billing_term: 'The billing term, e.g. "per month".'
+      payment_term: 'The payment terms, i.e., in advance and after use.'
+      payment_option: 'A payment option, e.g. credit card.'
+      bill: 'The service billing terms.'
+      duration: 'Generic duration of something.'
+      set_up_consumption_duration: 'The duration for setting up the service.'
+      provision_end_user_duration: 'The duration for provisioning an end user.'
+      browser: 'A browser'
+      browser_plugin: 'A browser plugin'
+      feature: 'A service feature'
+      documentation: 'Some service documentation'
+      interface: 'An interface to service functionality'
+      rest_interface: 'A RESTful interface'
+      soap_interface: 'A SOAP interface'
+      xmlrpc_interface: 'An XMLRPC interface'
+      browser_interface: 'A regular browser-based interface'
+      data_capability: 'A capability to operate on a specific data format'

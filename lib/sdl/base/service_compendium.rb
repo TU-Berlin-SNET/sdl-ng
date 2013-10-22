@@ -55,6 +55,7 @@ module SDL
         receiver = SDL::Receivers::ServiceReceiver.new(sym, self)
         receiver.instance_eval &service_definition if block_given?
         @services[sym] = receiver.service
+        receiver.service.symbolic_name = sym.to_s
         receiver.service
       end
 

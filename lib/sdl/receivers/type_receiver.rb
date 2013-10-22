@@ -7,9 +7,9 @@ module SDL
       attr :subclasses
       attr :compendium
 
-      def initialize(sym, compendium, superclass = nil)
+      def initialize(sym, compendium, superklass = nil)
         @compendium = compendium
-        @klass = Class.new(superclass || base_class)
+        @klass = Class.new(superklass || base_class)
         @klass.local_name = sym.to_s.camelize
 
         @subclasses = [@klass]
@@ -80,7 +80,7 @@ module SDL
             end
           end
 
-          @klass.properties << SDL::Base::Property.new(sym, type, multi)
+          @klass.properties << SDL::Base::Property.new(sym, type, @klass, multi)
         end
     end
   end

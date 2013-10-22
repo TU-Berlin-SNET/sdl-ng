@@ -1,79 +1,65 @@
 require_relative '../lib/sdl'
 require_relative 'spec_helper'
+require_relative 'shared_test_compendium'
 
 require 'rspec'
 
-describe 'The definition of type instances' do
-  let :compendium do
-    compendium = SDL::Base::ServiceCompendium.new
-
-    compendium.facts_definition do
-      type :color do
-        string :hex_value
-      end
-
-      fact :color do
-        color :color
-        string :name
-      end
-
-      fact :multicolor do
-        list_of_colors :colors
-      end
-
-      fact :favourite_colors do
-        list :favourites do
-          color :color
-          int :rating
-        end
-      end
-    end
-
-    compendium.type_instances_definition do
-      color :red do
-        hex_value '#F00'
-      end
-
-      color :green do
-        hex_value '#0F0'
-      end
-
-      color :blue do
-        hex_value '#00F'
-      end
-
-      color :yellow do
-        hex_value '#FF0'
-      end
-    end
-
-    compendium.register_classes_globally
-
-    compendium
-  end
-
-  it 'lets service definitions use predefined type instances by their symbolic name' do
-    compendium.service :red_service do
-      has_color :red, "Ruby Red"
-    end
+shared_examples_for 'it can use identifiers for predefined types' do
+  it 'can set facts' do
+    eval "compendium.service :red_service do
+      has_color #{red_identifier}, 'Ruby Red'
+    end"
 
     expect(compendium.services[:red_service].facts[0].color).to eq(compendium.type_instances[Color][:red])
     expect(compendium.services[:red_service].facts[0].name).to eq("Ruby Red")
   end
 
   it 'lets service definitions use symbolic names also in lists' do
-    compendium.service :multicolored_service do
+    eval "compendium.service :multicolored_service do
       has_multicolor do
-        color :red
-        color :green
+        color #{red_identifier}
+        color #{green_identifier}
       end
-    end
+    end"
 
     expect(compendium.services[:multicolored_service].facts[0].colors[0]).to eq(compendium.type_instances[Color][:red])
     expect(compendium.services[:multicolored_service].facts[0].colors[1]).to eq(compendium.type_instances[Color][:green])
   end
+end
 
-  it 'raises errors if it detects non existing symbolic names' do
+describe 'The definition of type instances' do
+  include_context 'the default compendium'
+
+  # Registers the classes of the default compendium
+  before(:each) do
+    compendium.register_classes_globally
+  end
+
+  context 'With identifiers as symbolic names' do
+    it_should_behave_like 'it can use identifiers for predefined types' do
+      let :red_identifier do
+        ':red'
+      end
+
+      let :green_identifier do
+        ':green'
+      end
+    end
+  end
+
+  context 'With identifiers as regular names (i.e. method calls)' do
+    it_should_behave_like 'it can use identifiers for predefined types' do
+      let :red_identifier do
+        'red'
+      end
+
+      let :green_identifier do
+        'green'
+      end
+    end
+  end
+
+  it 'raises errors if it detects non existing names or symbols' do
     expect {compendium.service :invalid_service do
       has_multicolor do
         color :the_colour_of_magic
@@ -83,6 +69,26 @@ describe 'The definition of type instances' do
     expect do
       compendium.service :second_invalid_service do
         has_color :the_colour_of_magic
+      end
+    end.to raise_exception
+
+    expect {compendium.service :invalid_service do
+      has_multicolor do
+        color the_colour_of_magic
+      end
+    end}.to raise_exception
+
+    expect do
+      compendium.service :second_invalid_service do
+        has_color the_colour_of_magic
+      end
+    end.to raise_exception
+  end
+
+  it 'raises an error, if multiple predefined type instances with the same name are found by #method_missing' do
+    expect do
+      compendium.service :service_with_ambiguous_reference do
+        color text
       end
     end.to raise_exception
   end
@@ -157,5 +163,16 @@ describe 'The definition of type instances' do
     expect(compendium.services[:favourite_service].facts[0].favourites[1].color).to eq(compendium.type_instances[Color][:green])
     expect(compendium.services[:favourite_service].facts[0].favourites[0].rating).to eq(5)
     expect(compendium.services[:favourite_service].facts[0].favourites[1].rating).to eq(10)
+  end
+
+  it 'returns the values of all properties by calling #property_values on a type' do
+    compendium.service :imaginative_service do
+      has_color :yellow, 'Yellow'
+    end
+
+    property_values = compendium.services[:imaginative_service].facts[0].property_values
+
+    expect(property_values[property_values.keys[0]]).to eq(compendium.type_instances[Color][:yellow])
+    expect(property_values[property_values.keys[1]]).to eq('Yellow')
   end
 end

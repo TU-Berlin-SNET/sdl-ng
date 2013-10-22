@@ -1,3 +1,5 @@
+require 'i18n'
+
 module SDL
   module Base
     class Type
@@ -12,13 +14,21 @@ module SDL
         attr_accessor :namespace
 
         ##
-        # The local name of the fact, e.g. "Name" or "ServiceInterface".
+        # The local name of the fact, e.g. "Name" or "ServiceInterface". Defaults to the name of the class
         #
         # The ServiceCompendium#register_classes_globally method makes this class accessible by a constant of this name
-        attr_accessor :local_name
+        @local_name
+
+        def local_name
+          @local_name || name.demodulize
+        end
+
+        def local_name=(name)
+          @local_name = name
+        end
 
         def to_s
-          @local_name
+          @local_name || name
         end
 
         def properties(including_super = false)

@@ -1,4 +1,7 @@
 require_relative '../lib/sdl'
+require 'i18n'
+
+I18n.load_path << File.join(__dir__, 'translations', 'en.yml')
 
 compendium = SDL::Base::ServiceCompendium.new
 
@@ -46,5 +49,7 @@ end
 
 rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
 compendium.services.each do |name, service|
-  puts rdf_exporter.export_service service
+  File.open(__dir__ + "/rdf_output/#{name}.rdf", 'w') do |f|
+    f.write rdf_exporter.export_service(service)
+  end
 end

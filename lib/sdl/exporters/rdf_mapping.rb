@@ -21,35 +21,35 @@ module SDL
   module Base
     class Fact
       class << self
-        def rdf_uri
-          "http://www.open-service-compendium.org/#{@local_name}"
+        def uri
+          "http://www.open-service-compendium.org/types/#{@local_name}"
         end
       end
 
-      def rdf_uri
-        "#{service.rdf_uri}/#{self.class.local_name.underscore}#{hash}"
+      def uri
+        "#{service.uri}/#{self.class.local_name.underscore}-#{hash}"
       end
     end
 
     class Type
       class << self
-        def rdf_uri
-          "http://www.open-service-compendium.org/#{@local_name}"
+        def uri
+          "http://www.open-service-compendium.org/types/#{@local_name}"
         end
       end
 
-      def rdf_uri
-        self.class.rdf_uri + '/' + hash.to_s
+      def uri
+        self.class.uri + '/' + hash.to_s
       end
 
       def rdf_object
-        RDF::URI.new(rdf_uri)
+        RDF::URI.new(uri)
       end
     end
 
     class Service
-      def rdf_uri
-        "http://www.open-service-compendium.org/#{hash}"
+      def uri
+        "http://www.open-service-compendium.org/services/#{@symbolic_name}"
       end
     end
   end

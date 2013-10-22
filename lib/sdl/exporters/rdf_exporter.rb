@@ -10,7 +10,7 @@ module SDL
         graph = RDF::Graph.new
 
         service.facts.each do |fact|
-          graph << [RDF::URI.new(service.rdf_uri), @@s["has_#{fact.class.local_name.underscore}"], RDF::URI.new(fact.rdf_uri)]
+          graph << [RDF::URI.new(service.uri), @@s["has_#{fact.class.local_name.underscore}"], RDF::URI.new(fact.uri)]
 
           expand_properties(fact, graph)
         end
@@ -21,7 +21,7 @@ module SDL
       def expand_properties(type_instance, graph)
         type_instance.property_values.each do |property, value|
           [value].flatten.each do |v|
-            graph << [RDF::URI.new(type_instance.rdf_uri), @@s["#{property.name.underscore}"], v.rdf_object]
+            graph << [RDF::URI.new(type_instance.uri), @@s["#{property.name.underscore}"], v.rdf_object] unless v.nil?
           end
 
           if property.type < SDL::Base::Type

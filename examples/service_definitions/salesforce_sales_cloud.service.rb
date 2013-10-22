@@ -1,24 +1,25 @@
 name "Salesforce Sales Cloud"
 
-has_documentation 'Overview', url: 'http://www.salesforce.com/sales-cloud/overview/'
+has_documentation url: 'http://www.salesforce.com/sales-cloud/overview/'
 
 has_rest_interface
 has_soap_interface
 has_xmlrpc_interface
 
 has_browser_interface do
-  compatible_browser :internet_explorer, '7'
-  compatible_browser :firefox, 'recent'
-  compatible_browser :chrome, 'recent'
-  compatible_browser :safari, '5', annotation: 'on Mac'
+  compatible_browser internet_explorer, '7'
+  compatible_browser firefox, 'recent'
+  compatible_browser chrome, 'recent'
+  compatible_browser safari, '5', annotation: 'on Mac'
 end
 
-has_data_capability :export do
-  format :csv
-  format :xls
-end
+has_data_capability export, csv
 
-is_billed :monthly
+is_billed annually, in_advance
+
+has_payment_option credit_card
+has_payment_option cheque
+has_payment_option invoice
 
 features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview/', '.slide h3 + p'
 

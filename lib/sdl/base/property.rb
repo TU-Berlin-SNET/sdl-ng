@@ -12,6 +12,9 @@ module SDL
       # Is this Property multi-valued
       attr :multi
 
+      # The parent type, where this property belongs to
+      attr :parent
+
       # Is this Property single-valued
       def single?
         !@multi
@@ -23,10 +26,8 @@ module SDL
       end
 
       # Define a property by its name and type
-      def initialize(name, type, multi = false)
-        @name = name.to_s
-        @type = type
-        @multi = multi
+      def initialize(name, type, parent, multi = false)
+        @name, @type, @parent, @multi = name.to_s, type, parent, multi
       end
     end
   end

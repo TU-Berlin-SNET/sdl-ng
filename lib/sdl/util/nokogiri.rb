@@ -5,9 +5,13 @@ module SDL
   module Receivers
     class ServiceReceiver
       def fetch_from_url(url, *search)
-        doc = Nokogiri::HTML(open(url))
+        begin
+          doc = Nokogiri::HTML(open(url))
 
-        doc.search(*search)
+          doc.search(*search)
+        rescue SocketError => e
+          []
+        end
       end
     end
   end

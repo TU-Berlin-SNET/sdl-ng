@@ -42,6 +42,22 @@ module SDL
 
           @service.facts << fact_instance
         end
+
+        ##
+        # Catches calls to methods named similarily to possible predefined type instances
+        def method_missing(name, *args)
+          possible_type_instances = @compendium.type_instances.map{|k, v| v[name]}.select{|v| v != nil}
+
+          unless possible_type_instances.nil? || possible_type_instances.empty?
+            if possible_type_instances.length > 1
+              raise Exception.new("Multiple possibilities for #{name} in #{caller[0]}")
+            else
+              possible_type_instances[0]
+            end
+          else
+            raise Exception.new("I do not know what to do with '#{name}' in #{caller[0]}")
+          end
+        end
     end
   end
 end

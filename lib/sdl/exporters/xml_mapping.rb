@@ -25,6 +25,14 @@ module SDL
         end
       end
     end
+
+    class Fact
+      class << self
+        def xsd_type_name
+          "#{local_name}Fact"
+        end
+      end
+    end
   end
 
   module Types
