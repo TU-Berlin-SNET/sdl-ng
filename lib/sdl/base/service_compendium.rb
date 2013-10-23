@@ -77,6 +77,7 @@ module SDL
 
           receiver.instance_eval &block if block != nil
 
+          receiver.instance.identifier = identifier
           @type_instances[type][identifier] = receiver.instance
         end
       end

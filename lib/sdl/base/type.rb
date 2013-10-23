@@ -3,18 +3,12 @@ require 'i18n'
 module SDL
   module Base
     class Type
-      ##
-      # Gets the values of all properties
-      def property_values
-        Hash[self.class.properties(true).map{|p| [p, send(p.name)]}]
-      end
-
       class << self
         ## The namespace URL of this Fact class
         attr_accessor :namespace
 
         ##
-        # The local name of the fact, e.g. "Name" or "ServiceInterface". Defaults to the name of the class
+        # The local name of the fact, e.g. "Name" or "ServiceInterface". Defaults to the name of the class.
         #
         # The ServiceCompendium#register_classes_globally method makes this class accessible by a constant of this name
         @local_name
@@ -44,6 +38,12 @@ module SDL
         end
       end
 
+      ##
+      # Gets the values of all properties
+      def property_values
+        Hash[self.class.properties(true).map{|p| [p, send(p.name)]}]
+      end
+
       def to_s
         # TODO Description of the meaning of facts
         self.class.to_s
@@ -52,6 +52,9 @@ module SDL
       def annotations
         @annotations ||= []
       end
+
+      # An identifier for type instances
+      attr_accessor :identifier
     end
   end
 end

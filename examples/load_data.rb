@@ -1,4 +1,5 @@
 require_relative '../lib/sdl'
+require 'active_support'
 require 'i18n'
 
 I18n.load_path << File.join(__dir__, 'translations', 'en.yml')
@@ -53,3 +54,37 @@ compendium.services.each do |name, service|
     f.write rdf_exporter.export_service(service)
   end
 end
+
+all_needed_translations = {
+    'en' => {
+        'sdl' => I18n.backend.instance_eval{translations}[:en][:sdl]
+    }
+}
+
+def returning(value)
+  yield(value)
+  value
+end
+
+def convert_hash_to_ordered_hash_and_sort(object, deep = false)
+# from http://seb.box.re/2010/1/15/deep-hash-ordering-with-ruby-1-8/
+  if object.is_a?(Hash)
+    # Hash is ordered in Ruby 1.9!
+    res = returning(RUBY_VERSION >= '1.9' ? Hash.new : ActiveSupport::OrderedHash.new) do |map|
+      object.each {|k, v| map[k] = deep ? convert_hash_to_ordered_hash_and_sort(v, deep) : v }
+    end
+    return res.class[res.sort {|a, b| a[0].to_s <=> b[0].to_s } ]
+  elsif deep && object.is_a?(Array)
+    array = Array.new
+    object.each_with_index {|v, i| array[i] = convert_hash_to_ordered_hash_and_sort(v, deep) }
+    return array
+  else
+    return object
+  end
+end
+
+File.open(__dir__ + "/translations/en.out.yml", 'w') do |f|
+  f.write(convert_hash_to_ordered_hash_and_sort(all_needed_translations.deep_stringify_keys!, true).to_yaml)
+end
+
+puts 'Finished'

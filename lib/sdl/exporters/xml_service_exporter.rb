@@ -19,7 +19,11 @@ module SDL
         type_instance.property_values.each do |property, value|
           [value].flatten.each do |v|
             if v.class < SDL::Base::Type
-              xml.send(property.xsd_element_name + '_') do
+              xml.send(property.xsd_element_name + '_', (!value.is_a?(Array) && value.identifier) ? {'identifier' => value.identifier.to_s} : {}) do
+                v.annotations.each do |annotation|
+                  xml.annotation annotation
+                end
+                xml.documentation v.documentation if (!value.is_a?(Array) && value.identifier)
                 serialize_type_instance(v, xml)
               end
             else

@@ -8,9 +8,22 @@ module I18n
       def message
         puts old_message
 
-        I18n
+        puts @key
+
+        I18n.backend.store_translations I18n.locale, to_deep_hash({@key => 'Translate'})
 
         old_message
+      end
+
+      # Taken from: http://www.ruby-doc.org/gems/docs/t/translate-rails3-0.2.2/Translate/Keys.html
+      def to_deep_hash(hash)
+        hash.inject({}) do |deep_hash, (key, value)|
+          keys = key.to_s.split('.').reverse
+          leaf_key = keys.shift
+          key_hash = keys.inject({leaf_key.to_sym => value}) { |hash, key| {key.to_sym => hash} }
+          deep_hash.deep_merge!(key_hash)
+          deep_hash
+        end
       end
     end
   end
@@ -32,8 +45,10 @@ module SDL
       def self.walk_the_class_name(klass)
         klass_key = klass.local_name.underscore.downcase
 
-        unless klass.eql?(SDL::Base::Fact) || klass.eql?(SDL::Base::Type)
-          klass_key = "#{walk_the_class_name(klass.superclass)}.#{klass_key}"
+        if klass.superclass.eql?(SDL::Base::Fact) || klass.superclass.eql?(SDL::Base::Type)
+          klass_key = "#{klass.superclass.local_name.underscore.downcase}.#{klass_key}"
+        else
+          klass_key = "#{walk_the_class_name(klass.superclass)}_#{klass_key}"
         end
 
         klass_key
@@ -50,11 +65,15 @@ module SDL
       def self.documentation_key
         "sdl.#{SDL::Util::Documentation.walk_the_class_name(self)}"
       end
+
+      def documentation_key
+        "sdl.instances.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{@identifier}"
+      end
     end
 
     class Property
       def documentation_key
-        "sdl.#{SDL::Util::Documentation.walk_the_class_name(@parent)}.#{@name}"
+        "sdl.property.#{SDL::Util::Documentation.walk_the_class_name(@parent)}.#{@name}"
       end
     end
   end
