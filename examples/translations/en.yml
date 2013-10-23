@@ -1,22 +1,112 @@
 en:
   sdl:
-    types:
-      name: 'The name of the service.'
-      charge_unit: 'The unit of service charging, e.g. "per user".'
-      billing_term: 'The billing term, e.g. "per month".'
-      payment_term: 'The payment terms, i.e., in advance and after use.'
-      payment_option: 'A payment option, e.g. credit card.'
-      bill: 'The service billing terms.'
-      duration: 'Generic duration of something.'
-      set_up_consumption_duration: 'The duration for setting up the service.'
-      provision_end_user_duration: 'The duration for provisioning an end user.'
-      browser: 'A browser'
-      browser_plugin: 'A browser plugin'
-      feature: 'A service feature'
-      documentation: 'Some service documentation'
-      interface: 'An interface to service functionality'
-      rest_interface: 'A RESTful interface'
-      soap_interface: 'A SOAP interface'
-      xmlrpc_interface: 'An XMLRPC interface'
-      browser_interface: 'A regular browser-based interface'
-      data_capability: 'A capability to operate on a specific data format'
+    xml:
+      service_root: The root element of the service. Contains an arbitrary number of facts.
+      typebase: The base type of all SDL types and facts. Contains annotations and documentation.
+      documentation: The documentation of this type or fact instance.
+      annotation: An arbitrary annotation to be displayed for the description consumer.
+      identifier: An identifier for a type instance. Two instances are the same, if they share the same identifier.
+    fact:
+      bill: The service billing terms.
+      charge_unit: The unit of service charging, e.g. "per user".
+      data_capability: A capability to operate on a specific data format
+      documentation: Some service documentation
+      duration: Generic duration of something.
+      duration_provision_end_user_duration: The duration for provisioning an end user.
+      duration_set_up_consumption_duration: The duration for setting up the service.
+      feature: A service feature
+      interface: An interface to service functionality
+      interface_browser_interface: A regular browser-based interface
+      interface_rest_interface: A RESTful interface
+      interface_soap_interface: A SOAP interface
+      interface_xmlrpc_interface: An XMLRPC interface
+      name: The name of the service.
+      payment_option: A payment option, e.g. credit card.
+    property:
+      fact:
+        bill:
+          billing_term: The billing terms
+          payment_term: The payment terms
+        charge_unit:
+          charge_unit: The unit of charge
+        data_capability:
+          format: The data format
+          operation: The operation, which can be carried out on the data format
+        documentation:
+          url: The documentation URL
+        duration:
+          duration: The duration
+        feature:
+          description: The feature description
+          feature: The feature name
+        interface_browser_interface:
+          compatible_browsers: The compatible browsers
+          required_plugins: The required browser plugins
+        name:
+          name: The service name
+        payment_option:
+          payment_option: The payment option
+      type:
+        browser:
+          browser_name: The name of the browser
+          url: The browser homepage URL
+        browser_plugin:
+          plugin_name: The name of the browser plugin
+          url: The browser plugin URL
+        compatible_browser:
+          compatible_browser: The compatible browser
+          min_version: The minimum version of the browser
+        data_format:
+          mime_type: The mime type of the data format
+        required_plugin:
+          min_version: The minimum version required of the browser plugin
+          required_plugin: The plugin
+    type:
+      billing_term: The billing term, e.g. "per month".
+      browser: A browser
+      browser_plugin: A browser plugin
+      charge_unit: The charge unit
+      compatible_browser: A compatible browser
+      data_capability_operation: The data capability operation
+      data_format: The data format
+      payment_option: The payment option
+      payment_term: The payment terms, i.e., in advance and after use.
+      required_plugin: The required plugins
+    instance:
+      type:
+        browser:
+          firefox: Mozilla Firefox
+          opera: Opera Browser
+          chrome: Google Chrome
+          internet_explorer: Internet Explorer
+          safari: Apple Safari
+        charge_unit:
+          user_account: The number of user accounts
+          floating_license: The number of floating licenses
+        data_format:
+          csv: Comma-separated values (CSV)
+          xls: Microsoft Excel
+          html: HTML
+          rtf: Rich text (RTF)
+          word: Microsoft Word
+          open_office: Open Office
+          pdf: Adobe PDF
+          text: Plain text
+          odf: Open Document Format (ODF)
+          pptx: Microsoft PowerPoint
+          png: Portable Network Graphics (PNG)
+          jpeg: JPEG
+          svg: Scalable Vector Graphics (SVG)
+        data_capability_operation:
+          export: Exporting data
+          import: Importing data
+        billing_term:
+          monthly: Monthly billing
+          annually: Annually billing
+        payment_term:
+          in_advance: Payment is done in advance of service consumption
+          after_use: Payment is done after service consumption
+        payment_option:
+          credit_card: Credit card
+          cheque: Cheque
+          invoice: Invoice

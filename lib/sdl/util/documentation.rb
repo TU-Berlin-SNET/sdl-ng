@@ -67,7 +67,7 @@ module SDL
       end
 
       def documentation_key
-        "sdl.instances.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{@identifier}"
+        "sdl.instance.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{@identifier}"
       end
     end
 

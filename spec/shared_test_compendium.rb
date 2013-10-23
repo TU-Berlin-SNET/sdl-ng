@@ -16,6 +16,10 @@ shared_context 'the default compendium' do
       fact :color do
         color :color
         string :name
+
+        subfact :supercolor do
+          string :superpower
+        end
       end
 
       fact :multicolor do
