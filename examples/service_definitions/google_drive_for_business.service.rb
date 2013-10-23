@@ -2,6 +2,8 @@ name 'Google Drive for Business'
 
 has_documentation 'http://www.google.com/enterprise/apps/business/products.html#drive'
 
+has_cloud_service_model saas
+
 has_rest_interface annotation: 'https://developers.google.com/drive/'
 
 is_billed monthly, in_advance

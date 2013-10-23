@@ -2,6 +2,8 @@ name "Salesforce Sales Cloud"
 
 has_documentation url: 'http://www.salesforce.com/sales-cloud/overview/'
 
+has_cloud_service_model saas
+
 has_rest_interface
 has_soap_interface
 has_xmlrpc_interface

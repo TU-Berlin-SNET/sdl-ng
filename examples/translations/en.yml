@@ -1,14 +1,9 @@
 en:
   sdl:
-    xml:
-      service_root: The root element of the service. Contains an arbitrary number of facts.
-      typebase: The base type of all SDL types and facts. Contains annotations and documentation.
-      documentation: The documentation of this type or fact instance.
-      annotation: An arbitrary annotation to be displayed for the description consumer.
-      identifier: An identifier for a type instance. Two instances are the same, if they share the same identifier.
     fact:
       bill: The service billing terms.
       charge_unit: The unit of service charging, e.g. "per user".
+      cloud_service_model: The cloud service model
       data_capability: A capability to operate on a specific data format
       documentation: Some service documentation
       duration: Generic duration of something.
@@ -22,6 +17,49 @@ en:
       interface_xmlrpc_interface: An XMLRPC interface
       name: The name of the service.
       payment_option: A payment option, e.g. credit card.
+    instance:
+      type:
+        billing_term:
+          annually: Annually billing
+          monthly: Monthly billing
+        browser:
+          chrome: Google Chrome
+          firefox: Mozilla Firefox
+          internet_explorer: Internet Explorer
+          opera: Opera Browser
+          safari: Apple Safari
+        charge_unit:
+          floating_license: The number of floating licenses
+          user_account: The number of user accounts
+        cloud_service_model:
+          saas: Software as a Service (SaaS)
+          paas: Platform as a Service (PaaS)
+          iaas: Infrastructure as a Service (IaaS)
+          haas: Hardware as a Service (HaaS)
+        data_capability_operation:
+          export: Exporting data
+          import: Importing data
+        data_format:
+          csv: Comma-separated values (CSV)
+          html: HTML
+          jpeg: JPEG
+          odf: Open Document Format (ODF)
+          open_office: Open Office
+          pdf: Adobe PDF
+          png: Portable Network Graphics (PNG)
+          pptx: Microsoft PowerPoint
+          rtf: Rich text (RTF)
+          svg: Scalable Vector Graphics (SVG)
+          text: Plain text
+          word: Microsoft Word
+          xls: Microsoft Excel
+        payment_option:
+          cheque: Cheque
+          credit_card: Credit card
+          invoice: Invoice
+        payment_term:
+          after_use: Payment is done after service consumption
+          in_advance: Payment is done in advance of service consumption
     property:
       fact:
         bill:
@@ -29,6 +67,8 @@ en:
           payment_term: The payment terms
         charge_unit:
           charge_unit: The unit of charge
+        cloud_service_model:
+          cloud_service_model: The cloud service model
         data_capability:
           format: The data format
           operation: The operation, which can be carried out on the data format
@@ -66,47 +106,19 @@ en:
       browser: A browser
       browser_plugin: A browser plugin
       charge_unit: The charge unit
+      cloud_service_model: A cloud service model
       compatible_browser: A compatible browser
       data_capability_operation: The data capability operation
       data_format: The data format
       payment_option: The payment option
       payment_term: The payment terms, i.e., in advance and after use.
       required_plugin: The required plugins
-    instance:
-      type:
-        browser:
-          firefox: Mozilla Firefox
-          opera: Opera Browser
-          chrome: Google Chrome
-          internet_explorer: Internet Explorer
-          safari: Apple Safari
-        charge_unit:
-          user_account: The number of user accounts
-          floating_license: The number of floating licenses
-        data_format:
-          csv: Comma-separated values (CSV)
-          xls: Microsoft Excel
-          html: HTML
-          rtf: Rich text (RTF)
-          word: Microsoft Word
-          open_office: Open Office
-          pdf: Adobe PDF
-          text: Plain text
-          odf: Open Document Format (ODF)
-          pptx: Microsoft PowerPoint
-          png: Portable Network Graphics (PNG)
-          jpeg: JPEG
-          svg: Scalable Vector Graphics (SVG)
-        data_capability_operation:
-          export: Exporting data
-          import: Importing data
-        billing_term:
-          monthly: Monthly billing
-          annually: Annually billing
-        payment_term:
-          in_advance: Payment is done in advance of service consumption
-          after_use: Payment is done after service consumption
-        payment_option:
-          credit_card: Credit card
-          cheque: Cheque
-          invoice: Invoice
+    xml:
+      annotation: An arbitrary annotation to be displayed for the description consumer.
+      documentation: The documentation of this type or fact instance.
+      identifier: An identifier for a type instance. Two instances are the same, if
+        they share the same identifier.
+      service_root: The root element of the service. Contains an arbitrary number
+        of facts.
+      typebase: The base type of all SDL types and facts. Contains annotations and
+        documentation.
