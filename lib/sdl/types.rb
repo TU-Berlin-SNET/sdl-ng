@@ -5,6 +5,7 @@ require_relative 'types/sdl_description'
 require_relative 'types/sdl_number'
 require_relative 'types/sdl_duration'
 require_relative 'types/sdl_url'
+require_relative 'types/sdl_datetime'
 
 module SDL
   ##

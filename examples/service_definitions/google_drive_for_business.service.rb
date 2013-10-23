@@ -2,7 +2,14 @@ name 'Google Drive for Business'
 
 has_documentation 'http://www.google.com/enterprise/apps/business/products.html#drive'
 
+has_add_on_repository 'https://www.google.com/enterprise/marketplace/home', 1000
+
 has_cloud_service_model saas
+
+maintenance_free
+
+has_past_release_notes 'https://plus.google.com/+GoogleDrive/posts'
+has_feedback_page 'https://plus.google.com/+GoogleDrive/posts'
 
 has_rest_interface annotation: 'https://developers.google.com/drive/'
 

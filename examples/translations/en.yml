@@ -1,9 +1,15 @@
+---
 en:
   sdl:
     fact:
+      add_on_repository: The service has an add-on repository.
       bill: The service billing terms.
       charge_unit: The unit of service charging, e.g. "per user".
       cloud_service_model: The cloud service model
+      continuous_service_improvement: The service has continuous service improvement means
+      continuous_service_improvement_feedback_page: The service has a feedback page
+      continuous_service_improvement_future_roadmap: The service has a future roadmap
+      continuous_service_improvement_past_release_notes: The service has past release notes
       data_capability: A capability to operate on a specific data format
       documentation: Some service documentation
       duration: Generic duration of something.
@@ -12,11 +18,16 @@ en:
       feature: A service feature
       interface: An interface to service functionality
       interface_browser_interface: A regular browser-based interface
-      interface_rest_interface: A RESTful interface
-      interface_soap_interface: A SOAP interface
-      interface_xmlrpc_interface: An XMLRPC interface
-      name: The name of the service.
-      payment_option: A payment option, e.g. credit card.
+      interface_rest_interface: The service has a RESTful interface
+      interface_soap_interface: The service has a SOAP interface
+      interface_xmlrpc_interface: The service has an XMLRPC interface
+      maintenance: The service has maintenance information
+      maintenance_maintenance_free: The service is maintenance free
+      maintenance_maintenance_window: The service has a maintenance window
+      name: The service has a name.
+      payment_option: The service can be payed by a payment option, e.g. credit card.
+      service_category: The service belongs to a category
+      service_tag: The service is tagged
     instance:
       type:
         billing_term:
@@ -32,10 +43,10 @@ en:
           floating_license: The number of floating licenses
           user_account: The number of user accounts
         cloud_service_model:
-          saas: Software as a Service (SaaS)
-          paas: Platform as a Service (PaaS)
-          iaas: Infrastructure as a Service (IaaS)
           haas: Hardware as a Service (HaaS)
+          iaas: Infrastructure as a Service (IaaS)
+          paas: Platform as a Service (PaaS)
+          saas: Software as a Service (SaaS)
         data_capability_operation:
           export: Exporting data
           import: Importing data
@@ -62,6 +73,9 @@ en:
           in_advance: Payment is done in advance of service consumption
     property:
       fact:
+        add_on_repository:
+          number_of_add_ons: The number of available add-ons
+          url: The URL of the add-on repository
         bill:
           billing_term: The billing terms
           payment_term: The payment terms
@@ -69,6 +83,8 @@ en:
           charge_unit: The unit of charge
         cloud_service_model:
           cloud_service_model: The cloud service model
+        continuous_service_improvement:
+          url: A link to the continuous service improvement
         data_capability:
           format: The data format
           operation: The operation, which can be carried out on the data format
@@ -82,10 +98,16 @@ en:
         interface_browser_interface:
           compatible_browsers: The compatible browsers
           required_plugins: The required browser plugins
+        maintenance_maintenance_window:
+          timespan: The timespan of the maintenance window
         name:
           name: The service name
         payment_option:
           payment_option: The payment option
+        service_category:
+          service_category: The category of the service
+        service_tag:
+          service_tag: The service tag
       type:
         browser:
           browser_name: The name of the browser
@@ -101,6 +123,9 @@ en:
         required_plugin:
           min_version: The minimum version required of the browser plugin
           required_plugin: The plugin
+        timespan:
+          end: The timespan end
+          start: The timespan start
     type:
       billing_term: The billing term, e.g. "per month".
       browser: A browser
@@ -113,6 +138,9 @@ en:
       payment_option: The payment option
       payment_term: The payment terms, i.e., in advance and after use.
       required_plugin: The required plugins
+      service_category: The category of a service
+      service_tag: A Service tag
+      timespan: An arbitrary timespan
     xml:
       annotation: An arbitrary annotation to be displayed for the description consumer.
       documentation: The documentation of this type or fact instance.

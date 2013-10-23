@@ -2,6 +2,15 @@ name "Salesforce Sales Cloud"
 
 has_documentation url: 'http://www.salesforce.com/sales-cloud/overview/'
 
+has_add_on_repository 'https://appexchange.salesforce.com/' do
+  number_of_add_ons 2000
+end
+
+maintenance_free
+
+has_future_roadmap 'http://www.sfdcstatic.com/assets/pdf/misc/summer13_ReleasePreview.pdf'
+has_past_release_notes 'http://www.salesforce.com/newfeatures/'
+
 has_cloud_service_model saas
 
 has_rest_interface

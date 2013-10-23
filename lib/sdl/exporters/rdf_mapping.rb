@@ -1,18 +1,10 @@
 require 'rdf'
 require 'active_support/inflector'
 
-class String
-  def rdf_object
-    RDF::Literal.new(self)
-  end
-end
-
-module Nokogiri
-  module XML
-    class Element
-      def rdf_object
-        RDF::Literal.new(self)
-      end
+[String, Fixnum, Nokogiri::XML::Element].each do |klass|
+  klass.class_eval do
+    def rdf_object
+      RDF::Literal.new(self)
     end
   end
 end
