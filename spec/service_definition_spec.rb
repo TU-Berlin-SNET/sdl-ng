@@ -62,4 +62,12 @@ describe 'The definition of services' do
 
     expect(my_inherited_value_fact.my_value).to eq("BCD")
   end
+
+  it 'raises an error, if a value is given for a non-existing property' do
+    expect do
+      example_compendium.service(:example_service) do
+        my_value "ABC", "DEF"
+      end
+    end.to raise_exception
+  end
 end
