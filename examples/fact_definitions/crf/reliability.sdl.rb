@@ -1,0 +1,1 @@
+fact :offline_capability

@@ -6,12 +6,22 @@ has_add_on_repository 'https://www.google.com/enterprise/marketplace/home', 1000
 
 has_cloud_service_model saas
 
+has_communication_protection https
+
+has_status_page 'http://www.google.com/appsstatus'
+
+has_public_service_level_agreement 'http://www.google.com/apps/intl/en/terms/sla.html'
+
 maintenance_free
 
 has_past_release_notes 'https://plus.google.com/+GoogleDrive/posts'
 has_feedback_page 'https://plus.google.com/+GoogleDrive/posts'
 
+has_establishing_year 2006
+
 has_rest_interface annotation: 'https://developers.google.com/drive/'
+
+has_offline_capability annotation: 'https://support.google.com/drive/answer/2375012'
 
 is_billed monthly, in_advance
 

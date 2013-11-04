@@ -6,6 +6,16 @@ has_add_on_repository 'https://appexchange.salesforce.com/' do
   number_of_add_ons 2000
 end
 
+has_communication_protection https
+
+has_status_page 'http://trust.salesforce.com/trust/status/'
+
+has_public_service_level_agreement 'http://www.salesforce.com/assets/pdf/misc/salesforce_MSA.pdf'
+
+has_establishing_year 1999
+
+has_offline_capability annotation: 'http://help.salesforce.com/apex/HTViewHelpDoc?id=offline_def.htm'
+
 maintenance_free
 
 has_future_roadmap 'http://www.sfdcstatic.com/assets/pdf/misc/summer13_ReleasePreview.pdf'

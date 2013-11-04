@@ -3,18 +3,29 @@ en:
   sdl:
     fact:
       add_on_repository: The service has an add-on repository.
+      audit_option: The service has an audit option
       bill: The service billing terms.
       charge_unit: The unit of service charging, e.g. "per user".
       cloud_service_model: The cloud service model
-      continuous_service_improvement: The service has continuous service improvement means
+      communication_protection: The communication with the service is protected
+      continuous_service_improvement: The service has continuous service improvement
+        means
       continuous_service_improvement_feedback_page: The service has a feedback page
       continuous_service_improvement_future_roadmap: The service has a future roadmap
-      continuous_service_improvement_past_release_notes: The service has past release notes
-      data_capability: A capability to operate on a specific data format
+      continuous_service_improvement_past_release_notes: The service has past release
+        notes
+      data_capability: The service can carry out operations on a specific data format
+      data_deletion_policy: The service allows for complete deletion of user data
+        after termination of contract
+      data_encryption: The service applies encrpytion on user data
+      data_location: The service offers to locate service data at runtime
+      data_location_transparency: The provider makes the location of service data
+        transparent
       documentation: Some service documentation
       duration: Generic duration of something.
       duration_provision_end_user_duration: The duration for provisioning an end user.
       duration_set_up_consumption_duration: The duration for setting up the service.
+      establishing_year: The establishing year of the service is known
       feature: A service feature
       interface: An interface to service functionality
       interface_browser_interface: A regular browser-based interface
@@ -25,9 +36,14 @@ en:
       maintenance_maintenance_free: The service is maintenance free
       maintenance_maintenance_window: The service has a maintenance window
       name: The service has a name.
+      offline_capability: Service functionality can be used offline
       payment_option: The service can be payed by a payment option, e.g. credit card.
       service_category: The service belongs to a category
+      service_level_agreement: The service has a kind of service level agreement
+      service_level_agreement_public_service_level_agreement: The service has a publicibly
+        accessible service level agreement
       service_tag: The service is tagged
+      status_page: The service has a status page
     instance:
       type:
         billing_term:
@@ -47,6 +63,9 @@ en:
           iaas: Infrastructure as a Service (IaaS)
           paas: Platform as a Service (PaaS)
           saas: Software as a Service (SaaS)
+        communication_protection:
+          https: HTTPS encryption
+          vpn: VPN connection
         data_capability_operation:
           export: Exporting data
           import: Importing data
@@ -64,6 +83,10 @@ en:
           text: Plain text
           word: Microsoft Word
           xls: Microsoft Excel
+        key_control:
+          provider_only: Only the provider controls the encryption keys
+          shared: Both user and provider control the encryption keys
+          user_only: Only the service user controls the encryption keys
         payment_option:
           cheque: Cheque
           credit_card: Credit card
@@ -76,6 +99,8 @@ en:
         add_on_repository:
           number_of_add_ons: The number of available add-ons
           url: The URL of the add-on repository
+        audit_option:
+          audit_option: The audit option
         bill:
           billing_term: The billing terms
           payment_term: The payment terms
@@ -83,15 +108,23 @@ en:
           charge_unit: The unit of charge
         cloud_service_model:
           cloud_service_model: The cloud service model
+        communication_protection:
+          communication_protection: The protection means
         continuous_service_improvement:
           url: A link to the continuous service improvement
         data_capability:
           format: The data format
           operation: The operation, which can be carried out on the data format
+        data_encryption:
+          key_control: Who excercises control over the encryption keys
+        data_location:
+          location: The location of data
         documentation:
           url: The documentation URL
         duration:
           duration: The duration
+        establishing_year:
+          year: The year, the service was established
         feature:
           description: The feature description
           feature: The feature name
@@ -106,8 +139,12 @@ en:
           payment_option: The payment option
         service_category:
           service_category: The category of the service
+        service_level_agreement_public_service_level_agreement:
+          url: The URL of the service level agreement
         service_tag:
           service_tag: The service tag
+        status_page:
+          url: The URL of the service status page
       type:
         browser:
           browser_name: The name of the browser
@@ -127,14 +164,18 @@ en:
           end: The timespan end
           start: The timespan start
     type:
+      audit_option: An option to audit a service
       billing_term: The billing term, e.g. "per month".
       browser: A browser
       browser_plugin: A browser plugin
       charge_unit: The charge unit
       cloud_service_model: A cloud service model
+      communication_protection: A communication protection means
       compatible_browser: A compatible browser
       data_capability_operation: The data capability operation
       data_format: The data format
+      key_control: One possibility of key control
+      location: Location information
       payment_option: The payment option
       payment_term: The payment terms, i.e., in advance and after use.
       required_plugin: The required plugins
