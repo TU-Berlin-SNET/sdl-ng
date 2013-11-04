@@ -3,12 +3,13 @@ require_relative 'sdl/receivers'
 require_relative 'sdl/types'
 require_relative 'sdl/exporters'
 require_relative 'sdl/util'
+require_relative 'sdl/version'
 
 ##
 #
 #
 # Author::  Mathias Slawik (mailto:mathias.slawik@tu-berlin.de)
-# License:: MIT License
+# License:: Apache License 2.0
 module SDL
 
 end
