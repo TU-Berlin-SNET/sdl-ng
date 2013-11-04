@@ -3,6 +3,10 @@
 .bundle
 .config
 .yardoc
+.idea
+examples/rdf_output
+examples/xml_output
+examples/translations/en.out.yml
 Gemfile.lock
 InstalledFiles
 _yardoc
