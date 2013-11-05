@@ -17,7 +17,7 @@ compendium.register_classes_globally
 
 # Load Service Definitions
 Dir.glob(File.join(__dir__, '**', '*.service.rb')) do |filename|
-  compendium.service filename.match(%r[.+/(.+).service.rb])[1] do
+  service = compendium.service filename.match(%r[.+/(.+).service.rb])[1] do
     eval(File.read(filename), binding, filename)
   end
 end
