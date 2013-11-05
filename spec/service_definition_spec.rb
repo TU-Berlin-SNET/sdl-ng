@@ -70,4 +70,12 @@ describe 'The definition of services' do
       end
     end.to raise_exception
   end
+
+  it 'allows to access the first fact instance by its name' do
+    service = example_compendium.service(:my_service) do
+      my_value "ABC"
+    end
+
+    expect(service.my_value.my_value).to eq "ABC"
+  end
 end
