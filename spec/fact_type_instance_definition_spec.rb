@@ -27,7 +27,7 @@ shared_examples_for 'it can use identifiers for predefined types' do
   end
 end
 
-describe 'The definition of type instances' do
+describe 'Doing type instance definition' do
   include_context 'the default compendium'
 
   # Registers the classes of the default compendium
@@ -135,12 +135,22 @@ describe 'The definition of type instances' do
     expect(compendium.services[:multi_service].facts[1].multis[1].e).to eql '5'
   end
 
-  it 'gives out the Fact class local name when #to_s is called' do
-    compendium.service :blue_service do
-      has_color :blue
+  context 'the #to_s method of a service' do
+    it 'gives out the #to_s output of a same-named property than the class' do
+      compendium.service :named_color_service do
+        has_named_color 'My color name'
+      end
+
+      expect(compendium.services[:named_color_service].facts[0].to_s).to eq('My color name')
     end
 
-    expect(compendium.services[:blue_service].facts[0].to_s).to eq('Color')
+    it 'gives out the Fact class local name when no same-named property than the class exists' do
+      compendium.service :blue_service do
+        has_color :blue
+      end
+
+      expect(compendium.services[:blue_service].facts[0].to_s).to eq('Color')
+    end
   end
 
   it 'lets facts be annotated by arbitrary values' do

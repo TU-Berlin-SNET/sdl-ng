@@ -45,8 +45,14 @@ module SDL
       end
 
       def to_s
-        # TODO Description of the meaning of facts
-        self.class.to_s
+        # If there is a property with the same name, than the type, return its to_s, return the name of the class
+        naming_property = self.class.properties(true).find {|p| p.name.eql?(self.class.to_s.underscore) }
+
+        if(naming_property)
+          instance_variable_get "@#{naming_property.name.to_sym}"
+        else
+          self.class.to_s
+        end
       end
 
       def annotations
