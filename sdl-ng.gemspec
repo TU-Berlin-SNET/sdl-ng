@@ -24,8 +24,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'linkeddata', '1.0.9'
 
   spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'yard-redcarpet-ext'
   spec.add_development_dependency 'redcarpet'
-  spec.add_development_dependency 'github-markup'
   spec.add_development_dependency 'rspec', '2.14.1'
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
