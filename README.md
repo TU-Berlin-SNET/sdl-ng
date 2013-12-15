@@ -350,8 +350,24 @@ The following code example uses the helper function `fetch_from_url` which uses 
     has_feature 'Chatter', features[3]
     has_feature 'Email Integration', features[4]
 
+Interfacing with the framework
+==============================
+
+As the framework is to be used within other applications, there is no mening to "running" it.
+
+Nevertheless, there is a GEM binary, `process_service_descriptions` provided, which does the following:
+
+  * Load translations from the `translations` directory
+  * Load all vocabulary definitions from the `vocabulary` directory
+  * Use this vocabulary to process all service descriptions from a `services` directory
+  * Output XML/XSD, RDF and Markdown to the `output` directory
+
+This binary can be used within the `examples` subdirectory of this GEM.
+
 Examples
 ========
+
+To run all examples, execute the GEM binary `process_service_descriptions` within the `examples` subdirectory of this GEM.
 
 Google Drive for Business
 -------------------------
