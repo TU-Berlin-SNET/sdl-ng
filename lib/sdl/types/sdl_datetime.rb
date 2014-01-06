@@ -1,6 +1,6 @@
 module SDL
   module Types
-    class SDLDatetime < SDLDefaultType
+    class SDLDatetime < SDLSimpleType
       include SDLType
 
       wraps Time

@@ -22,6 +22,10 @@ shared_context 'the default compendium' do
         end
       end
 
+      fact :name do
+        string :name
+      end
+
       fact :multicolor do
         list_of_colors :colors
       end

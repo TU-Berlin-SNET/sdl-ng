@@ -8,7 +8,7 @@ module SDL
         attr_accessor :namespace
 
         ##
-        # The local name of the fact, e.g. "Name" or "ServiceInterface". Defaults to the name of the class.
+        # The local name of the type, e.g. "Name" or "ServiceInterface". Defaults to the name of the class.
         #
         # The ServiceCompendium#register_classes_globally method makes this class accessible by a constant of this name
         @local_name
@@ -33,6 +33,18 @@ module SDL
           end
         end
 
+        def propertyless?(including_super = false)
+          properties(including_super).count == 0
+        end
+
+        def single_property?(including_super = false)
+          properties(including_super).count == 1
+        end
+
+        def multi_property?(including_super = true)
+          properties(including_super).count > 1
+        end
+
         def is_sub?
           not [SDL::Base::Type, SDL::Base::Fact].include? superclass
         end
@@ -49,10 +61,14 @@ module SDL
         naming_property = self.class.properties(true).find {|p| p.name.eql?(self.class.to_s.underscore) }
 
         if(naming_property)
-          instance_variable_get "@#{naming_property.name.to_sym}"
+          instance_variable_get("@#{naming_property.name.to_sym}").to_s
         else
           self.class.to_s
         end
+      end
+
+      def annotated?
+        ! @annotations.blank?
       end
 
       def annotations

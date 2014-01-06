@@ -38,7 +38,13 @@ module SDL
 
       def documentation
         if self.respond_to?(:documentation_key)
-          I18n.t(documentation_key)
+          documentation = I18n.t(documentation_key)
+
+          if documentation =~ /#\{.*\}/
+            eval '"' + I18n.t(documentation_key) + '"', binding
+          else
+            documentation
+          end
         end
       end
 

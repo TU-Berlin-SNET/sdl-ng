@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('lib', __dir__)
 $:.unshift(lib) unless $:.include?(lib)
-require 'sdl/version'
+require 'sdl/ng/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "sdl-ng"
-  spec.version       = SDL::VERSION
+  spec.version       = SDL::NG::VERSION
   spec.authors       = ["Mathias Slawik"]
   spec.email         = ["mathias.slawik@tu-berlin.de"]
   spec.description   = %q{Next Generation Service Description Language}
   spec.summary       = %q{Framework for building descriptions of business services.}
-  spec.homepage      = ""
-  spec.license       = "Apache-2.0"
+  spec.homepage      = 'https://github.com/TU-Berlin-SNET/sdl-ng'
+  spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

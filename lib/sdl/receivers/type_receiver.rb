@@ -69,7 +69,16 @@ module SDL
         def add_property(sym, type, multi)
           unless multi
             @klass.class_eval do
-              attr_accessor sym
+              attr_reader sym
+
+              # Setter
+              define_method "#{sym}=" do |value|
+                if type < SDL::Types::SDLSimpleType
+                  instance_variable_set "@#{sym}".to_s, type.new(value)
+                else
+                  instance_variable_set "@#{sym}".to_s, value
+                end
+              end
             end
           else
             # Define accessor method for lists

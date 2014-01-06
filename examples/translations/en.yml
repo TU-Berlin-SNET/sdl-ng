@@ -2,11 +2,11 @@
 en:
   sdl:
     fact:
-      add_on_repository: The service has an add-on repository.
-      audit_option: The service has an audit option
-      bill: The service billing terms.
-      charge_unit: The unit of service charging, e.g. "per user".
-      cloud_service_model: The cloud service model
+      add_on_repository: Service add-on repo
+      audit_option: Audit option
+      bill: Billing terms
+      charge_unit: Charge unit
+      cloud_service_model: Cloud service model
       communication_protection: The communication with the service is protected
       continuous_service_improvement: The service has continuous service improvement
         means
@@ -21,7 +21,7 @@ en:
       data_location: The service offers to locate service data at runtime
       data_location_transparency: The provider makes the location of service data
         transparent
-      documentation: Some service documentation
+      documentation: The service has public documentation
       duration: Generic duration of something.
       duration_provision_end_user_duration: The duration for provisioning an end user.
       duration_set_up_consumption_duration: The duration for setting up the service.
@@ -35,7 +35,7 @@ en:
       maintenance: The service has maintenance information
       maintenance_maintenance_free: The service is maintenance free
       maintenance_maintenance_window: The service has a maintenance window
-      name: The service has a name.
+      name: ''
       offline_capability: Service functionality can be used offline
       payment_option: The service can be payed by a payment option, e.g. credit card.
       service_category: The service belongs to a category
@@ -45,6 +45,10 @@ en:
       service_tag: The service is tagged
       status_page: The service has a status page
     instance:
+      fact:
+        add_on_repository: "There are #{number_of_add_ons} add-ons available at #{url}"
+        documentation: "The documentation URL is #{url}"
+        name: "The service name is: #{name}"
       type:
         billing_term:
           annually: Annually billing
@@ -97,54 +101,54 @@ en:
     property:
       fact:
         add_on_repository:
-          number_of_add_ons: The number of available add-ons
-          url: The URL of the add-on repository
+          number_of_add_ons: Number of add-ons
+          url: Repository URL
         audit_option:
-          audit_option: The audit option
+          audit_option: Audit option
         bill:
-          billing_term: The billing terms
-          payment_term: The payment terms
+          billing_term: Billing terms
+          payment_term: Payment terms
         charge_unit:
-          charge_unit: The unit of charge
+          charge_unit: Charge unit
         cloud_service_model:
-          cloud_service_model: The cloud service model
+          cloud_service_model: Cloud service model
         communication_protection:
-          communication_protection: The protection means
+          communication_protection: Protection means
         continuous_service_improvement:
-          url: A link to the continuous service improvement
+          url: Link
         data_capability:
-          format: The data format
-          operation: The operation, which can be carried out on the data format
+          format: Format
+          operation: Operation
         data_encryption:
-          key_control: Who excercises control over the encryption keys
+          key_control: Controlling party
         data_location:
-          location: The location of data
+          location: Data location
         documentation:
-          url: The documentation URL
+          url: Documentation URL
         duration:
-          duration: The duration
+          duration: Duration
         establishing_year:
-          year: The year, the service was established
+          year: Established in
         feature:
-          description: The feature description
-          feature: The feature name
+          description: Description
+          feature: Name
         interface_browser_interface:
-          compatible_browsers: The compatible browsers
-          required_plugins: The required browser plugins
+          compatible_browsers: Compatible to
+          required_plugins: Required plugins
         maintenance_maintenance_window:
-          timespan: The timespan of the maintenance window
+          timespan: Maintenance Window
         name:
-          name: The service name
+          name: Service name
         payment_option:
-          payment_option: The payment option
+          payment_option: Payment option
         service_category:
-          service_category: The category of the service
+          service_category: Service category
         service_level_agreement_public_service_level_agreement:
-          url: The URL of the service level agreement
+          url: SLA URL
         service_tag:
-          service_tag: The service tag
+          service_tag: Tag
         status_page:
-          url: The URL of the service status page
+          url: Service status URL
       type:
         browser:
           browser_name: The name of the browser

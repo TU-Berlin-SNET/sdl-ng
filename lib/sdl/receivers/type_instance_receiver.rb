@@ -24,7 +24,11 @@ module SDL
                 value = compendium.type_instances[property.type][value] || raise("Could not find instance :#{value.to_s} in predefined #{property.type.name} types")
               end
 
-              instance.send "#{property.name}=", value
+              begin
+                instance.send "#{property.name}=", value
+              rescue RuntimeError => e
+                raise RuntimeError, "Cannot set property '#{property.name}' of Type #{@instance.class.name}: #{e}", e.backtrace
+              end
             end
           else
             # Multi-valued properties are added to by their singular name

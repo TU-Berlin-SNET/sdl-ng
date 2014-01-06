@@ -1,6 +1,8 @@
 ---
 en:
   sdl:
+    markdown:
+      header: "The following facts are known about the service:"
     xml:
       annotation: An arbitrary annotation to be displayed for the description consumer.
       documentation: The documentation of this type or fact instance.

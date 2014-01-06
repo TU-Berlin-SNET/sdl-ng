@@ -8,6 +8,10 @@ module SDL
 
         @facts, @facades = [], []
       end
+
+      def fact_class_facts_map
+        facts.group_by &:class
+      end
     end
   end
 end

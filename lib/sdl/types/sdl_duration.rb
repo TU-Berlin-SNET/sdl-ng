@@ -2,7 +2,7 @@ require 'active_support/duration'
 
 module SDL
   module Types
-    class SDLDuration < SDLDefaultType
+    class SDLDuration < SDLSimpleType
       include SDLType
 
       wraps ActiveSupport::Duration

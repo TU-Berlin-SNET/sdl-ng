@@ -1,6 +1,6 @@
 module SDL
   module Types
-    class SDLString < SDLDefaultType
+    class SDLString < SDLSimpleType
       include SDLType
 
       wraps String

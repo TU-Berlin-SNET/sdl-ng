@@ -5,7 +5,7 @@ require_relative 'sdl/receivers'
 require_relative 'sdl/types'
 require_relative 'sdl/exporters'
 require_relative 'sdl/util'
-require_relative 'sdl/version'
+require_relative 'sdl/ng/version'
 
 ##
 #

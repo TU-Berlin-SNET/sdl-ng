@@ -125,23 +125,23 @@ describe 'Doing type instance definition' do
       end
     end
 
-    expect(compendium.services[:multi_service].facts[0].a).to eql '1'
-    expect(compendium.services[:multi_service].facts[0].b).to eql '2'
-    expect(compendium.services[:multi_service].facts[0].c).to eq(nil)
-    expect(compendium.services[:multi_service].facts[0].d).to eql '3'
+    expect(compendium.services[:multi_service].facts[0].a).to eq '1'
+    expect(compendium.services[:multi_service].facts[0].b).to eq '2'
+    expect(compendium.services[:multi_service].facts[0].c).to eq nil
+    expect(compendium.services[:multi_service].facts[0].d).to eq '3'
     expect(compendium.services[:multi_service].facts[0].e).to eq(nil)
 
-    expect(compendium.services[:multi_service].facts[1].multis[0].b).to eql '2'
-    expect(compendium.services[:multi_service].facts[1].multis[1].e).to eql '5'
+    expect(compendium.services[:multi_service].facts[1].multis[0].b).to eq '2'
+    expect(compendium.services[:multi_service].facts[1].multis[1].e).to eq '5'
   end
 
-  context 'the #to_s method of a service' do
+  context 'the #to_s method of a fact' do
     it 'gives out the #to_s output of a same-named property than the class' do
-      compendium.service :named_color_service do
-        has_named_color 'My color name'
+      compendium.service :named_service do
+        has_name 'My name'
       end
 
-      expect(compendium.services[:named_color_service].facts[0].to_s).to eq('My color name')
+      expect(compendium.services[:named_service].facts[0].to_s).to eq 'My name'
     end
 
     it 'gives out the Fact class local name when no same-named property than the class exists' do
@@ -149,7 +149,7 @@ describe 'Doing type instance definition' do
         has_color :blue
       end
 
-      expect(compendium.services[:blue_service].facts[0].to_s).to eq('Color')
+      expect(compendium.services[:blue_service].facts[0].to_s).to eq 'Color'
     end
   end
 
@@ -171,8 +171,8 @@ describe 'Doing type instance definition' do
 
     expect(compendium.services[:favourite_service].facts[0].favourites[0].color).to eq(compendium.type_instances[Color][:red])
     expect(compendium.services[:favourite_service].facts[0].favourites[1].color).to eq(compendium.type_instances[Color][:green])
-    expect(compendium.services[:favourite_service].facts[0].favourites[0].rating).to eq(5)
-    expect(compendium.services[:favourite_service].facts[0].favourites[1].rating).to eq(10)
+    expect(compendium.services[:favourite_service].facts[0].favourites[0].rating).to eq 5
+    expect(compendium.services[:favourite_service].facts[0].favourites[1].rating).to eq 10
   end
 
   it 'returns the values of all properties by calling #property_values on a type' do
@@ -183,6 +183,6 @@ describe 'Doing type instance definition' do
     property_values = compendium.services[:imaginative_service].facts[0].property_values
 
     expect(property_values[property_values.keys[0]]).to eq(compendium.type_instances[Color][:yellow])
-    expect(property_values[property_values.keys[1]]).to eq('Yellow')
+    expect(property_values[property_values.keys[1]]).to eq 'Yellow'
   end
 end

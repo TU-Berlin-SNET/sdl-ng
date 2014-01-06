@@ -1,9 +1,9 @@
 module SDL
   module Types
-    class SDLNumber < SDLDefaultType
+    class SDLNumber < SDLSimpleType
       include SDLType
 
-      wraps Integer
+      wraps Numeric
       codes :number, :int, :integer
     end
   end
