@@ -1,10 +1,6 @@
-module SDL
-  module Types
-    class SDLString < SDLSimpleType
-      include SDLType
+class SDL::Types::SDLString < SDL::Types::SDLSimpleType
+  include SDL::Types::SDLType
 
-      wraps String
-      codes :string, :str
-    end
-  end
+  wraps String
+  codes :string, :str
 end

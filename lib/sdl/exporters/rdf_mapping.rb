@@ -1,5 +1,4 @@
 require 'rdf'
-require 'active_support/inflector'
 
 [String, Fixnum, Nokogiri::XML::Element].each do |klass|
   klass.class_eval do

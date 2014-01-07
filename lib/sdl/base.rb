@@ -1,9 +1,3 @@
-require_relative 'base/type'
-require_relative 'base/fact'
-require_relative 'base/property'
-require_relative 'base/service'
-require_relative 'base/service_compendium'
-
 module SDL
   ##
   # This module contains the base classes of the \SDL Framework.
@@ -16,5 +10,12 @@ module SDL
   #
   # The ServiceCompendium is used for easy definition of new facts, services, types and properties.
   module Base
+    extend ActiveSupport::Autoload
+
+    autoload :Fact
+    autoload :Property
+    autoload :Service
+    autoload :ServiceCompendium
+    autoload :Type
   end
 end

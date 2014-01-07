@@ -1,14 +1,10 @@
-module SDL
-  module Types
-    class SDLDescription < SDLSimpleType
-      include SDLType
+class SDL::Types::SDLDescription < SDL::Types::SDLSimpleType
+  include SDL::Types::SDLType
 
-      wraps String
-      codes :description
+  wraps String
+  codes :description
 
-      def from_nilclass(nilvalue)
-        @value = ""
-      end
-    end
+  def from_nilclass(nilvalue)
+    @value = ""
   end
 end

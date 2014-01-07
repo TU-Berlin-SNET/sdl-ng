@@ -1,11 +1,12 @@
-require_relative 'receivers/type_instance_receiver'
-require_relative 'receivers/type_receiver'
-require_relative 'receivers/fact_receiver'
-require_relative 'receivers/service_receiver'
-
-
 module SDL
   module Receivers
+    extend ActiveSupport::Autoload
+
+    autoload :FactReceiver
+    autoload :ServiceReceiver
+    autoload :TypeReceiver
+    autoload :TypeInstanceReceiver
+
     #
     def self.set_value(type_class, type_instance, *property_values, compendium)
       property_values.zip(type_class.properties(true)).each do |value, property|

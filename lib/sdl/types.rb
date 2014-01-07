@@ -1,12 +1,3 @@
-require_relative 'types/sdl_type'
-require_relative 'types/sdl_simple_type'
-require_relative 'types/sdl_string'
-require_relative 'types/sdl_description'
-require_relative 'types/sdl_number'
-require_relative 'types/sdl_duration'
-require_relative 'types/sdl_url'
-require_relative 'types/sdl_datetime'
-
 module SDL
   ##
   # This module contains the SDL type system.
@@ -15,5 +6,20 @@ module SDL
   # * When setting a property, its new value is checked for type compatibility to the wrapped Ruby class
   # * When exporting a service description, the wrapper is used to determine the serialization format
   module Types
+    extend ActiveSupport::Autoload
+
+    # Required, as these types register Receiver methods for their usage in property definitions.
+    eager_autoload do
+      autoload :SDLType
+      autoload :SDLSimpleType
+      autoload :SDLDatetime
+      autoload :SDLDescription
+      autoload :SDLDuration
+      autoload :SDLNumber
+      autoload :SDLString
+      autoload :SDLUrl
+    end
+
+    eager_load!
   end
 end

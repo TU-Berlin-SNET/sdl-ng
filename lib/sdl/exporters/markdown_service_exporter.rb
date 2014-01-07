@@ -1,5 +1,3 @@
-require 'active_support/i18n'
-
 class SDL::Exporters::MarkdownServiceExporter < SDL::Exporters::ServiceExporter
   def export_service(service)
     buf = StringIO.new

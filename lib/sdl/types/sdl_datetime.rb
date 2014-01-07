@@ -1,10 +1,6 @@
-module SDL
-  module Types
-    class SDLDatetime < SDLSimpleType
-      include SDLType
+class SDL::Types::SDLDatetime < SDL::Types::SDLSimpleType
+  include SDL::Types::SDLType
 
-      wraps Time
-      codes :datetime
-    end
-  end
+  wraps Time
+  codes :datetime
 end

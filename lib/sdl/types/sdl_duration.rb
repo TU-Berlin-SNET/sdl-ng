@@ -1,12 +1,8 @@
 require 'active_support/duration'
 
-module SDL
-  module Types
-    class SDLDuration < SDLSimpleType
-      include SDLType
+class SDL::Types::SDLDuration < SDL::Types::SDLSimpleType
+  include SDL::Types::SDLType
 
-      wraps ActiveSupport::Duration
-      codes :duration
-    end
-  end
+  wraps ActiveSupport::Duration
+  codes :duration
 end
