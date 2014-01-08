@@ -1,12 +1,12 @@
-class SDL::Receivers::TypeReceiver
+class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
   include ActiveSupport::Inflector
 
   attr :klass
   attr :subclasses
-  attr :compendium
 
   def initialize(sym, compendium, superklass = nil)
-    @compendium = compendium
+    super(compendium)
+
     @klass = Class.new(superklass || base_class)
     @klass.local_name = sym.to_s.camelize
 

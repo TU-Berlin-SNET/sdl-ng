@@ -5,19 +5,6 @@
 class SDL::Types::SDLSimpleType
   include SDL::Types::SDLType
 
-  ##
-  # Array of all SDLSimpleTypes. Used by the ServiceCompendium.
-  def self.sdl_types
-    @@sdl_types ||= []
-  end
-
-  ##
-  # Every descendant of SDLSimpleType registers it with this class, so that all ServiceCompendiums
-  # recognize the codes of descendants.
-  def self.inherited(subclass)
-    sdl_types << subclass
-  end
-
   # The SDL value type value, possibly converted to the wrapped ruby type, e.g., an URI object created from an
   # "http://" String
   attr_reader :value
@@ -59,6 +46,6 @@ class SDL::Types::SDLSimpleType
 
   private
     def conversion_method_name(value)
-      value.class.name.demodulize.camelize.downcase
+      'from_' + value.class.name.underscore.gsub('/', '_')
     end
 end

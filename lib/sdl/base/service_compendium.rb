@@ -111,7 +111,7 @@ class SDL::Base::ServiceCompendium
     ##
     # Registers all default types
     def register_default_types
-      SDL::Types::SDLSimpleType.sdl_types.each do |type|
+      SDL::Types::SDLSimpleType.descendants.each do |type|
         register_sdltype_codes type
       end
     end

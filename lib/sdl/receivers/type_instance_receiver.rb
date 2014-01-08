@@ -1,16 +1,15 @@
 ##
 # Receiver for setting the properties of Type instances
-class SDL::Receivers::TypeInstanceReceiver
+class SDL::Receivers::TypeInstanceReceiver < SDL::Receivers::Receiver
   attr_accessor :instance
-
-  attr_accessor :compendium
 
   ##
   # When initialized for a fact or type instance, the receiver creates singleton methods on itself for all
   # properties.
   def initialize(instance, compendium)
+    super(compendium)
+
     @instance = instance
-    @compendium = compendium
 
     instance.class.properties(true).each do |property|
       if property.single?
@@ -48,7 +47,7 @@ class SDL::Receivers::TypeInstanceReceiver
             else
               new_list_item = property.type.new
 
-              SDL::Receivers.set_value(property.type, new_list_item, *property_values, @compendium)
+              set_value(property.type, new_list_item, *property_values)
 
               self.class.new(new_list_item, @compendium).instance_exec(&block) unless block.nil?
 

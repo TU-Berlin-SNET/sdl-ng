@@ -5,8 +5,7 @@ require 'active_support/dependencies'
 require 'active_support/inflector'
 
 require 'i18n'
-
-ActiveSupport::Dependencies.autoload_paths += ['sdl']
+require 'verbs'
 
 ##
 #
@@ -18,11 +17,8 @@ module SDL
   autoload :Base
   autoload :Exporters
   autoload :Receivers
+  autoload :Types
 
-  eager_autoload do
-    autoload :Types
-  end
-
-  require_relative 'sdl/util'
-  require_relative 'sdl/ng/version'
+  ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'sdl', 'util.rb')
+  ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'sdl', 'ng', 'version.rb')
 end

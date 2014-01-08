@@ -9,17 +9,16 @@ module SDL
     extend ActiveSupport::Autoload
 
     # Required, as these types register Receiver methods for their usage in property definitions.
-    eager_autoload do
-      autoload :SDLType
-      autoload :SDLSimpleType
-      autoload :SDLDatetime
-      autoload :SDLDescription
-      autoload :SDLDuration
-      autoload :SDLNumber
-      autoload :SDLString
-      autoload :SDLUrl
+    autoload :SDLType
+    autoload :SDLSimpleType
+
+    %w[datetime description duration number string url].each do |typefile|
+      ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'types', "sdl_#{typefile}.rb")
     end
 
-    eager_load!
+    autoload :SDLDescription
+    autoload :SDLDuration
+    autoload :SDLNumber
+    autoload :SDLUrl
   end
 end

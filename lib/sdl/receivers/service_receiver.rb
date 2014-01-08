@@ -1,14 +1,14 @@
 require 'verbs'
 
-class SDL::Receivers::ServiceReceiver
+class SDL::Receivers::ServiceReceiver < SDL::Receivers::Receiver
   include ActiveSupport::Inflector
 
   attr :service
-  attr :compendium
 
   def initialize(sym, compendium)
+    super(compendium)
+
     @service = SDL::Base::Service.new(sym.to_s)
-    @compendium = compendium
 
     compendium.fact_classes.each do |fact_class|
       define_singleton_method("is_#{fact_class.local_name.underscore.verb.conjugate(:tense => :past, :person => :third, :plurality => :singular, :aspect => :perfective)}") do |*args, &block|
@@ -30,7 +30,7 @@ class SDL::Receivers::ServiceReceiver
       fact_instance = fact_class.new
       fact_instance.service = @service
 
-      SDL::Receivers.set_value(fact_class, fact_instance, *property_values, @compendium)
+      set_value(fact_class, fact_instance, *property_values)
 
       if block_given?
         SDL::Receivers::TypeInstanceReceiver.new(fact_instance, @compendium).instance_eval &block

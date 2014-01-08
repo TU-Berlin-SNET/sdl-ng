@@ -42,7 +42,7 @@ has_payment_option credit_card
 has_payment_option cheque
 has_payment_option invoice
 
-features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview/', '.slide h3 + p'
+features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview/', '.slide h3 + *'
 
 has_feature 'Mobile', features[0]
 has_feature 'Contact Management', features[1]

@@ -23,9 +23,13 @@ class SDL::Base::Type
 
     def properties(including_super = false)
       if including_super && is_sub?
-        self.properties + superclass.properties(true)
+        retrieved_properties = self.properties + superclass.properties(true)
       else
-        @properties ||= []
+        retrieved_properties = @properties ||= []
+      end
+
+      retrieved_properties.each do |p|
+        p.holder = self
       end
     end
 

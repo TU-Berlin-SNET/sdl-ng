@@ -1,14 +1,14 @@
 require 'active_support/inflector'
 
+I18n.config.enforce_available_locales = true
+
 module I18n
   class MissingTranslation
     module Base
-      alias :old_message :message
+      alias :old_message :message unless method_defined?(:old_message)
 
       def message
         puts old_message
-
-        puts @key
 
         I18n.backend.store_translations I18n.locale, to_deep_hash({@key => 'Translate'})
 
@@ -59,28 +59,41 @@ module SDL
 
         klass_key
       end
-
-      [SDL::Base::Type, SDL::Base::Fact, SDL::Base::Property].each do |m| m.class_eval do include SDL::Util::Documentation end end
     end
+  end
+
+  module Base
+    [Type, Fact, Property].each do |m| m.class_eval do include SDL::Util::Documentation end end
   end
 end
 
-module SDL
-  module Base
-    class Type
-      def self.documentation_key
-        "sdl.#{SDL::Util::Documentation.walk_the_class_name(self)}"
-      end
-
-      def documentation_key
-        "sdl.instance.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{@identifier}"
-      end
+module SDL::Base
+  class Type
+    def self.documentation_key
+      "sdl.#{SDL::Util::Documentation.walk_the_class_name(self)}"
     end
 
-    class Property
-      def documentation_key
-        "sdl.property.#{SDL::Util::Documentation.walk_the_class_name(@parent)}.#{@name}"
+    def documentation_key
+      "sdl.instance.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{@identifier}"
+    end
+  end
+
+  class Property
+    ##
+    # As properties are inherited, the documentation could either be defined by the current type, or any subtypes, which
+    # also define or inherit this key. This method finds the first defined key.
+    def documentation_key
+      # Search class and ancestors, if any defines a documentation key
+      @holder.ancestors.each do |ancestor|
+        break if ancestor.eql? SDL::Base::Type
+
+        key = "sdl.property.#{SDL::Util::Documentation.walk_the_class_name(ancestor)}.#{@name}"
+
+        return key if I18n.exists? key
       end
+
+      # Return default key
+      return "sdl.property.#{SDL::Util::Documentation.walk_the_class_name(@parent)}.#{@name}"
     end
   end
 end

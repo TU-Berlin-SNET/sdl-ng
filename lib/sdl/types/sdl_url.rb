@@ -8,7 +8,7 @@ class SDL::Types::SDLUrl < SDL::Types::SDLSimpleType
 
   def from_string(string_value)
     begin
-      URI.parse string_value
+      @value = URI.parse string_value
     rescue URI::InvalidURIError
       throw "Invalid URI: #{string_value}"
     end

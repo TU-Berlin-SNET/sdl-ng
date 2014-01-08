@@ -10,8 +10,11 @@ class SDL::Base::Property
   # Is this Property multi-valued
   attr :multi
 
-  # The parent type, where this property belongs to
+  # The type, for which the property is defined
   attr :parent
+
+  # The type, which currently holds this property
+  attr_accessor :holder
 
   # Is this Property single-valued
   def single?

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sdl-ng (0.0.3)
+    sdl-ng (0.0.5)
       activesupport (>= 4.0.0)
       linkeddata (= 1.0.9)
       nokogiri (= 1.6.0)

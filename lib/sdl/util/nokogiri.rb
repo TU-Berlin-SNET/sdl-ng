@@ -17,12 +17,6 @@ module SDL
   end
 end
 
-module SDL
-  module Receivers
-    [FactReceiver, ServiceReceiver, TypeInstanceReceiver, TypeReceiver].each do |r|
-      r.class_eval do
-        include(SDL::Util::NokogiriUtils)
-      end
-    end
-  end
+SDL::Receivers::Receiver.class_eval do
+  include(SDL::Util::NokogiriUtils)
 end
