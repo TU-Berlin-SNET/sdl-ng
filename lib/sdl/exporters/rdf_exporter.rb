@@ -1,7 +1,7 @@
 require 'rdf'
 require 'rdf/rdfxml'
 
-class SDL::Exporters::RDFExporter < ServiceExporter
+class SDL::Exporters::RDFExporter < SDL::Exporters::ServiceExporter
   @@s = RDF::Vocabulary.new('http://www.open-service-compendium.org/')
 
   def export_service(service)
@@ -26,5 +26,11 @@ class SDL::Exporters::RDFExporter < ServiceExporter
         [value].flatten.each do |v| expand_properties(v, graph) end
       end
     end
+  end
+end
+
+class SDL::Base::Service
+  def to_rdf
+    SDL::Exporters::RDFExporter.new(@compendium).export_service(self)
   end
 end

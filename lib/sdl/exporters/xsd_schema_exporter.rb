@@ -9,7 +9,7 @@ require 'nokogiri'
 #     service fact types.
 #   - The definition of service fact classes and SDL types
 #   - The definition of a type base, containing annotations and documentation
-class SDL::Exporters::XSDSchemaExporter < SchemaExporter
+class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
   def export_schema
     export_schema_xml.to_xml
   end

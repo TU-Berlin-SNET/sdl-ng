@@ -5,9 +5,10 @@ module SDL::Exporters
   autoload :SchemaExporter
   autoload :ServiceExporter
   autoload :RDFExporter
-  autoload :RDFMapping
   autoload :MarkdownServiceExporter
-  autoload :XMLMapping
   autoload :XMLServiceExporter
   autoload :XSDSchemaExporter
+
+  ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'exporters', 'xml_mapping.rb')
+  ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'exporters', 'rdf_mapping.rb')
 end

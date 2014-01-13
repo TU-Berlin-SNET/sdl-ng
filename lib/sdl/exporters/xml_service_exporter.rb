@@ -1,16 +1,20 @@
-class SDL::Exporters::XMLServiceExporter < ServiceExporter
+class SDL::Exporters::XMLServiceExporter < SDL::Exporters::ServiceExporter
   def export_service(service)
     builder = Nokogiri::XML::Builder.new do |xml|
-      xml.service('xmlns' => 'http://www.open-service-compendium.org') do
-        service.facts.each do |fact|
-          xml.send(fact.class.xsd_element_name + '_') do
-            serialize_type_instance fact, xml
-          end
-        end
-      end
+      build_service(service, xml)
     end
 
     builder.to_xml
+  end
+
+  def build_service(service, xml)
+    xml.service('xmlns' => 'http://www.open-service-compendium.org') do
+      service.facts.each do |fact|
+        xml.send(fact.class.xsd_element_name + '_') do
+          serialize_type_instance fact, xml
+        end
+      end
+    end
   end
 
   def serialize_type_instance(type_instance, xml)
@@ -29,5 +33,11 @@ class SDL::Exporters::XMLServiceExporter < ServiceExporter
         end
       end
     end
+  end
+end
+
+class SDL::Base::Service
+  def to_xml
+    SDL::Exporters::XMLServiceExporter.new(@compendium).export_service(self)
   end
 end

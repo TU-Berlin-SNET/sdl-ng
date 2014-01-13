@@ -1,10 +1,8 @@
 require 'rdf'
 
-[String, Fixnum, Nokogiri::XML::Element].each do |klass|
-  klass.class_eval do
-    def rdf_object
-      RDF::Literal.new(self)
-    end
+SDL::Types::SDLSimpleType.class_eval do
+  def rdf_object
+    RDF::Literal.new(self)
   end
 end
 
