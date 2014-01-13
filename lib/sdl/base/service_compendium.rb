@@ -65,6 +65,7 @@ class SDL::Base::ServiceCompendium
     receiver.instance_eval &service_definition if block_given?
     @services[sym] = receiver.service
     receiver.service.symbolic_name = sym.to_s
+    receiver.service.compendium = self
     receiver.service.extend ServiceMethods
     receiver.service
   end

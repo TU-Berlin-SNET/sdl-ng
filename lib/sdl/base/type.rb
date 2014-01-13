@@ -1,7 +1,10 @@
 class SDL::Base::Type
   class << self
-    ## The namespace URL of this Fact class
+    # The namespace URL of this Type class
     attr_accessor :namespace
+
+    # If the Type is a list item type
+    attr_accessor :list_item
 
     ##
     # The local name of the type, e.g. "Name" or "ServiceInterface". Defaults to the name of the class.
@@ -33,16 +36,24 @@ class SDL::Base::Type
       end
     end
 
-    def propertyless?(including_super = false)
+    def propertyless?(including_super = true)
       properties(including_super).count == 0
     end
 
-    def single_property?(including_super = false)
+    def single_property?(including_super = true)
       properties(including_super).count == 1
+    end
+
+    def single_property(including_super = true)
+      properties(including_super).first
     end
 
     def multi_property?(including_super = true)
       properties(including_super).count > 1
+    end
+
+    def list_item?
+      @list_item == true
     end
 
     def is_sub?
@@ -52,8 +63,14 @@ class SDL::Base::Type
 
   ##
   # Gets the values of all properties
-  def property_values
-    Hash[self.class.properties(true).map{|p| [p, send(p.name)]}]
+  def property_values(include_empty = true)
+    pv = Hash[self.class.properties(true).map{|p| [p, send(p.name)]}]
+
+    unless include_empty
+      pv.reject! {|p, v| v.blank? }
+    end
+
+    pv
   end
 
   def to_s

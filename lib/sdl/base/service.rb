@@ -1,5 +1,5 @@
 class SDL::Base::Service
-  attr_accessor :facts, :symbolic_name
+  attr_accessor :facts, :symbolic_name, :compendium
 
   def initialize(symbolic_name)
     @symbolic_name = symbolic_name

@@ -40,6 +40,9 @@ class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
   def list(name, &block)
     list_type = @compendium.type name.to_s.singularize.to_sym, &block
 
+    # Designate as list type
+    list_type.list_item = true
+
     add_property name.to_sym, list_type, true
   end
 
