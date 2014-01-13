@@ -7,7 +7,7 @@ class SDL::Types::SDLDescription < SDL::Types::SDLSimpleType
   codes :description
 
   def from_nil_class(nilvalue)
-    @value = ""
+    @value = ''
   end
 
   def from_nokogiri_xml_element(element)
@@ -15,9 +15,13 @@ class SDL::Types::SDLDescription < SDL::Types::SDLSimpleType
   end
 
   def to_html
-    case @raw_value.class
+    case @raw_value
       when Nokogiri::XML::Element
         @raw_value.to_s
+      when NilClass
+        ''
+      else
+        "Cannot convert #{@raw_value.class} to HTML. Please extend SDLDescription#to_html"
     end
   end
 end
