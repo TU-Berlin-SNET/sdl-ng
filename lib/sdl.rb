@@ -18,8 +18,7 @@ module SDL
   autoload :Exporters
   autoload :Receivers
   autoload :Types
-  autoload :NG
+  autoload :NG, File.join(__dir__, 'sdl', 'ng', 'version.rb')
 
   ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'sdl', 'util.rb')
-  ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'sdl', 'ng', 'version.rb')
 end
