@@ -1,14 +1,14 @@
 name "Salesforce Sales Cloud"
 
-has_documentation url: 'http://www.salesforce.com/sales-cloud/overview/'
+has_documentation url: 'http://www.salesforce.com/sales-cloud/overview'
 
-has_add_on_repository 'https://appexchange.salesforce.com/' do
+has_add_on_repository 'https://appexchange.salesforce.com' do
   number_of_add_ons 2000
 end
 
 has_communication_protection https
 
-has_status_page 'http://trust.salesforce.com/trust/status/'
+has_status_page 'http://trust.salesforce.com/trust/status'
 
 has_public_service_level_agreement 'http://www.salesforce.com/assets/pdf/misc/salesforce_MSA.pdf'
 
@@ -19,7 +19,7 @@ has_offline_capability annotation: 'http://help.salesforce.com/apex/HTViewHelpDo
 maintenance_free
 
 has_future_roadmap 'http://www.sfdcstatic.com/assets/pdf/misc/summer13_ReleasePreview.pdf'
-has_past_release_notes 'http://www.salesforce.com/newfeatures/'
+has_past_release_notes 'http://www.salesforce.com/newfeatures'
 
 has_cloud_service_model saas
 
@@ -34,7 +34,7 @@ has_browser_interface do
   compatible_browser safari, '5', annotation: 'on Mac'
 end
 
-has_data_capability export, csv
+has_export_capability csv
 
 is_billed annually, in_advance
 
@@ -42,7 +42,7 @@ has_payment_option credit_card
 has_payment_option cheque
 has_payment_option invoice
 
-features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview/', '.slide h3 + *'
+features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview', '.slide h3 + *'
 
 has_feature 'Mobile', features[0]
 has_feature 'Contact Management', features[1]

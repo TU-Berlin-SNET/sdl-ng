@@ -4,13 +4,13 @@ en:
     fact:
       add_on_repository: Service add-on repo
       audit_option: Audit option
-      bill: Billing terms
+      bill: Billing & Payment
       charge_unit: Charge unit
       cloud_service_model: Cloud service model
       communication_protection: The communication with the service is protected
       continuous_service_improvement: The service has continuous service improvement
         means
-      data_capability: The service can carry out operations on a specific data format
+      data_capability: Supports operation
       data_deletion_policy: The service allows for complete deletion of user data
         after termination of contract
       data_encryption: The service applies encrpytion on user data
@@ -24,7 +24,7 @@ en:
       establishing_year: The establishing year of the service is known
       feature: A service feature
       interface: An interface to service functionality
-      interface_browser_interface: A regular browser-based interface
+      interface_browser_interface: Browser interface
       interface_rest_interface: The service has a RESTful interface
       interface_soap_interface: The service has a SOAP interface
       interface_xmlrpc_interface: The service has an XMLRPC interface
@@ -102,14 +102,14 @@ en:
         audit_option:
           audit_option: Audit option
         bill:
-          billing_term: Billing terms
-          payment_term: Payment terms
+          billing_term: Billing
+          payment_term: Payment
         charge_unit:
           charge_unit: Charge unit
         cloud_service_model:
           cloud_service_model: Cloud service model
         communication_protection:
-          communication_protection: Protection means
+          communication_protection: Protected by
         continuous_service_improvement:
           url: Link
         continuous_service_improvement_feedback_page:
@@ -118,9 +118,10 @@ en:
           url: Future roadmap
         continuous_service_improvement_past_release_notes:
           url: Past release notes
-        data_capability:
-          format: Format
-          operation: Operation
+        data_capability_export_capability:
+          format: Can export
+        data_capability_export_capability:
+          format: Can import
         data_encryption:
           key_control: Controlling party
         data_location:
@@ -154,13 +155,13 @@ en:
       type:
         browser:
           browser_name: The name of the browser
-          url: The browser homepage URL
+          url: Homepage
         browser_plugin:
           plugin_name: The name of the browser plugin
           url: The browser plugin URL
         compatible_browser:
-          compatible_browser: The compatible browser
-          min_version: The minimum version of the browser
+          compatible_browser: Browser
+          min_version: Min version
         data_format:
           mime_type: The mime type of the data format
         required_plugin:
@@ -177,7 +178,6 @@ en:
       charge_unit: The charge unit
       cloud_service_model: A cloud service model
       communication_protection: A communication protection means
-      compatible_browser: A compatible browser
       data_capability_operation: The data capability operation
       data_format: The data format
       key_control: One possibility of key control

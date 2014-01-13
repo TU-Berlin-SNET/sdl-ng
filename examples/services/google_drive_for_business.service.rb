@@ -40,11 +40,14 @@ end
   "For drawings" => [:png, :jpeg, :svg, :pdf]
 }.each do |annotation, formats_list|
   formats_list.each do |f|
-    has_data_capability export, f, annotation: annotation
+    has_export_capability f, annotation: annotation
   end
 end
 
-headers = fetch_from_url 'http://www.google.com/enterprise/apps/business/products.html', 'div.apps-content-set:nth-child(3) div.maia-col-4 h3'
-headers.each do |header|
+# Fetch a list of features from the Google Apps page
+fetch_from_url('http://www.google.com/enterprise/apps/business/products.html', 'div.apps-content-set:nth-child(3) div.product-section-features h3').each do |header|
+  # Skip empty features (e.g. "more information...")
+  next if header.search('~p')[0].blank?
+
   has_feature header.content.strip, header.search('~p')[0]
 end
