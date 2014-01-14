@@ -1,5 +1,9 @@
 class SDL::Base::Type
+  include SDL::Base::URIMappedResource
+
   class << self
+    include SDL::Base::URIMappedResource
+
     # The namespace URL of this Type class
     attr_accessor :namespace
 

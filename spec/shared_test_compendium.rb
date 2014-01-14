@@ -64,6 +64,14 @@ shared_context 'the default compendium' do
       end
     end
 
+    compendium.service :blue_service do
+      has_color :blue
+    end
+
+    compendium.service :red_service do
+      has_color :red
+    end
+
     compendium
   end
 end

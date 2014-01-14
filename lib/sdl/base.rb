@@ -17,5 +17,7 @@ module SDL
     autoload :Service
     autoload :ServiceCompendium
     autoload :Type
+    autoload :URIMappedResource
+    autoload :DefaultURIMapper
   end
 end

@@ -1,4 +1,6 @@
 class SDL::Base::Service
+  include SDL::Base::URIMappedResource
+
   attr_accessor :facts, :symbolic_name, :compendium
 
   def initialize(symbolic_name)
