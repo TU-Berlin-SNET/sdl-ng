@@ -19,17 +19,17 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'activesupport', '>=4.0.0'
-  spec.add_runtime_dependency 'nokogiri', '1.6.0'
-  spec.add_runtime_dependency 'verbs', '~> 2.1.3'
-  spec.add_runtime_dependency 'linkeddata', '1.0.9'
+  spec.add_runtime_dependency 'activesupport', '~> 4.0'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
+  spec.add_runtime_dependency 'verbs', '~> 2.1'
+  spec.add_runtime_dependency 'linkeddata', '~> 1.1'
 
-  spec.add_development_dependency 'yard'
-  spec.add_development_dependency 'yard-redcarpet-ext'
-  spec.add_development_dependency 'redcarpet'
-  spec.add_development_dependency 'rspec', '2.14.1'
-  spec.add_development_dependency 'bundler', '~> 1.3'
+  spec.add_development_dependency 'yard', '~> 0.8.7.3'
+  spec.add_development_dependency 'yard-redcarpet-ext', '~> 0.0.3'
+  spec.add_development_dependency 'redcarpet', '~> 3.0'
+  spec.add_development_dependency 'rspec', '~> 2.14'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'fuubar'
-  spec.add_development_dependency 'simplecov', '~> 0.8.0.pre'
+  spec.add_development_dependency 'fuubar', '~> 1.3'
+  spec.add_development_dependency 'simplecov', '~> 0.8.2'
 end
