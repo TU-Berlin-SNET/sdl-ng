@@ -20,8 +20,10 @@ class SDL::Types::SDLDescription < SDL::Types::SDLSimpleType
         @raw_value.to_s
       when NilClass
         ''
+      when String
+        @value
       else
-        "Cannot convert #{@raw_value.class} to HTML. Please extend SDLDescription#to_html"
+        raise "Cannot convert #{@raw_value.class} to HTML. Please extend SDLDescription#to_html"
     end
   end
 end

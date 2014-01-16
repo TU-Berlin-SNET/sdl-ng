@@ -67,6 +67,8 @@ class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
   private
     ##
     # Adds accessors to set the property to the target class.
+    #
+    # These accessors set the instance variable to the given value and set the parent of the value to self.
     def add_property(sym, type, multi)
       unless multi
         @klass.class_eval do
@@ -78,6 +80,8 @@ class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
               instance_variable_set "@#{sym}".to_s, type.new(value)
             else
               instance_variable_set "@#{sym}".to_s, value
+
+              value.parent = self
             end
           end
         end

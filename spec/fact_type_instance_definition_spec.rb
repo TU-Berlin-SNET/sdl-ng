@@ -1,4 +1,3 @@
-require_relative '../lib/sdl'
 require_relative 'spec_helper'
 require_relative 'shared_test_compendium'
 
@@ -93,6 +92,16 @@ describe 'Doing type instance definition' do
     end.to raise_exception
   end
 
+  it 'raises an error, if a value with an invalid type is given for multi valued properties' do
+    expect {
+      service = compendium.service(:invalid_service) do
+        has_multicolor do
+          color "Blue"
+        end
+      end
+    }.to raise_exception
+  end
+
   it 'can be done through multiple arguments and associative hashes' do
     compendium.facts_definition do
       type :multi do
@@ -158,6 +167,7 @@ describe 'Doing type instance definition' do
       has_color :yellow, annotation: "Yuck!"
     end
 
+    expect(compendium.services[:yellow_service].facts[0].annotated?).to eq true
     expect(compendium.services[:yellow_service].facts[0].annotations).to include("Yuck!")
   end
 
@@ -169,6 +179,8 @@ describe 'Doing type instance definition' do
       end
     end
 
+    expect(compendium.services[:favourite_service].facts[0].favourites[0].class.list_item?).to eq true
+
     expect(compendium.services[:favourite_service].facts[0].favourites[0].color).to eq(compendium.type_instances[Color][:red])
     expect(compendium.services[:favourite_service].facts[0].favourites[1].color).to eq(compendium.type_instances[Color][:green])
     expect(compendium.services[:favourite_service].facts[0].favourites[0].rating).to eq 5
@@ -176,13 +188,151 @@ describe 'Doing type instance definition' do
   end
 
   it 'returns the values of all properties by calling #property_values on a type' do
-    compendium.service :imaginative_service do
+    service = compendium.service :imaginative_service do
       has_color :yellow, 'Yellow'
     end
 
-    property_values = compendium.services[:imaginative_service].facts[0].property_values
+    property_values = service.facts[0].property_values
 
     expect(property_values[property_values.keys[0]]).to eq(compendium.type_instances[Color][:yellow])
     expect(property_values[property_values.keys[1]]).to eq 'Yellow'
+  end
+
+  it 'can reject empty property values if specifying include_empty' do
+    property_values = compendium.service :empty_service do
+      has_color
+    end.color.property_values(false)
+
+    expect(property_values).to be_empty
+  end
+
+  it 'returns its service for the parent of facts' do
+    red_service = compendium.services[:red_service]
+
+    expect(red_service.facts[0].parent).to eq red_service
+  end
+
+  it 'returns a parent type or fact for the parent of types' do
+    compendium.facts_definition do
+      type :third_level_type
+
+      type :second_level_type do
+        third_level_type
+      end
+
+      type :first_level_type do
+        second_level_type
+      end
+
+      fact :fact_with_children do
+        first_level_type
+      end
+
+      third_level_type :third
+
+      second_level_type :second do
+        third_level_type :third
+      end
+
+      first_level_type :first do
+        second_level_type :second
+      end
+    end
+
+    service = compendium.service :service_with_children do
+      has_fact_with_children do
+        first_level_type :first
+      end
+    end
+
+    first_level = service.facts[0].first_level_type
+    second_level = first_level.second_level_type
+    third_level = second_level.third_level_type
+
+    expect(third_level.parent).to eq second_level
+    expect(second_level.parent).to eq first_level
+  end
+
+  it 'returns nil for #parent_index, if the type is used as value of a single-valued property' do
+    new_color = Color.new
+
+    compendium.service :service_single_value do
+      has_color do
+        color new_color
+      end
+    end
+
+    expect(new_color.parent_index).to eq nil
+  end
+
+  it 'returns the index of a value in a multi-valued property when giving a compatible value for the list' do
+    first_color = Color.new
+    second_color = Color.new
+
+    compendium.service :service_multi_value do
+      has_multicolor do
+        color first_color
+        color second_color
+      end
+    end
+
+    expect(first_color.parent_index).to eq 0
+    expect(second_color.parent_index).to eq 1
+  end
+
+  it 'returns the index of a value in a multi-valued property when specifying a list value' do
+    service = compendium.service :service_multi_value do
+      has_multicolor do
+        color do
+          hex_value '#123'
+        end
+
+        color do
+          hex_value '#456'
+        end
+      end
+    end
+
+    expect(service.multicolor.colors[0].parent_index).to eq 0
+    expect(service.multicolor.colors[1].parent_index).to eq 1
+  end
+
+  it 'does not set #parent_index if given a predefined type' do
+    service = compendium.service :service_multi_value_predefined_type do
+      color red
+    end
+
+    expect(compendium.type_instances[Color][:red].parent_index).to eq nil
+  end
+
+  it 'returns the index of a fact instance in relation to its fact class' do
+    service = compendium.service :service_multiple_facts do
+      has_color :red
+      has_color :green
+      has_color :blue
+
+      has_multicolor
+    end
+
+    expect(service.colors[0].parent_index).to eq 0
+    expect(service.colors[1].parent_index).to eq 1
+    expect(service.colors[2].parent_index).to eq 2
+    expect(service.multicolors[0].parent_index).to eq 0
+  end
+
+  it 'marks fact types with multiple properties as multi_property?' do
+    compendium.fact_classes.each do |fact_class|
+      if fact_class.properties.count > 1
+        expect(fact_class.multi_property?).to eq true
+      end
+    end
+  end
+
+  it 'raises an error, if it gets the wrong type of property value' do
+    expect {
+      service = compendium.service :simple_service do
+        name Object.new
+      end
+    }.to raise_exception
   end
 end

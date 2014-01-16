@@ -7,5 +7,7 @@ en:
       annotation: An arbitrary annotation to be displayed for the description consumer.
       documentation: The documentation of this type or fact instance.
       identifier: An identifier for a type instance. Two instances are the same, if they share the same identifier.
-      service_root: The root element of the service. Contains an arbitrary number of facts.
+      services_root: A list of services.
+      service_root: The root element of a service.
+      service_class: A service. It contains an arbitrary number of facts.
       typebase: The base type of all SDL types and facts. Contains annotations and documentation.

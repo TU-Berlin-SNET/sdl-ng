@@ -1,4 +1,3 @@
-require_relative '../lib/sdl'
 require_relative 'spec_helper'
 
 require 'rspec'
@@ -18,6 +17,7 @@ describe 'The service compendium' do
     subject.fact :has_example_fact
 
     expect(subject.fact_classes.first).to be < SDL::Base::Fact
+    expect(subject.fact_classes.first.propertyless?).to eq true
   end
 
   it 'allows the definition of fact subclasses' do

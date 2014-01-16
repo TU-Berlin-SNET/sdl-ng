@@ -17,10 +17,23 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
   def export_schema_xml
     Nokogiri::XML::Builder.new do |xml|
       xml['ns'].schema('xmlns' => 'http://www.open-service-compendium.org', 'targetNamespace' => 'http://www.open-service-compendium.org', 'xmlns:ns' => 'http://www.w3.org/2001/XMLSchema', 'elementFormDefault' => 'qualified') do
-        xml['ns'].element :name => 'service' do
-          document(xml, I18n.t('sdl.xml.service_root'))
+        xml['ns'].element :name => 'services' do
+          document(xml, I18n.t('sdl.xml.services_root'))
           xml['ns'].complexType do
-            xml['ns'].choice :maxOccurs => 'unbounded' do
+            xml['ns'].sequence do
+              xml['ns'].element :name=> 'service', :type => 'Service', :minOccurs => 0, :maxOccurs => :unbounded
+            end
+          end
+        end
+
+        xml['ns'].element :name => 'service', :type => 'Service' do
+          document(xml, I18n.t('sdl.xml.service_root'))
+        end
+
+        xml['ns'].complexType :name => 'Service' do
+          document(xml, I18n.t('sdl.xml.service_class'))
+          xml['ns'].sequence do
+            xml['ns'].choice :maxOccurs => :unbounded do
               @compendium.fact_classes.each do |fact_class|
                 xml['ns'].element :name => fact_class.xsd_element_name, :type => fact_class.xsd_type_name do
                   document(xml, fact_class.documentation)

@@ -1,4 +1,3 @@
-require_relative '../lib/sdl'
 require_relative 'spec_helper'
 
 require 'rspec'
@@ -12,6 +11,9 @@ describe 'The definition of properties' do
     subject.string :my_string_property
 
     defined_property = subject.klass.properties.first
+
+    expect(subject.klass.single_property?).to eq true
+    expect(subject.klass.single_property).to eq defined_property
 
     expect(defined_property.name).to eq "my_string_property"
     expect(defined_property.type).to be SDL::Types::SDLString

@@ -19,10 +19,6 @@ module SDL
         def xsd_type_name
           local_name
         end
-
-        def xsd_type_qname
-          'sdl:' + xsd_type_name
-        end
       end
     end
 

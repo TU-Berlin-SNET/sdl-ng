@@ -98,4 +98,10 @@ class SDL::Base::Type
 
   # An identifier for type instances
   attr_accessor :identifier
+
+  # The index of this type instance in the parent list
+  attr_accessor :parent_index
+
+  # The parent of this type.
+  attr_accessor :parent
 end

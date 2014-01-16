@@ -37,6 +37,8 @@ class SDL::Receivers::ServiceReceiver < SDL::Receivers::Receiver
       end
 
       @service.facts << fact_instance
+
+      fact_instance.parent_index = @service.fact_class_facts_map[fact_class].count - 1
     end
 
     ##

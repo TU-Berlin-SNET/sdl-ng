@@ -1,4 +1,3 @@
-require_relative '../lib/sdl'
 require_relative 'spec_helper'
 require_relative 'shared_test_compendium'
 

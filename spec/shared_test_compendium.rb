@@ -72,6 +72,34 @@ shared_context 'the default compendium' do
       has_color :red
     end
 
+    compendium.service :complex_service do
+      name 'Complex Service'
+
+      has_multicolor do
+        color :red
+        color :green
+        color :blue
+        color :yellow
+        color :text
+      end
+
+      has_favourite_colors do
+        favourite do
+          color :blue
+          rating 5
+
+          annotation 'Mathias'
+        end
+
+        favourite do
+          color :green
+          rating 10
+
+          annotation 'Sabrina'
+        end
+      end
+    end
+
     compendium
   end
 end

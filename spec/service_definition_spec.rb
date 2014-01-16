@@ -1,4 +1,3 @@
-require_relative '../lib/sdl'
 require_relative 'spec_helper'
 
 require 'rspec'
@@ -77,5 +76,29 @@ describe 'The definition of services' do
     end
 
     expect(service.my_value.my_value).to eq "ABC"
+  end
+
+  it 'allows to access all fact instances by their plural name' do
+    service = example_compendium.service(:different_service) do
+      my_value 'GHI'
+      my_value 'JKL'
+      my_value 'MNO'
+    end
+
+    expect(service.my_values.join).to eq 'GHIJKLMNO'
+  end
+
+  it 'lets facts be grouped by their fact class' do
+    service = example_compendium.service(:another_service) do
+      my_value 'ABC'
+      my_value 'DEF'
+    end
+
+    fact_class_facts_map = service.fact_class_facts_map
+
+    expect(fact_class_facts_map.keys[0]).to eq service.facts[0].class
+
+    expect(fact_class_facts_map[service.facts[0].class][0]).to eq service.facts[0]
+    expect(fact_class_facts_map[service.facts[0].class][1]).to eq service.facts[1]
   end
 end

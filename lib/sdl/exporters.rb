@@ -5,7 +5,6 @@ module SDL::Exporters
   autoload :SchemaExporter
   autoload :ServiceExporter
   autoload :RDFExporter
-  autoload :MarkdownServiceExporter
   autoload :XMLServiceExporter
   autoload :XSDSchemaExporter
 
