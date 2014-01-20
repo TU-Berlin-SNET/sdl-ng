@@ -1,9 +1,39 @@
 #!/usr/bin/env ruby
+require 'optparse'
+
+profile = false
+mock = false
+OptionParser.new do |opts|
+  opts.banner = 'Usage: process_service_descriptions [-p]'
+
+  opts.on('-p', '--profile', 'Enable profiling') do |p|
+    profile = true
+  end
+
+  opts.on('-m', '--mock', 'Mock HTTP request') do |m|
+    mock = true
+  end
+end.parse
+
+if profile
+  require 'ruby-prof'
+
+  RubyProf.start
+end
+
 gem 'sdl-ng'
 
 require 'sdl'
 require 'active_support'
 require 'i18n'
+
+if mock
+  SDL::Util::NokogiriUtils.module_eval do
+    def fetch_from_url(url, *search)
+      []
+    end
+  end
+end
 
 # Make the translations for fact classes, instances, etc. known to the I18n framework
 I18n.load_path << File.join(Dir.pwd, 'translations', 'en.yml')
@@ -29,11 +59,10 @@ end
 
 puts "Loaded Service Compendium with #{compendium.services.count} services. Generating output"
 
-%w[xml rdf markdown].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
+%w[xml rdf].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
 
 schema_exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
 service_exporter = SDL::Exporters::XMLServiceExporter.new(compendium)
-markdown_exporter = SDL::Exporters::MarkdownServiceExporter.new(compendium)
 rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
 
 schema_dir = Dir.pwd + '/output/xml/schema.xsd'
@@ -87,3 +116,7 @@ File.open(translations_output_file, 'w') do |f|
 end
 
 puts 'Finished'
+
+if profile
+  RubyProf::CallTreePrinter.new(RubyProf.stop).print(File.new('profile.kcachegrind', 'w'), {})
+end

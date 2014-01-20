@@ -37,4 +37,46 @@ describe 'The exporters' do
       end
     end
   end
+
+  context 'The RDF exporter' do
+    it 'creates valid RDF documents' do
+      compendium.services.each do |name, service|
+        rdf_export = service.to_rdf
+
+        RDF::RDFXML::Reader.new(rdf_export, :validate => true) do |reader|
+          expect(reader.valid?)
+        end
+      end
+    end
+  end
+
+  context 'The exported files' do
+    it 'contains the XSD export' do
+      file = Tempfile.new('export.xsd')
+      xsd_export = xsd_exporter.export_schema
+
+      begin
+        xsd_exporter.export_schema_to_file file.path
+        expect(file.read).to eq xsd_export
+      ensure
+        file.close
+        file.unlink
+      end
+    end
+
+    it 'contains XML export' do
+      compendium.services.each do |name, service|
+        file = Tempfile.new("#{name}.xml")
+        xml_export = service.to_xml
+
+        begin
+          SDL::Exporters::XMLServiceExporter.new(compendium).export_service_to_file(service, file.path)
+          expect(file.read).to eq xml_export
+        ensure
+          file.close
+          file.unlink
+        end
+      end
+    end
+  end
 end

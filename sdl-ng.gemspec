@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'activesupport', '~> 4.0'
   spec.add_runtime_dependency 'nokogiri', '~> 1.6'
   spec.add_runtime_dependency 'verbs', '~> 2.1'
-  spec.add_runtime_dependency 'linkeddata', '~> 1.1'
+  spec.add_runtime_dependency 'rdf', '~> 1.1'
+  spec.add_runtime_dependency 'rdf-rdfxml', '~> 1.1'
 
   spec.add_development_dependency 'yard', '~> 0.8.7.3'
   spec.add_development_dependency 'yard-redcarpet-ext', '~> 0.0.3'

@@ -3,9 +3,7 @@ require_relative 'shared_test_compendium'
 
 require 'rspec'
 
-describe 'Documentation of SDL objects' do
-  include_context 'the default compendium'
-
+store_translation = lambda {
   I18n.backend.store_translations('en', :sdl => {
       :type => {
           :color => 'A color'
@@ -24,15 +22,22 @@ describe 'Documentation of SDL objects' do
       :instance => {
           :type => {
               :color => {
-                  :red => 'The color "red"'
+                  :red => 'The color "red"',
+                  :blue => '#{hex_value}'
               }
           }
       }
   })
+}
+
+describe 'Documentation of SDL objects' do
+  include_context 'the default compendium'
 
   # Registers the classes of the default compendium
   before(:each) do
     compendium.register_classes_globally
+
+    store_translation.call
   end
 
   it 'can document types' do
@@ -59,5 +64,9 @@ describe 'Documentation of SDL objects' do
     expect(compendium.type_instances[Color][:green].documentation).to eq('translation missing: en.sdl.instance.type.color.green')
 
     expect(I18n.backend.instance_variable_get(:@translations)[:en][:sdl][:instance][:type][:color][:green]).to eq('Translate')
+  end
+
+  it 'evaluates statements enclosed within #{}' do
+    expect(compendium.type_instances[Color][:blue].documentation).to eq('#00F')
   end
 end

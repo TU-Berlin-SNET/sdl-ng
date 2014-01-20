@@ -20,29 +20,28 @@ describe 'The definition of services' do
   end
 
   context 'the addition of a Fact instance' do
-    after(:all) do
-      example_service = example_compendium.services[:example_service]
-      example_fact_instance = example_service.facts.first
-
-      expect(example_fact_instance).to be_a(example_compendium.fact_classes.first)
-    end
-
     it 'allows the addition of a Fact instance using has_{Fact class name} syntax' do
-      example_compendium.service(:example_service) do
+      service = example_compendium.service(:example_service_1) do
         has_fact
       end
+
+      expect(service.facts[0]).to be_a(example_compendium.fact_classes.first)
     end
 
     it 'allows the addition of a Fact instance using {Fact class name} syntax' do
-      example_compendium.service(:example_service) do
+      service = example_compendium.service(:example_service_2) do
         fact
       end
+
+      expect(service.facts[0]).to be_a(example_compendium.fact_classes.first)
     end
 
     it 'allows the addition of a Fact instance using is_{Fact class name past participle} syntax' do
-      example_compendium.service(:example_service) do
+      service = example_compendium.service(:example_service_3) do
         is_facted
       end
+
+      expect(service.facts[0]).to be_a(example_compendium.fact_classes.first)
     end
   end
 
