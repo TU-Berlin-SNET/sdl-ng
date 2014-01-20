@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 gem 'sdl-ng'
 
 require 'sdl'
@@ -43,26 +42,14 @@ File.open(schema_dir, 'w') {|f|
   puts "Written Service Compendium XSD schema into #{schema_dir}"
 }
 
-# Load XSD
-xsd = Nokogiri::XML::Schema(File.read(Dir.pwd + '/output/xml/schema.xsd'))
-
 compendium.services.each do |name, service|
   xml_output_file = Dir.pwd + "/output/xml/#{name}.xml"
   service_exporter.export_service_to_file service, xml_output_file
   puts "Wrote XML export of service '#{name}' to #{xml_output_file}"
 
-  puts "Validating XML export against schema"
-  xsd.validate(Nokogiri::XML(File.read(Dir.pwd + "/output/xml/#{name}.xml"))).each do |error|
-    puts error.message
-  end
-
   rdf_output_file = Dir.pwd + "/output/rdf/#{name}.rdf"
   rdf_exporter.export_service_to_file service, rdf_output_file
   puts "Wrote RDF export of service '#{name}' to #{rdf_output_file}"
-
-  markdown_output_file = Dir.pwd + "/output/markdown/#{name}.md"
-  markdown_exporter.export_service_to_file service, markdown_output_file
-  puts "Wrote Markdown export of service '#{name}' to #{markdown_output_file}"
 end
 
 all_needed_translations = {
