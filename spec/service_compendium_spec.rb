@@ -59,6 +59,87 @@ describe 'The service compendium' do
     expect(subject).to be CONTEXT_SELF
   end
 
+  it 'is independent of one another' do
+    first_compendium = SDL::Base::ServiceCompendium.new
+    second_compendium = SDL::Base::ServiceCompendium.new
+
+    first_compendium.facts_definition do
+      fact :first
+    end
+
+    second_compendium.facts_definition do
+      fact :second
+    end
+
+    expect {
+      first_compendium.service 'first_service' do
+        has_second
+      end
+    }.to raise_exception
+
+    service = first_compendium.service 'second_service' do
+      has_first
+    end
+
+    expect(service).not_to respond_to :second
+  end
+
+  it 'does not partially load invalid services' do
+    compendium = SDL::Base::ServiceCompendium.new
+
+    compendium.facts_definition do
+      fact :first_fact
+      fact :second_fact
+    end
+
+    service_definition = <<END
+has_first_fact
+has_second_fact
+has_third_fact
+END
+
+    expect{
+      compendium.load_service_from_string(service_definition, 'my_service', 'empty')
+    }.to raise_exception
+
+    expect(compendium.services.size).to eq 0
+  end
+
+  it 'does not partially load invalid vocabulary' do
+    new_compendium = SDL::Base::ServiceCompendium.new
+
+    new_compendium.with_uri 'rspec' do
+      new_compendium.type_instances_definition do
+        fact :first_fact
+        type :first_type
+
+        first_type :abc
+      end
+    end
+
+    facts_definition = <<END
+fact :second_fact
+type :second_type
+
+second_type :def
+
+fakt :third_fact
+tüpe :third_type
+END
+
+    expect {
+      new_compendium.load_vocabulary_from_string(facts_definition, 'empty')
+    }.to raise_exception
+
+    expect(new_compendium.fact_classes.count).to eq 1
+    expect(new_compendium.types.count).to eq 1
+    expect(new_compendium.type_instances.count).to eq 1
+  end
+
+  it 'does not let double definitions of types and facts happen' do
+    pending 'Not yet implemented'
+  end
+
   context 'with defined example classes' do
     subject do
       compendium = SDL::Base::ServiceCompendium.new
