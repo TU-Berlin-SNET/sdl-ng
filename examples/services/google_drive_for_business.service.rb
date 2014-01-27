@@ -49,5 +49,6 @@ fetch_from_url('http://www.google.com/enterprise/apps/business/products.html', '
   # Skip empty features (e.g. "more information...")
   next if header.search('~p')[0].blank?
 
+  # Extract Google Apps Features
   has_feature header.content.strip, header.search('~p')[0]
 end

@@ -2,7 +2,8 @@ name "Salesforce Sales Cloud"
 
 has_documentation url: 'http://www.salesforce.com/sales-cloud/overview'
 
-has_add_on_repository 'https://appexchange.salesforce.com' do
+has_add_on_repository do
+  url 'https://appexchange.salesforce.com'
   number_of_add_ons 2000
 end
 

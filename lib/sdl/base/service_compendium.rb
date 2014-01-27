@@ -3,8 +3,8 @@
 class SDL::Base::ServiceCompendium
   extend ActiveSupport::Autoload
 
-  autoload :VocabularyLoadTransaction, 'sdl/base/transactions/vocabulary_load_transaction'
-  autoload :ServiceLoadTransaction, 'sdl/base/transactions/service_load_transaction'
+  autoload :VocabularyLoadTransaction
+  autoload :ServiceLoadTransaction
 
   include VocabularyLoadTransaction
   include ServiceLoadTransaction
