@@ -42,7 +42,7 @@ I18n.load_path << File.join(Dir.pwd, 'translations', 'en.yml')
 compendium = SDL::Base::ServiceCompendium.new
 
 # Load SDL
-Dir.glob(File.join(Dir.pwd, '**', '*.sdl.rb')) do |filename|
+Dir.glob(File.join(Dir.pwd, '**', '*.sdl.rb')).sort.each do |filename|
   compendium.facts_definition do
     eval(File.read(filename), binding, filename)
   end
