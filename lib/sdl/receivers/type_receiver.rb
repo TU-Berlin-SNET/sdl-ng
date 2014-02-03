@@ -1,7 +1,14 @@
 class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
   include ActiveSupport::Inflector
 
+  # The class for which the type receiver was instantiated
+  # !@attr [r] klass
+  # @return [Class]
   attr :klass
+
+  # The class and all subclasses
+  # !@attr [r] subclasses
+  # @return [Array<Class>]
   attr :subclasses
 
   def initialize(sym, compendium, superklass = nil)
@@ -31,6 +38,7 @@ class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
   def subtype(sym, &definition)
     receiver = self.class.new(sym, @compendium, @klass)
     receiver.instance_eval(&definition) if block_given?
+    klass.subtypes << receiver.klass
 
     @subclasses.concat(receiver.subclasses)
   end
@@ -51,10 +59,10 @@ class SDL::Receivers::TypeReceiver < SDL::Receivers::Receiver
 
     if name =~ /list_of_/
       multi = true
-      type = @compendium.sdltype_codes[name.to_s.gsub('list_of_', '').singularize.to_sym]
+      type = @compendium.all_codes[name.to_s.gsub('list_of_', '').singularize.to_sym]
     else
       multi = false
-      type = @compendium.sdltype_codes[name.to_sym]
+      type = @compendium.all_codes[name.to_sym]
     end
 
     if type

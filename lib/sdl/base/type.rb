@@ -5,9 +5,11 @@ class SDL::Base::Type
     include SDL::Base::URIMappedResource
 
     # The namespace URL of this Type class
+    # !@attr [r] namespace
     attr_accessor :namespace
 
     # If the Type is a list item type
+    # !@attr [r] list_item
     attr_accessor :list_item
 
     ##
@@ -16,12 +18,25 @@ class SDL::Base::Type
     # The ServiceCompendium#register_classes_globally method makes this class accessible by a constant of this name
     @local_name
 
+    alias :original_name :name
+
+    def name
+      original_name || local_name
+    end
+
     def local_name
-      @local_name || name.demodulize
+      @local_name || original_name.demodulize
     end
 
     def local_name=(name)
       @local_name = name
+    end
+
+    # A list of all subtypes
+    # !@attr [r] subtypes
+    # @return [<Class>] The subtypes
+    def subtypes
+      @subtypes ||= []
     end
 
     def to_s
@@ -62,6 +77,10 @@ class SDL::Base::Type
 
     def is_sub?
       not [SDL::Base::Type, SDL::Base::Fact].include? superclass
+    end
+
+    def sdl_ancestors
+      ancestors.drop(1).take_while {|ancestor| ! [SDL::Base::Type, SDL::Base::Fact, SDL::Types::SDLType].include? ancestor}
     end
   end
 
