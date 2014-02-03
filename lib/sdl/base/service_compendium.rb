@@ -3,6 +3,7 @@
 class SDL::Base::ServiceCompendium
   extend ActiveSupport::Autoload
 
+  autoload :LoadTransaction
   autoload :VocabularyLoadTransaction
   autoload :ServiceLoadTransaction
 
@@ -12,21 +13,44 @@ class SDL::Base::ServiceCompendium
   ##
   # A list of all +Fact+ classes registered in this compendium
   # @!attribute [r] fact_classes
-  # @return Array<Class>
+  # @return [Array<Class>]
   attr :fact_classes
 
   ##
   # A list of all +Type+ classes registered in this compendium
   # @!attribute [r] types
-  # @return Array<Class>
+  # @return [Array<Class>]
   attr :types
 
   ##
-  # Registered codes for +SDLSimpleType+s, used for defining property types.
+  # Registered codes for +SDLSimpleType+s and +Type+s.
   #
-  # @!attribute [r] sdltype_codes
-  # @return Hash{String => Class}
-  attr :sdltype_codes
+  # These are used in the definition of the type of a property.
+  #
+  # @!attribute [r] all_codes
+  # @return [Hash{String => Class}]
+  attr :all_codes
+
+  ##
+  # Registered codes for +SDLSimpleType+s.
+  #
+  # These are used in the definition of the type of a property.
+  #
+  # @!attribute [r] sdl_simple_type_codes
+  # @return [Hash{String => Class}]
+  attr :sdl_simple_type_codes
+
+  ##
+  # Registered codes for +Type+s.
+  #
+  # These are used in the definition of the type of a property.
+  #
+  # @!attribute [r] type_codes
+  # @return [Hash{String => Class}]
+  attr :type_codes
+
+  ##
+  # Registered codes for +SDL
 
   ##
   # A map containing predefined type instances, mapped to their Type classes.
@@ -61,13 +85,26 @@ class SDL::Base::ServiceCompendium
   # Initializes the compendium.
   def initialize
     @fact_classes, @types, @services = [], [], {}
-    @type_instances, @sdltype_codes = {}, {}
+    @type_instances, @sdl_simple_type_codes, @type_codes, @all_codes = {}, {}, {}, {}
+
+    @type_instances.default = {}
 
     @service_methods = Module.new() do |mod|
       include ServiceMethods
     end
 
     register_default_types
+  end
+
+  ##
+  # A compendium is empty, if there are neither types, nor services loaded.
+  # @return [Boolean] If this compendium is empty.
+  def empty?
+    @fact_classes.empty? &&
+        @types.empty? &&
+        @services.empty? &&
+        @type_instances.empty? &&
+        @type_codes.empty?
   end
 
   def facts_definition(&facts_definitions)
@@ -78,6 +115,11 @@ class SDL::Base::ServiceCompendium
     self.instance_eval &type_instances_definition
   end
 
+  ##
+  # Runs the +&block+ with specified +current_uri+ and restores the old +current_uri+.
+  #
+  # @param [String] current_uri The URI, with which the block should be run.
+  # @param [Block] block The block, which will be called.
   def with_uri(current_uri, &block)
     old_uri = @current_uri
     @current_uri = current_uri
@@ -101,6 +143,8 @@ class SDL::Base::ServiceCompendium
       # Refer to the symbolic name of the current class, which can be a subclass of
       sym = fact_class.local_name.underscore.to_sym
 
+      # Extend the @service_methods module with methods retrieving the first or all
+      # instances of this fact, e.g. "service.features" would find all Feature facts
       @service_methods.class_eval do
         unless SDL::Base::Service.instance_methods.include? sym
           define_method sym do
@@ -122,10 +166,16 @@ class SDL::Base::ServiceCompendium
     receiver = SDL::Receivers::TypeReceiver.new(sym, self)
     receiver.klass.loaded_from = @current_uri
     receiver.instance_eval &type_definition if block_given?
-    register_sdltype_codes(receiver.klass)
-    register_sdltype(receiver.klass)
-    @types << receiver.klass
-    @type_instances[receiver.klass] = {}
+
+    @types.concat receiver.subclasses
+
+    receiver.subclasses.each do |klass|
+      klass.loaded_from = @current_uri
+      register_codes klass
+      register_sdltype klass
+      @type_instances[klass] = {}
+    end
+
     receiver.klass
   end
 
@@ -142,10 +192,17 @@ class SDL::Base::ServiceCompendium
   end
 
   ##
-  # Registers an SDLSimpleType under its code
-  def register_sdltype_codes(type)
+  # Registers an SDLSimpleType or SDLType under its code
+  # @param [Class] type The type to be registered.
+  def register_codes(type)
+    if type < SDL::Types::SDLSimpleType
+      type.codes.each do |c| @sdl_simple_type_codes[c] = type end
+    else
+      type.codes.each do |c| @type_codes[c] = type end
+    end
+
     type.codes.each do |code|
-      @sdltype_codes[code] = type
+      @all_codes[code] = type
     end
   end
 
@@ -175,18 +232,45 @@ class SDL::Base::ServiceCompendium
   end
 
   ##
+  # Returns an iterator for all items, which were loaded by this compendium
+  def loaded_items
+    @fact_classes.each do |fact_class|
+      yield fact_class
+    end
+
+    @types.each do |type_class|
+      yield type_class
+    end
+
+    @type_instances.each do |type_class, instance_hash|
+      instance_hash.each do |symbol, instance|
+        yield instance
+      end
+    end
+
+    @services.each do |symbol, service|
+      yield service
+    end
+  end
+
+  ##
   # Unloads all items with the specified uri from this service compendium
   def unload(uri)
+    @services.delete_if do |symbolic_name, service| service.loaded_from.eql?(uri) end
+
     @fact_classes.delete_if do |item| item.loaded_from.eql?(uri) end
-    @types.delete_if do |item| item.loaded_from.eql?(uri) end
-    @services.delete_if do |item| item.loaded_from.eql?(uri) end
 
-    @type_instances.delete_if do |klass, klass_map|
-      klass_map.delete_if do |symbol, type|
-        type.loaded_from.eql? uri
+    @types.delete_if do |item|
+      if item.loaded_from.eql?(uri) then
+        @type_instances.delete(item)
+
+        @all_codes.delete_if do |code, type| type.eql? item end
+        @type_codes.delete_if do |code, type| type.eql? item end
+
+        true
+      else
+        false
       end
-
-      klass.loaded_from.eql? uri
     end
   end
 
@@ -212,7 +296,7 @@ class SDL::Base::ServiceCompendium
     # Registers all default types
     def register_default_types
       SDL::Types::SDLSimpleType.descendants.each do |type|
-        register_sdltype_codes type
+        register_codes type
       end
     end
 end
