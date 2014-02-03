@@ -1,17 +1,24 @@
-# A transaction for loading vocabulary definition
-module SDL::Base::ServiceCompendium::ServiceLoadTransaction
-  ##
-  # Loads a service, either from a file or from a path recursively.
-  #
-  # Service definition files are expected to end with +.service.rb+
-  # @param path_or_filename[String] Either a filename or a path
-  def load_service_from_path(path_or_filename)
-    path_or_filename = [path_or_filename] if File.file? path_or_filename
+class SDL::Base::ServiceCompendium
+  # A transaction for loading vocabulary definition
+  module ServiceLoadTransaction
+    include LoadTransaction
 
-    Dir.glob(File.join(path_or_filename, '**', '*.service.rb')) do |filename|
-      service_name = filename.match(%r[.+/(.+).service.rb])[1]
+    ##
+    # Loads a service, either from a file or from a path recursively.
+    #
+    # Service definition files are expected to end with +.service.rb+
+    # @param path_or_filename[String] Either a filename or a path
+    # @param ignore_errors[Boolean] Ignore errors when loading service
+    def load_service_from_path(path_or_filename, ignore_errors = false)
+      to_files_array(path_or_filename, '.service.rb').each do |filename|
+        service_name = filename.match(%r[.+/(.+).service.rb])[1]
 
-      load_service_from_string File.read(filename), service_name, filename
+        begin
+          load_service_from_string File.read(filename), service_name, filename
+        rescue Exception => e
+          raise e unless ignore_errors
+        end
+      end
     end
   end
 
@@ -22,14 +29,10 @@ module SDL::Base::ServiceCompendium::ServiceLoadTransaction
   # @param [String] uri The URI
   # @raise [SyntaxError] If there is an error in service_definition
   def load_service_from_string(service_definition, service_name, uri)
-    begin
-      with_uri uri do
-        service service_name do
-          eval service_definition, binding
-        end
+    with_uri uri do
+      service service_name do
+        eval service_definition, binding, uri
       end
-    rescue Exception => e
-      raise SyntaxError.new("Error while loading '#{service_name}' from '#{uri}': #{e}")
     end
   end
 end

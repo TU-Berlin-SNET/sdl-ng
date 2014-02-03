@@ -82,7 +82,7 @@ class SDL::Receivers::TypeInstanceReceiver < SDL::Receivers::Receiver
     unless possible_type_instances.nil? || possible_type_instances.empty?
       possible_type_instances[0]
     else
-      raise Exception.new("I do not know what to do with '#{name}' in #{caller[0]}")
+      raise Exception.new("I do not know what to do with '#{name}'.")
     end
   end
 end

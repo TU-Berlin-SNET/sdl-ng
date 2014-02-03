@@ -11,16 +11,10 @@ class SDL::Receivers::ServiceReceiver < SDL::Receivers::Receiver
     @service = SDL::Base::Service.new(sym.to_s)
 
     compendium.fact_classes.each do |fact_class|
-      define_singleton_method("is_#{fact_class.local_name.underscore.verb.conjugate(:tense => :past, :person => :third, :plurality => :singular, :aspect => :perfective)}") do |*args, &block|
-        add_fact fact_class, *args, &block
-      end
-
-      define_singleton_method("has_#{fact_class.local_name.underscore}") do |*args, &block|
-        add_fact fact_class, *args, &block
-      end
-
-      define_singleton_method("#{fact_class.local_name.underscore}") do |*args, &block|
-        add_fact fact_class, *args, &block
+      fact_class.keywords.each do |keyword|
+        define_singleton_method keyword do |*args, &block|
+          add_fact fact_class, *args, &block
+        end
       end
     end
   end
@@ -48,12 +42,12 @@ class SDL::Receivers::ServiceReceiver < SDL::Receivers::Receiver
 
       unless possible_type_instances.nil? || possible_type_instances.empty?
         if possible_type_instances.length > 1
-          raise Exception.new("Multiple possibilities for #{name} in #{caller[0]}")
+          raise Exception.new("Multiple possibilities for #{name}")
         else
           possible_type_instances[0]
         end
       else
-        raise Exception.new("I do not know what to do with '#{name}' in #{caller[0]}")
+        raise Exception.new("I do not know what to do with '#{name}'")
       end
     end
 end
