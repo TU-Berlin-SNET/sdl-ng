@@ -34,6 +34,10 @@ describe 'The service compendium' do
     expect(subject.types.first).to be < SDL::Base::Type
   end
 
+  it 'allows the definition of service subtypes' do
+    pending 'Not yet implemented'
+  end
+
   it 'allows the definition of services' do
     subject.service :example_service
 
@@ -137,7 +141,7 @@ END
   end
 
   it 'does not let double definitions of types and facts happen' do
-    pending 'Not yet implemented'
+    pending
   end
 
   context 'with defined example classes' do
@@ -164,8 +168,8 @@ END
       compendium
     end
 
-    it 'registers the code for the example type with its #sdltype_codes' do
-      expect(subject.sdltype_codes[:example_type]).to be subject.types.first
+    it 'registers the code for the example type with its #all_codes' do
+      expect(subject.all_codes[:example_type]).to be subject.types.first
     end
   end
 end
