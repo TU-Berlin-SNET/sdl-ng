@@ -63,7 +63,7 @@ module SDL
   end
 
   module Base
-    [Type, Fact, Property].each do |m| m.class_eval do include SDL::Util::Documentation end end
+    [Type, Property].each do |m| m.class_eval do include SDL::Util::Documentation end end
   end
 end
 

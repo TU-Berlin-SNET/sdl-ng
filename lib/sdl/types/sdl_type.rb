@@ -5,6 +5,10 @@ module SDL::Types::SDLType
     base.extend ClassMethods
   end
 
+  def self.codes
+    @codes ||= {}
+  end
+
   module ClassMethods
     ##
     # The Ruby type, which is to be wrapped
@@ -32,7 +36,13 @@ module SDL::Types::SDLType
     # @return [Array<Symbol>] all resulting symbols
     def codes(*symbols)
       @codes ||= []
-      symbols.each do |symbol| @codes << symbol end
+
+      symbols.each do |symbol|
+        @codes << symbol
+
+        SDL::Types::SDLType.codes[symbol] = self
+      end
+
       @codes
     end
   end

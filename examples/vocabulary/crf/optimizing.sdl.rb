@@ -1,6 +1,6 @@
 fact :maintenance do
   subfact :maintenance_window do
-    timespan
+    #timespan
   end
 
   subfact :maintenance_free

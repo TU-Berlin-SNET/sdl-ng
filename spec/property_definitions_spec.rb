@@ -4,7 +4,7 @@ require 'rspec'
 
 describe 'The definition of properties' do
   subject do
-    SDL::Receivers::TypeReceiver.new :my_example_type, SDL::Base::ServiceCompendium.new
+    SDL::Receivers::TypeReceiver.new "my_example_type_#{rand(2**122)}", SDL::Base::ServiceCompendium.new
   end
 
   it 'allows the definition of properties' do

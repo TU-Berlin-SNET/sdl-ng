@@ -1,7 +1,7 @@
 fact :data_location_transparency
 
 fact :data_location do
-  location
+  #location
 end
 
 fact :data_deletion_policy

@@ -22,12 +22,12 @@ fact :interface do
 
   subfact :browser_interface do
     list :compatible_browsers do
-      browser :compatible_browser
+      browser
       string :min_version
     end
 
     list :required_plugins do
-      browser_plugin :required_plugin
+      browser_plugin
       string :min_version
     end
   end

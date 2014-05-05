@@ -12,9 +12,7 @@ module SDL
   module Base
     extend ActiveSupport::Autoload
 
-    autoload :Fact
     autoload :Property
-    autoload :Service
     autoload :ServiceCompendium
     autoload :Type
     autoload :URIMappedResource

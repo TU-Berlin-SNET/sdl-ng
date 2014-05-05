@@ -2,7 +2,11 @@
 lib = File.expand_path('lib', __dir__)
 $:.unshift(lib) unless $:.include?(lib)
 
-require 'sdl'
+begin
+  require 'sdl'
+rescue Exception => e
+  puts e
+end
 
 Gem::Specification.new do |spec|
   spec.name          = 'sdl-ng'
@@ -24,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'verbs', '~> 2.1'
   spec.add_runtime_dependency 'rdf', '~> 1.1'
   spec.add_runtime_dependency 'rdf-rdfxml', '~> 1.1'
+  spec.add_runtime_dependency 'multi_json', '~> 1.8'
 
   spec.add_development_dependency 'yard', '~> 0.8.7.3'
   spec.add_development_dependency 'yard-redcarpet-ext', '~> 0.0.3'

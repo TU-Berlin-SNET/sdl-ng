@@ -52,8 +52,16 @@ class SDL::Base::Property
     ! parent.eql? holder
   end
 
+  def simple_type?
+    type <= SDL::Types::SDLSimpleType
+  end
+
   # Define a property by its name and type
   def initialize(name, type, parent, multi = false)
     @name, @type, @parent, @multi = name.to_s, type, parent, multi
+  end
+
+  def to_s
+    "#{@parent.name}.#{@name}"
   end
 end

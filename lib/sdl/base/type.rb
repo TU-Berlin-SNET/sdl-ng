@@ -1,6 +1,44 @@
 class SDL::Base::Type
   include SDL::Base::URIMappedResource
 
+  class RecursiveSubtypes
+    include Enumerable
+
+    def initialize(type)
+      @type = type
+    end
+
+    def each
+      yield @type
+
+      @type.subtypes.each do |subtype|
+        subtype.subtypes_recursive.each do |type|
+          yield type
+        end
+      end
+    end
+  end
+
+  class RecursiveInstances
+    include Enumerable
+
+    def initialize(type)
+      @type = type
+    end
+
+    def each
+      @type.instances.each do |key, value|
+        yield key, value
+      end
+
+      @type.subtypes.each do |subtype|
+        subtype.instances_recursive.each do |key, value|
+          yield key, value
+        end
+      end
+    end
+  end
+
   class << self
     include SDL::Base::URIMappedResource
 
@@ -37,6 +75,14 @@ class SDL::Base::Type
     # @return [<Class>] The subtypes
     def subtypes
       @subtypes ||= []
+    end
+
+    def [](symbol)
+      instances[symbol]
+    end
+
+    def instances
+      @instances ||= {}
     end
 
     def to_s
@@ -76,11 +122,148 @@ class SDL::Base::Type
     end
 
     def is_sub?
-      not [SDL::Base::Type, SDL::Base::Fact].include? superclass
+      superclass != SDL::Base::Type
     end
 
-    def sdl_ancestors
-      ancestors.drop(1).take_while {|ancestor| ! [SDL::Base::Type, SDL::Base::Fact, SDL::Types::SDLType].include? ancestor}
+    def subtypes_recursive
+      RecursiveSubtypes.new(self)
+    end
+
+    def instances_recursive
+      RecursiveInstances.new(self)
+    end
+
+    def find_subtype_recursive(symbol)
+      subtypes_recursive.find do |subtype|
+        subtype.local_name.underscore.eql? symbol.to_s
+      end
+    end
+
+    # @return [Boolean] Has this Type already been registered with the compendium?
+    def registered?
+      @registered ||= false
+    end
+
+    def class_definition_string(sym, superklass)
+      "class SDL::Base::Type::#{sym.to_s.camelize} < #{superklass.name}
+        unless @registered
+          include SDL::Types::SDLType
+
+          wraps self
+          codes local_name.underscore.to_sym
+
+          superclass.subtypes << self
+
+          @registered = true
+        end
+      end"
+    end
+
+    def define_type(sym, superklass = SDL::Base::Type)
+      eval class_definition_string(sym, superklass)
+
+      SDL::Base::Type.const_get(sym.to_s.camelize)
+    end
+
+    def subtype(sym, &definition)
+      type = define_type(sym, self)
+
+      type.instance_eval(&definition)
+
+      return type
+    end
+
+    ##
+    # Define a list of a type, which is defined in the block.
+    def list(sym, &block)
+      list_type = define_type(sym.to_s.singularize.to_sym)
+
+      list_type.instance_eval(&block)
+
+      # Designate as list type
+      list_type.list_item = true
+
+      add_property sym, list_type, true
+    end
+
+    def method_missing(name, *args, &block)
+      sym = args[0] || name.to_sym
+
+      if name =~ /list_of_/
+        multi = true
+        type = SDL::Types::SDLType.codes[name.to_s.gsub('list_of_', '').singularize.to_sym]
+      else
+        multi = false
+        type = SDL::Types::SDLType.codes[name.to_sym]
+      end
+
+      if type
+        add_property sym, type, multi
+      else
+        super(name, *args, &block)
+      end
+    end
+
+    def add_property(sym, type, multi)
+      deleted = properties.delete_if { |p| p.name == sym.to_s }
+
+      puts "Warning: Overwritten property definition of #{deleted[0].to_s}" unless deleted.empty?
+
+      (@properties ||= []) << SDL::Base::Property.new(sym, type, self, multi)
+
+      add_property_setters(sym, type, multi)
+      add_property_getter(sym, type) unless multi
+    end
+
+    def add_property_setters(sym, type, multi)
+      unless multi
+        attr_reader sym
+
+        # Setter
+        define_method "#{sym}=" do |value|
+          if type < SDL::Types::SDLSimpleType
+            instance_variable_set "@#{sym}".to_s, type.new(value)
+          else
+            instance_variable_set "@#{sym}".to_s, value
+
+            value.parent = self
+          end
+        end
+      else
+        # Define accessor method for lists
+        define_method sym do
+          eval "@#{sym} ||= []"
+        end
+      end
+    end
+
+    def add_property_getter(sym, type)
+      define_method sym do
+        instance_variable_get "@#{sym.to_s}"
+      end
+    end
+  end
+
+  def set_sdl_property(property, value)
+    send "#{property.name}=", value
+  end
+
+  def get_sdl_value(property)
+    send property.name
+  end
+
+  def set_sdl_values(*property_values)
+    property_values.zip(self.class.properties(true)).each do |value, property|
+      if(value.is_a?(Hash))
+        # Setting values can be carried out by specifying the name of the property as a hash
+        # e.g. a: 1, b: 2
+        SDL::Receivers::TypeInstanceReceiver.new(self).send(value.first[0].to_s, value.first[1])
+      else
+        # Else, setting values is carried out by a value list, e.g. 1, 2
+        raise "Specified value '#{value}' for non-existing property." unless property
+
+        SDL::Receivers::TypeInstanceReceiver.new(self).send(property.name, value)
+      end
     end
   end
 

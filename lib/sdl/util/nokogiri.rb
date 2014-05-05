@@ -41,6 +41,6 @@ module SDL
   end
 end
 
-SDL::Receivers::Receiver.class_eval do
-  include(SDL::Util::NokogiriUtils)
+SDL::Receivers::TypeInstanceReceiver.class_eval do
+  include SDL::Util::NokogiriUtils
 end

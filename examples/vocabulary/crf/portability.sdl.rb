@@ -3,7 +3,7 @@ type :data_capability_operation
 type :data_format
 
 fact :data_capability do
-  data_format :format
+  data_format :data_format
 
   subfact :export_capability
   subfact :import_capability

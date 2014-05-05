@@ -4,37 +4,35 @@ shared_context 'the default compendium' do
   let :compendium do
     compendium = SDL::Base::ServiceCompendium.new
 
-    compendium.facts_definition do
+    compendium.instance_eval do
       type :color do
         string :hex_value
+
+        subtype :supercolor do
+          string :superpower
+        end
+      end
+
+      type :service_color do
+        color :color
+        string :name
       end
 
       type :something_other do
         string :some_text
       end
+    end
 
-      fact :color do
+    compendium.facts_definition do
+      service_color :is_colored
+
+      string :name
+
+      list_of_colors :multicolored
+
+      list :favourite_colors do
         color :color
-        string :name
-
-        subfact :supercolor do
-          string :superpower
-        end
-      end
-
-      fact :name do
-        string :name
-      end
-
-      fact :multicolor do
-        list_of_colors :colors
-      end
-
-      fact :favourite_colors do
-        list :favourites do
-          color :color
-          int :rating
-        end
+        int :rating
       end
     end
 
@@ -65,38 +63,34 @@ shared_context 'the default compendium' do
     end
 
     compendium.service :blue_service do
-      has_color :blue
+      is_colored :blue, 'Blue'
     end
 
     compendium.service :red_service do
-      has_color :red
+      is_colored :red
     end
 
     compendium.service :complex_service do
       name 'Complex Service'
 
-      has_multicolor do
-        color :red
-        color :green
+      multicolored :red
+      multicolored :green
+      multicolored :blue
+      multicolored :yellow
+      multicolored :text
+
+      favourite_color do
         color :blue
-        color :yellow
-        color :text
+        rating 5
+
+        annotation 'Mathias'
       end
 
-      has_favourite_colors do
-        favourite do
-          color :blue
-          rating 5
+      favourite_color do
+        color :green
+        rating 10
 
-          annotation 'Mathias'
-        end
-
-        favourite do
-          color :green
-          rating 10
-
-          annotation 'Sabrina'
-        end
+        annotation 'Sabrina'
       end
     end
 
