@@ -1,13 +1,4 @@
-type :data_capability_operation
-
 type :data_format
-
-fact :data_capability do
-  data_format :data_format
-
-  subfact :export_capability
-  subfact :import_capability
-end
 
 data_format :csv
 data_format :xls
@@ -22,3 +13,15 @@ data_format :pptx
 data_format :png
 data_format :jpeg
 data_format :svg
+
+type :data_capability do
+  data_format
+
+  subtype :export_capability
+  subtype :import_capability
+end
+
+service_properties do
+  list_of_export_capabilities :can_export
+  list_of_import_capabilities :can_import
+end

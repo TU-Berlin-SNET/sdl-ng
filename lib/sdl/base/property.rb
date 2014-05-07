@@ -62,6 +62,6 @@ class SDL::Base::Property
   end
 
   def to_s
-    "#{@parent.name}.#{@name}"
+    "#{@parent.original_name}.#{@name.to_s}"
   end
 end

@@ -19,8 +19,6 @@ en:
         transparent
       documentation: The service has public documentation
       duration: Generic duration of something.
-      duration_provision_end_user_duration: The duration for provisioning an end user.
-      duration_set_up_consumption_duration: The duration for setting up the service.
       establishing_year: The establishing year of the service is known
       feature: A service feature
       interface: An interface to service functionality
@@ -42,9 +40,9 @@ en:
       status_page: The service has a status page
     instance:
       fact:
-        add_on_repository: "There are #{number_of_add_ons} add-ons available at #{url}"
-        documentation: "The documentation URL is #{url}"
-        name: "The service name is: #{name}"
+        add_on_repository: 'There are #{number_of_add_ons} add-ons available at #{url}'
+        documentation: 'The documentation URL is #{url}'
+        name: 'The service name is: #{name}'
       type:
         billing_term:
           annually: Annually billing
@@ -94,65 +92,18 @@ en:
         payment_term:
           after_use: Payment is done after service consumption
           in_advance: Payment is done in advance of service consumption
+    markdown:
+      header: 'The following facts are known about the service:'
     property:
-      fact:
+      type:
         add_on_repository:
           number_of_add_ons: Number of add-ons
           url: Repository URL
-        audit_option:
-          audit_option: Audit option
-        bill:
+        address:
+          address_lines: The address lines
+        billing_and_payment:
           billing_term: Billing
           payment_term: Payment
-        charge_unit:
-          charge_unit: Charge unit
-        cloud_service_model:
-          cloud_service_model: Cloud service model
-        communication_protection:
-          communication_protection: Protected by
-        continuous_service_improvement:
-          url: Link
-        continuous_service_improvement_feedback_page:
-          url: Feedback page
-        continuous_service_improvement_future_roadmap:
-          url: Future roadmap
-        continuous_service_improvement_past_release_notes:
-          url: Past release notes
-        data_capability_export_capability:
-          format: Can export
-        data_capability_export_capability:
-          format: Can import
-        data_encryption:
-          key_control: Controlling party
-        data_location:
-          location: Data location
-        documentation:
-          url: Documentation URL
-        duration:
-          duration: Duration
-        establishing_year:
-          year: Established in
-        feature:
-          description: Description
-          feature: Name
-        interface_browser_interface:
-          compatible_browsers: Compatible to
-          required_plugins: Required plugins
-        maintenance_maintenance_window:
-          timespan: Maintenance Window
-        name:
-          name: Service name
-        payment_option:
-          payment_option: Payment option
-        service_category:
-          service_category: Service category
-        service_level_agreement_public_service_level_agreement:
-          url: SLA URL
-        service_tag:
-          service_tag: Tag
-        status_page:
-          url: Service status URL
-      type:
         browser:
           browser_name: The name of the browser
           url: Homepage
@@ -160,31 +111,119 @@ en:
           plugin_name: The name of the browser plugin
           url: The browser plugin URL
         compatible_browser:
-          compatible_browser: Browser
-          min_version: Min version
+          browser: The browser
+          min_version: Min version required
+        country:
+          jurisdiction: The jurisdictions the country falls under
+        data_capability:
+          data_format: The data format
+        data_encryption:
+          key_control: How is the key control carried out
         data_format:
           mime_type: The mime type of the data format
+        feature:
+          description: Description
+          feature_name: Name
+        interface:
+          interface_documentation: The documentation of the interface
+        interface_browser_interface:
+          compatible_browsers: Compatible browsers
+          required_plugins: Required plugins
+        location_specific_location:
+          address: Postal address
+          country: Country
+        location_unspecific_location:
+          jurisdiction: The jurisdiction in which the service operates
+        maintenance_window:
+          timespan: The maintenance window
+        offline_capability:
+          documentation: Information about service offline capability
         required_plugin:
-          min_version: The minimum version required of the browser plugin
-          required_plugin: The plugin
+          browser_plugin: The plugin, which is required
+          min_version: The minimum version
+        service:
+          add_on_repository: Service Add-On Repository
+          audit_options: The audit options
+          browser_interface: The browser interface
+          can_be_used_offline: Offline capability information
+          can_export: Exportable data formats
+          can_import: Importable data formats
+          cloud_service_model: Cloud service model
+          data_deletion_policy: Data deletion policy
+          data_encryption: Service data is encrypted
+          data_location: Data location
+          documentation: Service documentation URL
+          established_in: Established in
+          feature: The service features
+          feedback_page: Feedback page URL
+          future_roadmap: Future roadmap URL
+          is_billed: Billing and Payment info
+          is_charged_by: Charging unit
+          is_protected_by: Protection means of service
+          maintenance_free: The service is maintenance free
+          maintenance_window: The service has a maintenance window
+          past_release_notes: Past release notes URL
+          payment_options: Payment options
+          provision_end_user_duration: The duration for provisioning an end user.
+          public_service_level_agreement: URL of public SLA
+          rest_interface: The REST interface
+          service_categories: Categories
+          service_name: Service name
+          service_tags: Tags
+          set_up_consumption_duration: The duration for setting up the service.
+          soap_interface: The SOAP interface
+          status_page: The status page URL
+          xmlrpc_interface: The XMLRPC interface
         timespan:
           end: The timespan end
           start: The timespan start
     type:
+      add_on_repository: A service add-on repo
+      address: A postal address
       audit_option: An option to audit a service
+      billing_and_payment: Billing and payment information
       billing_term: The billing term, e.g. "per month".
       browser: A browser
       browser_plugin: A browser plugin
       charge_unit: The charge unit
       cloud_service_model: A cloud service model
       communication_protection: A communication protection means
+      compatible_browser: Compatible browser information
+      country: A country
+      data_capability: Data capability
+      data_capability_export_capability: Data export capability
+      data_capability_import_capability: Data import capability
       data_capability_operation: The data capability operation
+      data_encryption: Data encryption means
       data_format: The data format
+      feature: A service feature
+      interface: A service interface
+      interface_browser_interface: A browser interface
+      interface_rest_interface: A RESTful interface
+      interface_soap_interface: A SOAP interface
+      interface_xmlrpc_interface: An XMLRPC interface
+      jurisdiction: A jurisdictional area
       key_control: One possibility of key control
       location: Location information
+      location_specific_location: Specific location information
+      location_unspecific_location: Unspecific location information
+      maintenance_free: Information about service maintenance
+      maintenance_window: The maintenance window
+      offline_capability: Offline capability information
       payment_option: The payment option
       payment_term: The payment terms, i.e., in advance and after use.
       required_plugin: The required plugins
+      service: A service
       service_category: The category of a service
       service_tag: A Service tag
       timespan: An arbitrary timespan
+    xml:
+      annotation: An arbitrary annotation to be displayed for the description consumer.
+      documentation: The documentation of this type or fact instance.
+      identifier: An identifier for a type instance. Two instances are the same, if
+        they share the same identifier.
+      service_class: A service. It contains an arbitrary number of facts.
+      service_root: The root element of a service.
+      services_root: A list of services.
+      typebase: The base type of all SDL types and facts. Contains annotations and
+        documentation.

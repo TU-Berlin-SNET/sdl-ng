@@ -2,16 +2,12 @@ require 'rdf'
 require 'rdf/rdfxml'
 
 class SDL::Exporters::RDFExporter < SDL::Exporters::ServiceExporter
-  @@s = RDF::Vocabulary.new('http://www.open-service-compendium.org/')
+  @@s = RDF::Vocabulary('http://www.open-service-compendium.org/')
 
   def export_service(service)
     graph = RDF::Graph.new
 
-    service.facts.each do |fact|
-      graph << [RDF::URI.new(service.uri), @@s["has_#{fact.class.local_name.underscore}"], RDF::URI.new(fact.uri)]
-
-      expand_properties(fact, graph)
-    end
+    expand_properties(service, graph)
 
     graph.dump(:rdf)
   end
@@ -26,11 +22,5 @@ class SDL::Exporters::RDFExporter < SDL::Exporters::ServiceExporter
         [value].flatten.each do |v| expand_properties(v, graph) end
       end
     end
-  end
-end
-
-class SDL::Base::Service
-  def to_rdf
-    SDL::Exporters::RDFExporter.new(@compendium).export_service(self)
   end
 end

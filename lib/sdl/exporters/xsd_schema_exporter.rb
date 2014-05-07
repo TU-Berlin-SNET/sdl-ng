@@ -30,19 +30,6 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
           document(xml, I18n.t('sdl.xml.service_root'))
         end
 
-        xml['ns'].complexType :name => 'Service' do
-          document(xml, I18n.t('sdl.xml.service_class'))
-          xml['ns'].sequence do
-            xml['ns'].choice :maxOccurs => :unbounded do
-              @compendium.fact_classes.each do |fact_class|
-                xml['ns'].element :name => fact_class.xsd_element_name, :type => fact_class.xsd_type_name do
-                  document(xml, fact_class.documentation)
-                end
-              end
-            end
-          end
-        end
-
         xml['ns'].complexType :name => 'SDLTypeBase' do
           document(xml, I18n.t('sdl.xml.typebase'))
           xml['ns'].choice do
@@ -58,14 +45,14 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
           end
         end
 
-        (@compendium.fact_classes + @compendium.types).each do |fact_class|
-          xml['ns'].complexType :name => fact_class.xsd_type_name do
-            document(xml, fact_class.documentation)
+        SDL::Base::Type.subtypes_recursive.drop(1).each do |type_class|
+          xml['ns'].complexType :name => type_class.xsd_type_name do
+            document(xml, type_class.documentation)
             xml['ns'].complexContent do
-              xml['ns'].extension :base => fact_class.is_sub? ? fact_class.superclass.xsd_type_name : 'SDLTypeBase' do
-                unless fact_class.properties.empty?
+              xml['ns'].extension :base => type_class.is_sub? ? type_class.superclass.xsd_type_name : 'SDLTypeBase' do
+                unless type_class.properties.empty?
                   xml['ns'].sequence do
-                    fact_class.properties.each do |property|
+                    type_class.properties.each do |property|
                       extend_property(property, xml) do
                         document(xml, property.documentation)
                       end

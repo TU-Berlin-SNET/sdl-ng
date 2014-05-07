@@ -48,23 +48,20 @@ class SDL::Receivers::TypeInstanceReceiver
         define_singleton_method property.name.singularize do |*property_values, &block|
           existing_list = type_instance.send property.name
 
-          # If there is just one parameter for a multi-valued property setter
-          if property_values.length == 1
-            # It could be a symbol, which would resolve to a predefined type instance of the same name
+          if property_values.length == 1 && (property_values[0].is_a?(Symbol) || property_values[0].is_a?(property.type))
+            # If there is just one parameter for a multi-valued property setter it could be a symbol,
+            # which would resolve to a predefined type instance of the same name or the instance itself
             if property_values[0].is_a?(Symbol)
-              predefined_value = refer_or_copy(find_instance(property_values[0]))
+              new_item = refer_or_copy(find_instance(property_values[0]))
 
-              raise "Could not find instance :#{property_values[0]} in predefined #{property.type.name} types" unless predefined_value
-
-              existing_list << predefined_value
-            # Or better: it could already be an instance of the type - e.g. when using the implemented #method_mssing
-            elsif property_values[0].is_a? property.type
-              existing_list << property_values[0]
-
-              property_values[0].parent_index = existing_list.count - 1 unless property_values[0].identifier
+              raise "Could not find instance :#{property_values[0]} in predefined #{property.type.name} types" unless new_item
             else
-              raise "Type #{property_values[0].class} of list item '#{property_values}' is incompatible with list type #{property.type}."
+              new_item = property_values[0]
+
+              new_item.parent_index = existing_list.count
             end
+
+            existing_list << new_item
           else
             property_values.map! {|item| item.is_a?(Symbol) ? find_instance!(item) : item }
 
@@ -120,5 +117,9 @@ class SDL::Receivers::TypeInstanceReceiver
 
   def refer_or_copy(instance)
     instance
+  end
+
+  def dynamic(&block)
+    instance_eval &block
   end
 end

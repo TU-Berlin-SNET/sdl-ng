@@ -1,15 +1,14 @@
-fact :maintenance do
-  subfact :maintenance_window do
-    #timespan
-  end
+type :maintenance_free
 
-  subfact :maintenance_free
+type :maintenance_window do
+  timespan
 end
 
-fact :continuous_service_improvement do
-  url
+service_properties do
+  maintenance_free
+  maintenance_window
 
-  subfact :future_roadmap
-  subfact :past_release_notes
-  subfact :feedback_page
+  url :future_roadmap
+  url :past_release_notes
+  url :feedback_page
 end

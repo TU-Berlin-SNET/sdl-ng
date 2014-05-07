@@ -6,6 +6,8 @@ describe 'the bundled examples' do
   it 'can be (un-)loaded and traces the load path of files' do
     compendium = SDL::Base::ServiceCompendium.new
 
+    compendium.clear!
+
     expect {
       compendium.load_vocabulary_from_path File.join(__dir__, '..', 'examples', 'vocabulary')
       compendium.load_service_from_path File.join(__dir__, '..', 'examples', 'services')
@@ -14,6 +16,10 @@ describe 'the bundled examples' do
     items_to_unload = []
 
     compendium.loaded_items do |loaded_item|
+      expect(loaded_item.loaded_from).not_to be_nil
+
+      next if loaded_item.loaded_from.eql? :default
+
       expect(File.exists?(loaded_item.loaded_from))
 
       items_to_unload << loaded_item

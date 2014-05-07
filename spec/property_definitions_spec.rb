@@ -4,16 +4,16 @@ require 'rspec'
 
 describe 'The definition of properties' do
   subject do
-    SDL::Receivers::TypeReceiver.new "my_example_type_#{rand(2**122)}", SDL::Base::ServiceCompendium.new
+    SDL::Base::Type.subtype "my_example_type_#{rand(2**122)}".to_sym
   end
 
   it 'allows the definition of properties' do
     subject.string :my_string_property
 
-    defined_property = subject.klass.properties.first
+    defined_property = subject.properties.first
 
-    expect(subject.klass.single_property?).to eq true
-    expect(subject.klass.single_property).to eq defined_property
+    expect(subject.single_property?).to eq true
+    expect(subject.single_property).to eq defined_property
 
     expect(defined_property.name).to eq "my_string_property"
     expect(defined_property.type).to be SDL::Types::SDLString
@@ -23,7 +23,7 @@ describe 'The definition of properties' do
   it 'allows the definition of properties, omitting the name if it should be the same as the type' do
     subject.url
 
-    defined_property = subject.klass.properties.first
+    defined_property = subject.properties.first
 
     expect(defined_property.name).to eq 'url'
     expect(defined_property.type).to be SDL::Types::SDLUrl
@@ -33,7 +33,7 @@ describe 'The definition of properties' do
   it 'allows the definition of list properties' do
     subject.list_of_integers :my_integer_list
 
-    defined_property = subject.klass.properties.first
+    defined_property = subject.properties.first
 
     expect(defined_property.name).to eq("my_integer_list")
     expect(defined_property.type).to be SDL::Types::SDLNumber

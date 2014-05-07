@@ -92,9 +92,7 @@ describe 'The mapping of URIs' do
 
   context_resource_map = {
       'All services' => lambda { compendium.services.values },
-      'All fact instances' => lambda { compendium.services.values.map(&:facts).flatten },
-      'All fact classes' => lambda { compendium.fact_classes },
-      'All type instances' => lambda { ObjectSpace.each_object(SDL::Base::Type) },
+      'All type instances' => lambda { Hash[SDL::Base::Type.instances_recursive.to_a].values },
       'All type classes' => lambda { compendium.types }
   }
 

@@ -1,5 +1,9 @@
 class SDL::Base::Type
+  extend ActiveSupport::Autoload
+
   include SDL::Base::URIMappedResource
+
+  autoload :Service
 
   class RecursiveSubtypes
     include Enumerable
@@ -85,6 +89,10 @@ class SDL::Base::Type
       @instances ||= {}
     end
 
+    def clear_instances!
+      @instances = {}
+    end
+
     def to_s
       @local_name || name
     end
@@ -99,6 +107,14 @@ class SDL::Base::Type
       retrieved_properties.each do |p|
         p.holder = self
       end
+    end
+
+    def clear_properties!
+      @properties = []
+    end
+
+    def properties_hash(including_super = false)
+      Hash[properties(including_super).collect do |p| [p.name.to_sym, p] end]
     end
 
     def propertyless?(including_super = true)
@@ -159,6 +175,12 @@ class SDL::Base::Type
       end"
     end
 
+    def unregister
+      superclass.subtypes.delete self
+
+      SDL::Base::Type.send(:remove_const, local_name.to_sym)
+    end
+
     def define_type(sym, superklass = SDL::Base::Type)
       eval class_definition_string(sym, superklass)
 
@@ -168,7 +190,7 @@ class SDL::Base::Type
     def subtype(sym, &definition)
       type = define_type(sym, self)
 
-      type.instance_eval(&definition)
+      type.instance_eval(&definition) if definition
 
       return type
     end
@@ -192,24 +214,34 @@ class SDL::Base::Type
       if name =~ /list_of_/
         multi = true
         type = SDL::Types::SDLType.codes[name.to_s.gsub('list_of_', '').singularize.to_sym]
+        sym = sym.to_s.gsub('list_of_', '').to_sym
       else
         multi = false
         type = SDL::Types::SDLType.codes[name.to_sym]
+
+        if !type
+          type = SDL::Base::Type.subtype(sym)
+          if block_given?
+            type.instance_eval &block
+          else
+            raise "No block given for type definition of #{sym}"
+          end
+        end
       end
 
-      if type
-        add_property sym, type, multi
-      else
-        super(name, *args, &block)
-      end
+      add_property sym, type, multi
+    end
+
+    def respond_to_missing?(symbol, include_all = false)
+      ! symbol.eql? (:uri_mapper)
     end
 
     def add_property(sym, type, multi)
-      deleted = properties.delete_if { |p| p.name == sym.to_s }
+      properties.delete_if { |p| (p.name == sym.to_s) && puts("Warning: Overwritten property definition of #{p.to_s}").nil? }
 
-      puts "Warning: Overwritten property definition of #{deleted[0].to_s}" unless deleted.empty?
+      property = SDL::Base::Property.new(sym, type, self, multi)
 
-      (@properties ||= []) << SDL::Base::Property.new(sym, type, self, multi)
+      (@properties ||= []) << property
 
       add_property_setters(sym, type, multi)
       add_property_getter(sym, type) unless multi
@@ -269,7 +301,7 @@ class SDL::Base::Type
 
   ##
   # Gets the values of all properties
-  def property_values(include_empty = true)
+  def property_values(include_empty = false)
     pv = Hash[self.class.properties(true).map{|p| [p, send(p.name)]}]
 
     unless include_empty

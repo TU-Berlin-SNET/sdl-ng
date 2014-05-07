@@ -12,7 +12,7 @@ module SDL
     autoload :SDLType
     autoload :SDLSimpleType
 
-    %w[datetime description duration number string url].each do |typefile|
+    %w[time description duration number string url boolean].each do |typefile|
       ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'types', "sdl_#{typefile}.rb")
     end
 
@@ -20,5 +20,7 @@ module SDL
     autoload :SDLDuration
     autoload :SDLNumber
     autoload :SDLUrl
+    autoload :SDLTime
+    autoload :SDLBoolean
   end
 end

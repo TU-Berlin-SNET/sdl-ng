@@ -1,10 +1,12 @@
 require 'rspec'
 
 shared_context 'the default compendium' do
-  let :compendium do
-    compendium = SDL::Base::ServiceCompendium.new
+  let! :compendium do
+    @compendium ||= SDL::Base::ServiceCompendium.new
 
-    compendium.instance_eval do
+    @compendium.clear!
+
+    @compendium.instance_eval do
       type :color do
         string :hex_value
 
@@ -23,7 +25,7 @@ shared_context 'the default compendium' do
       end
     end
 
-    compendium.facts_definition do
+    @compendium.facts_definition do
       service_color :is_colored
 
       string :name
@@ -36,7 +38,7 @@ shared_context 'the default compendium' do
       end
     end
 
-    compendium.type_instances_definition do
+    @compendium.type_instances_definition do
       color :red do
         hex_value '#F00'
       end
@@ -62,15 +64,15 @@ shared_context 'the default compendium' do
       end
     end
 
-    compendium.service :blue_service do
+    @compendium.service :blue_service do
       is_colored :blue, 'Blue'
     end
 
-    compendium.service :red_service do
+    @compendium.service :red_service do
       is_colored :red
     end
 
-    compendium.service :complex_service do
+    @compendium.service :complex_service do
       name 'Complex Service'
 
       multicolored :red
@@ -94,6 +96,6 @@ shared_context 'the default compendium' do
       end
     end
 
-    compendium
+    @compendium
   end
 end

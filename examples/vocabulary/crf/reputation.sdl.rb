@@ -1,3 +1,3 @@
-fact :establishing_year do
-  number :year
+service_properties do
+  number :established_in
 end

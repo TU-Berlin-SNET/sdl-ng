@@ -1,9 +1,7 @@
 class SDL::Exporters::Exporter
-  attr :compendium
   attr :options
 
-  def initialize(compendium, options = {})
-    @compendium = compendium
+  def initialize(options = {})
     @options = options
   end
 

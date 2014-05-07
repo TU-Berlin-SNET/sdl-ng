@@ -1,52 +1,63 @@
-name "Salesforce Sales Cloud"
+# base
+service_name "Salesforce Sales Cloud"
 
-has_documentation url: 'http://www.salesforce.com/sales-cloud/overview'
-
-has_add_on_repository do
+# characteristics
+cloud_service_model saas
+add_on_repository do
   url 'https://appexchange.salesforce.com'
   number_of_add_ons 2000
 end
 
-has_communication_protection https
+# charging
+is_charged_by user_account
 
-has_status_page 'http://trust.salesforce.com/trust/status'
+# compliance
+status_page 'http://trust.salesforce.com/trust/status'
+public_service_level_agreement 'http://www.salesforce.com/assets/pdf/misc/salesforce_MSA.pdf'
 
-has_public_service_level_agreement 'http://www.salesforce.com/assets/pdf/misc/salesforce_MSA.pdf'
+# delivery
+is_billed annually, in_advance
+payment_option credit_card
+payment_option cheque
+payment_option invoice
 
-has_establishing_year 1999
+# dynamics
 
-has_offline_capability annotation: 'http://help.salesforce.com/apex/HTViewHelpDoc?id=offline_def.htm'
-
-maintenance_free
-
-has_future_roadmap 'http://www.sfdcstatic.com/assets/pdf/misc/summer13_ReleasePreview.pdf'
-has_past_release_notes 'http://www.salesforce.com/newfeatures'
-
-has_cloud_service_model saas
-
-has_rest_interface
-has_soap_interface
-has_xmlrpc_interface
-
-has_browser_interface do
+# interop
+documentation 'http://www.salesforce.com/sales-cloud/overview'
+rest_interface
+soap_interface
+xmlrpc_interface
+browser_interface do
   compatible_browser internet_explorer, '7'
   compatible_browser firefox, 'recent'
   compatible_browser chrome, 'recent'
   compatible_browser safari, '5', annotation: 'on Mac'
 end
 
-has_export_capability csv
+dynamic do
+  fetched_features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview', '.slide h3 + *'
 
-is_billed annually, in_advance
+  feature 'Mobile', fetched_features[0]
+  feature 'Contact Management', fetched_features[1]
+  feature 'Opportunity Management', fetched_features[2]
+  feature 'Chatter', fetched_features[3]
+  feature 'Email Integration', fetched_features[4]
+end
 
-has_payment_option credit_card
-has_payment_option cheque
-has_payment_option invoice
+# optimizing
+maintenance_free
+future_roadmap 'http://www.sfdcstatic.com/assets/pdf/misc/summer13_ReleasePreview.pdf'
+past_release_notes 'http://www.salesforce.com/newfeatures'
 
-features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview', '.slide h3 + *'
+# portability
+can_export csv
 
-has_feature 'Mobile', features[0]
-has_feature 'Contact Management', features[1]
-has_feature 'Opportunity Management', features[2]
-has_feature 'Chatter', features[3]
-has_feature 'Email Integration', features[4]
+# protection
+is_protected_by https
+
+# reliability
+can_be_used_offline 'http://help.salesforce.com/apex/HTViewHelpDoc?id=offline_def.htm'
+
+# reputation
+established_in 1999

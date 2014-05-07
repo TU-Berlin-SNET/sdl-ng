@@ -6,16 +6,13 @@ require 'rspec'
 store_translation = lambda {
   I18n.backend.store_translations('en', :sdl => {
       :type => {
-          :color => 'A color'
-      },
-      :fact => {
-          :multicolor => 'The service is multi-colored.',
+          :color => 'A color',
           :color_supercolor => 'The service has a supercolor.'
       },
       :property => {
-          :fact => {
-              :favourite_colors => {
-                  :favourites => 'The favourite colors'
+          :type => {
+              :color => {
+                  :hex_value => 'The hexadecimal color value.'
               }
           }
       },
@@ -44,29 +41,25 @@ describe 'Documentation of SDL objects' do
     expect(Color.documentation).to eq('A color')
   end
 
-  it 'can document facts' do
-    expect(Multicolor.documentation).to eq('The service is multi-colored.')
-  end
-
-  it 'can document subfacts' do
+  it 'can document subtypes' do
     expect(Supercolor.documentation).to eq('The service has a supercolor.')
   end
 
   it 'can document properties' do
-    expect(FavouriteColors.properties.first.documentation).to eq('The favourite colors')
+    expect(Color.properties.first.documentation).to eq('The hexadecimal color value.')
   end
 
   it 'can document instances' do
-    expect(compendium.type_instances[Color][:red].documentation).to eq('The color "red"')
+    expect(Color[:red].documentation).to eq('The color "red"')
   end
 
   it 'adds missing translations to the I18n backend as "translate" string after trying to translate a missing key' do
-    expect(compendium.type_instances[Color][:green].documentation).to eq('translation missing: en.sdl.instance.type.color.green')
+    expect(Color[:green].documentation).to eq('translation missing: en.sdl.instance.type.color.green')
 
     expect(I18n.backend.instance_variable_get(:@translations)[:en][:sdl][:instance][:type][:color][:green]).to eq('Translate')
   end
 
   it 'evaluates statements enclosed within #{}' do
-    expect(compendium.type_instances[Color][:blue].documentation).to eq('#00F')
+    expect(Color[:blue].documentation).to eq('#00F')
   end
 end

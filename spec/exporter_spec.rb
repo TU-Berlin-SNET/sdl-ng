@@ -7,7 +7,7 @@ describe 'The exporters' do
   include_context 'the default compendium'
 
   let :xsd_exporter do
-    SDL::Exporters::XSDSchemaExporter.new(compendium)
+    SDL::Exporters::XSDSchemaExporter.new
   end
 
   let :schema do
@@ -70,7 +70,7 @@ describe 'The exporters' do
         xml_export = service.to_xml
 
         begin
-          SDL::Exporters::XMLServiceExporter.new(compendium).export_service_to_file(service, file.path)
+          SDL::Exporters::XMLServiceExporter.new.export_service_to_file(service, file.path)
           expect(file.read).to eq xml_export
         ensure
           file.close

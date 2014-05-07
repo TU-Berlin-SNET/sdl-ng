@@ -11,20 +11,18 @@ shared_examples_for 'it can use identifiers for predefined types' do
       is_colored #{red_identifier}, 'Ruby Red'
     end"
 
-    expect(compendium.services[:red_service].is_colored.color).to eq(compendium.type_instances[Color][:red])
+    expect(compendium.services[:red_service].is_colored.color).to eq(SDL::Base::Type::Color[:red])
     expect(compendium.services[:red_service].is_colored.name).to eq("Ruby Red")
   end
 
   it 'lets service definitions use symbolic names also in lists' do
     eval "compendium.service :multicolored_service do
-      multicolored do
-        color #{red_identifier}
-        color #{green_identifier}
-      end
+      multicolored #{red_identifier}
+      multicolored #{green_identifier}
     end"
 
-    expect(compendium.services[:multicolored_service].multicolored[0]).to eq(compendium.type_instances[Color][:red])
-    expect(compendium.services[:multicolored_service].multicolored[1]).to eq(compendium.type_instances[Color][:green])
+    expect(compendium.services[:multicolored_service].multicolored[0]).to eq(SDL::Base::Type::Color[:red])
+    expect(compendium.services[:multicolored_service].multicolored[1]).to eq(SDL::Base::Type::Color[:green])
   end
 end
 
@@ -144,7 +142,7 @@ describe 'Doing type instance definition' do
         is_colored :blue
       end
 
-      expect(compendium.services[:blue_service].is_colored.to_s).to eq 'Color'
+      expect(compendium.services[:blue_service].is_colored.to_s).to eq 'SDL::Base::Type::ServiceColor'
     end
   end
 
@@ -178,14 +176,16 @@ describe 'Doing type instance definition' do
 
     property_values = service.property_values
 
-    expect(property_values[property_values.keys[0]]).to eq(SDL::Base::Type::Color[:yellow])
-    expect(property_values[property_values.keys[1]]).to eq 'Yellow'
+    is_colored = SDL::Base::Type::Service.properties_hash[:is_colored]
+
+    expect(property_values[is_colored].color).to eq(SDL::Base::Type::Color[:yellow])
+    expect(property_values[is_colored].name).to eq 'Yellow'
   end
 
   it 'can reject empty property values if specifying include_empty' do
     property_values = compendium.service :empty_service do
       is_colored
-    end.color.property_values(false)
+    end.is_colored.property_values(false)
 
     expect(property_values).to be_empty
   end
@@ -193,11 +193,11 @@ describe 'Doing type instance definition' do
   it 'returns its service for the parent of facts' do
     red_service = compendium.services[:red_service]
 
-    expect(red_service.facts[0].parent).to eq red_service
+    expect(red_service.property_values.values.first.parent).to eq red_service
   end
 
   it 'returns a parent type or fact for the parent of types' do
-    compendium.facts_definition do
+    compendium.instance_eval do
       type :third_level_type
 
       type :second_level_type do
@@ -206,10 +206,6 @@ describe 'Doing type instance definition' do
 
       type :first_level_type do
         second_level_type
-      end
-
-      fact :fact_with_children do
-        first_level_type
       end
 
       third_level_type :third
@@ -223,13 +219,15 @@ describe 'Doing type instance definition' do
       end
     end
 
-    service = compendium.service :service_with_children do
-      has_fact_with_children do
-        first_level_type :first
-      end
+    compendium.facts_definition do
+      first_level_type :first
     end
 
-    first_level = service.facts[0].first_level_type
+    service = compendium.service :service_with_children do
+      first :first
+    end
+
+    first_level = service.first
     second_level = first_level.second_level_type
     third_level = second_level.third_level_type
 
@@ -238,26 +236,22 @@ describe 'Doing type instance definition' do
   end
 
   it 'returns nil for #parent_index, if the type is used as value of a single-valued property' do
-    new_color = Color.new
+    new_color = SDL::Base::Type::Color.new
 
     compendium.service :service_single_value do
-      has_color do
-        color new_color
-      end
+      is_colored new_color
     end
 
     expect(new_color.parent_index).to eq nil
   end
 
   it 'returns the index of a value in a multi-valued property when giving a compatible value for the list' do
-    first_color = Color.new
-    second_color = Color.new
+    first_color = SDL::Base::Type::Color.new
+    second_color = SDL::Base::Type::Color.new
 
     compendium.service :service_multi_value do
-      has_multicolor do
-        color first_color
-        color second_color
-      end
+      multicolored first_color
+      multicolored second_color
     end
 
     expect(first_color.parent_index).to eq 0
@@ -266,48 +260,35 @@ describe 'Doing type instance definition' do
 
   it 'returns the index of a value in a multi-valued property when specifying a list value' do
     service = compendium.service :service_multi_value do
-      has_multicolor do
+      favourite_color do
         color do
           hex_value '#123'
         end
+      end
 
+      favourite_color do
         color do
           hex_value '#456'
         end
       end
     end
 
-    expect(service.multicolor.colors[0].parent_index).to eq 0
-    expect(service.multicolor.colors[1].parent_index).to eq 1
+    expect(service.favourite_colors[0].parent_index).to eq 0
+    expect(service.favourite_colors[1].parent_index).to eq 1
   end
 
   it 'does not set #parent_index if given a predefined type' do
     service = compendium.service :service_multi_value_predefined_type do
-      color red
+      is_colored red
     end
 
-    expect(compendium.type_instances[Color][:red].parent_index).to eq nil
-  end
-
-  it 'returns the index of a fact instance in relation to its fact class' do
-    service = compendium.service :service_multiple_facts do
-      has_color :red
-      has_color :green
-      has_color :blue
-
-      has_multicolor
-    end
-
-    expect(service.colors[0].parent_index).to eq 0
-    expect(service.colors[1].parent_index).to eq 1
-    expect(service.colors[2].parent_index).to eq 2
-    expect(service.multicolors[0].parent_index).to eq 0
+    expect(SDL::Base::Type::Color.instances[:red].parent_index).to eq nil
   end
 
   it 'marks fact types with multiple properties as multi_property?' do
-    compendium.fact_classes.each do |fact_class|
-      if fact_class.properties.count > 1
-        expect(fact_class.multi_property?).to eq true
+    SDL::Base::Type.subtypes_recursive.each do |type|
+      if type.properties.count > 1
+        expect(type.multi_property?).to eq true
       end
     end
   end

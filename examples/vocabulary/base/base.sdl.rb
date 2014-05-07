@@ -1,8 +1,8 @@
 type :timespan do
-  datetime :start
-  datetime :end
+  time :start
+  time :end
 end
 
-fact :name do
-  string :name
+service_properties do
+  string :service_name
 end

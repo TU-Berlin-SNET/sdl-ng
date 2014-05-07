@@ -11,10 +11,12 @@ class SDL::Base::ServiceCompendium
   include ServiceLoadTransaction
 
   ##
-  # A list of all +Type+ classes registered in this compendium
+  # An enumerator of all registered +Type+ classes
   # @!attribute [r] types
-  # @return [Array<Class>]
-  attr :types
+  # @return [Enumerable<Class>]
+  def types
+    SDL::Base::Type.subtypes_recursive.drop(2)
+  end
 
   ##
   # Registered codes for +SDLSimpleType+s and +Type+s.
@@ -48,7 +50,15 @@ class SDL::Base::ServiceCompendium
   #
   # @!attribute [r] type_instances
   # @return Hash{Class => Hash{Symbol => Type}}
-  attr :type_instances
+  def type_instances
+    type_instances = {}
+
+    types.each do |type|
+      type_instances[type] = type.instances
+    end
+
+    type_instances
+  end
 
   ##
   # A map of service names to service objects. It contains all loaded services in
@@ -70,27 +80,47 @@ class SDL::Base::ServiceCompendium
   ##
   # Initializes the compendium.
   def initialize
-    @types, @services = [], {}
+    @services = {}
     @type_instances, @sdl_simple_type_codes, @type_codes, @all_codes = {}, {}, {}, {}
 
     @type_instances.default = {}
 
     register_default_types
+
+    @current_uri = :default
+
+    type :service
   end
 
   ##
   # A compendium is empty, if there are neither types, nor services loaded.
   # @return [Boolean] If this compendium is empty.
   def empty?
-    @types.empty? &&
-    @services.empty? &&
-    @type_instances.empty? &&
-    @type_codes.empty?
+    SDL::Base::Type.subtypes_recursive.count == 2 &&
+    SDL::Base::Type.instances_recursive.to_a.empty?
+  end
+
+  # Clears all loaded types and instances
+  def clear!
+    SDL::Base::Type::Service.clear_instances!
+
+    SDL::Base::Type.subtypes_recursive.drop(2).each do |type|
+      type.codes.each do |code|
+        @all_codes.delete code
+        @type_codes.delete code
+      end
+
+      type.unregister
+    end
+
+    SDL::Base::Type::Service.clear_properties!
   end
 
   def facts_definition(&facts_definitions)
     type :service, &facts_definitions
   end
+
+  alias_method :service_properties, :facts_definition
 
   def type_instances_definition(&type_instances_definition)
     self.instance_eval &type_instances_definition
@@ -115,10 +145,16 @@ class SDL::Base::ServiceCompendium
   # Defines a new type and returns it
   def type(sym, &type_definition)
     type = SDL::Base::Type.subtype(sym, &type_definition)
-    type.subtypes_recursive.each do |type|
-      type.loaded_from = @current_uri
-      register_codes type
-      register_sdltype type
+
+    SDL::Base::Type.subtypes_recursive.drop(1).each do |type|
+      # All newly loaded types have loaded_from.nil?
+      # Cannot iterate over subtypes, as types can define property types on the fly, which are
+      # certainly NOT subtypes of themselves
+      if(type.loaded_from.nil?)
+        type.loaded_from = @current_uri
+        register_codes type
+        register_sdltype type
+      end
     end
 
     type
@@ -165,45 +201,39 @@ class SDL::Base::ServiceCompendium
   ##
   # Registers all classes by their #local_name to be used in all scopes
   def register_classes_globally
-    @types.each do |defined_class|
+    SDL::Base::Type.subtypes_recursive.each do |defined_class|
       Object.send(:remove_const, defined_class.local_name) if Object.const_defined? defined_class.local_name.to_sym
       Object.const_set defined_class.local_name, defined_class
     end
   end
 
   ##
-  # Returns an iterator for all items, which were loaded by this compendium
+  # Yields all items, which were loaded by this compendium
   def loaded_items
-    @types.each do |type_class|
-      yield type_class
-    end
+    SDL::Base::Type.subtypes_recursive.drop(1).each do |type|
+      yield type
 
-    @type_instances.each do |type_class, instance_hash|
-      instance_hash.each do |symbol, instance|
+      type.instances.each do |sym, instance|
         yield instance
       end
-    end
-
-    @services.each do |symbol, service|
-      yield service
     end
   end
 
   ##
   # Unloads all items with the specified uri from this service compendium
   def unload(uri)
-    @services.delete_if do |symbolic_name, service| service.loaded_from.eql?(uri) end
+    SDL::Base::Type::Service.instances.delete_if do |symbolic_name, service|
+      service.loaded_from.eql?(uri)
+    end
 
-    @types.delete_if do |item|
-      if item.loaded_from.eql?(uri) then
-        @type_instances.delete(item)
+    SDL::Base::Type.subtypes_recursive.each do |type|
+      if type.loaded_from.eql?(uri) then
+        type.codes.each do |code|
+          @all_codes.delete code
+          @type_codes.delete code
+        end
 
-        @all_codes.delete_if do |code, type| type.eql? item end
-        @type_codes.delete_if do |code, type| type.eql? item end
-
-        true
-      else
-        false
+        type.unregister
       end
     end
   end

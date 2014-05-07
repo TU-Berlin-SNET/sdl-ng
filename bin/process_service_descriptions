@@ -1,21 +1,20 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
-profile = false
-mock = false
+options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: process_service_descriptions [-p]'
 
   opts.on('-p', '--profile', 'Enable profiling') do |p|
-    profile = true
+    options[:profile] = true
   end
 
-  opts.on('-m', '--mock', 'Mock HTTP request') do |m|
-    mock = true
+  opts.on('-d', '--dynamic', 'Fetch dynamic data') do |m|
+    options[:dynamic] = true
   end
 end.parse
 
-if profile
+if options[:profile]
   require 'ruby-prof'
 
   RubyProf.start
@@ -27,10 +26,10 @@ require 'sdl'
 require 'active_support'
 require 'i18n'
 
-if mock
-  SDL::Util::NokogiriUtils.module_eval do
-    def fetch_from_url(url, *search)
-      []
+unless options[:dynamic]
+  SDL::Receivers::TypeInstanceReceiver.class_eval do
+    def dynamic
+      nil
     end
   end
 end
@@ -43,7 +42,7 @@ compendium = SDL::Base::ServiceCompendium.new
 
 # Load SDL
 Dir.glob(File.join(Dir.pwd, '**', '*.sdl.rb')).sort.each do |filename|
-  compendium.facts_definition do
+  compendium.instance_eval do
     eval(File.read(filename), binding, filename)
   end
 end
@@ -117,6 +116,6 @@ end
 
 puts 'Finished'
 
-if profile
+if options[:profile]
   RubyProf::CallTreePrinter.new(RubyProf.stop).print(File.new('profile.kcachegrind', 'w'), {})
 end

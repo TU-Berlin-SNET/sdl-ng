@@ -51,7 +51,7 @@ module SDL
       def self.walk_the_class_name(klass)
         klass_key = klass.local_name.underscore.downcase
 
-        if klass.superclass.eql?(SDL::Base::Fact) || klass.superclass.eql?(SDL::Base::Type)
+        if klass.superclass.eql?(SDL::Base::Type)
           klass_key = "#{klass.superclass.local_name.underscore.downcase}.#{klass_key}"
         else
           klass_key = "#{walk_the_class_name(klass.superclass)}_#{klass_key}"
