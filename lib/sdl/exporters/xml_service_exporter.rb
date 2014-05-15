@@ -8,7 +8,7 @@ class SDL::Exporters::XMLServiceExporter < SDL::Exporters::ServiceExporter
   end
 
   def build_service(service, xml)
-    xml.service('xmlns' => 'http://www.open-service-compendium.org') do
+    xml.service('xmlns' => 'http://www.open-service-compendium.org', 'uri' => service.uri) do
       serialize_type_instance service, xml
     end
   end
@@ -16,16 +16,12 @@ class SDL::Exporters::XMLServiceExporter < SDL::Exporters::ServiceExporter
   def serialize_type_instance(type_instance, xml)
     type_instance.property_values.each do |property, value|
       [value].flatten.each do |v|
-        if v.class < SDL::Base::Type
-          xml.send(property.xsd_element_name + '_', (!value.is_a?(Array) && value.identifier) ? {'identifier' => value.identifier.to_s} : {}) do
-            v.annotations.each do |annotation|
-              xml.annotation annotation
-            end
-            xml.documentation v.documentation if (!value.is_a?(Array) && value.identifier)
+        xml.send(property.xsd_element_name + '_', v.xml_attributes) do
+          if v.class < SDL::Base::Type
             serialize_type_instance(v, xml)
+          else
+            xml.text v.xml_value
           end
-        else
-          xml.send(property.xsd_element_name + '_', v)
         end
       end
     end

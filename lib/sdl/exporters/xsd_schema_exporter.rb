@@ -36,11 +36,14 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
             xml['ns'].element :name => 'documentation', :minOccurs => 0, :maxOccurs => 'unbounded', :type => 'ns:string' do
               document(xml, I18n.t('sdl.xml.documentation'))
             end
-            xml['ns'].element :name => 'annotation', :minOccurs => 0, :maxOccurs => 'unbounded', :type => 'ns:string' do
-              document(xml, I18n.t('sdl.xml.annotation'))
-            end
+          end
+          xml['ns'].attribute :name => 'annotation', :type => 'ns:string' do
+            document(xml, I18n.t('sdl.xml.annotation'))
           end
           xml['ns'].attribute :name => 'identifier' do
+            document(xml, I18n.t('sdl.xml.identifier'))
+          end
+          xml['ns'].attribute :name => 'uri' do
             document(xml, I18n.t('sdl.xml.identifier'))
           end
         end
@@ -49,7 +52,7 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
           xml['ns'].complexType :name => type_class.xsd_type_name do
             document(xml, type_class.documentation)
             xml['ns'].complexContent do
-              xml['ns'].extension :base => type_class.is_sub? ? type_class.superclass.xsd_type_name : 'SDLTypeBase' do
+              xml['ns'].restriction :base => type_class.is_sub? ? type_class.superclass.xsd_type_name : 'SDLTypeBase' do
                 unless type_class.properties.empty?
                   xml['ns'].sequence do
                     type_class.properties.each do |property|
@@ -59,9 +62,25 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
                     end
                   end
                 end
+
+                if(type_class.eql? SDL::Base::Type::Service)
+                  xml['ns'].attribute :name => 'uri', :type => 'ns:anyURI'
+                else
+                  xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name
+                end
               end
             end
           end
+
+          xml['ns'].simpleType :name => type_class.xsd_type_identifier_name do
+            xml['ns'].restriction :base => type_class.is_sub? ? type_class.superclass.xsd_type_identifier_name : 'ns:string' do
+              type_class.instances.each do |symbol, instance|
+                xml['ns'].enumeration :value => symbol do
+                  document(xml, instance.documentation)
+                end
+              end
+            end
+          end unless type_class.eql? SDL::Base::Type::Service
         end
       end
     end
@@ -69,13 +88,26 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
 
   # Creates an xml element corresponding to the SDL property
   def extend_property(property, xml)
-    if property.multi?
-      xml['ns'].element :name => property.name.singularize, :type => property.type.xml_type, :minOccurs => 0, :maxOccurs => 'unbounded' do
+    if property.simple_type?
+      xml['ns'].element :name => property.multi? ? property.name.singularize : property.name, :minOccurs => 0, :maxOccurs => property.multi? ? 'unbounded' : 1 do
         yield
+        xml['ns'].complexType do
+          xml['ns'].simpleContent do
+            xml['ns'].extension :base => property.type.xml_type do
+              xml['ns'].attribute :name => 'annotation'
+            end
+          end
+        end
       end
     else
-      xml['ns'].element :name => property.name, :type => property.type.xml_type, :minOccurs => 0 do
-        yield
+      if property.multi?
+        xml['ns'].element :name => property.name.singularize, :type => property.type.xml_type, :minOccurs => 0, :maxOccurs => 'unbounded' do
+          yield
+        end
+      else
+        xml['ns'].element :name => property.name, :type => property.type.xml_type, :minOccurs => 0 do
+          yield
+        end
       end
     end
   end
