@@ -29,6 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rdf', '~> 1.1'
   spec.add_runtime_dependency 'rdf-rdfxml', '~> 1.1'
   spec.add_runtime_dependency 'multi_json', '~> 1.8'
+  spec.add_runtime_dependency 'money', '~> 6.1'
+  spec.add_runtime_dependency 'monetize', '~> 0.3'
 
   spec.add_development_dependency 'yard', '~> 0.8.7.3'
   spec.add_development_dependency 'yard-redcarpet-ext', '~> 0.0.3'
