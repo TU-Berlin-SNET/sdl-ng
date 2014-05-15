@@ -44,6 +44,8 @@ en:
         documentation: 'The documentation URL is #{url}'
         name: 'The service name is: #{name}'
       type:
+        audit_option:
+          audit_log: Audit log
         billing_term:
           annually: Annually billing
           monthly: Monthly billing
@@ -53,6 +55,9 @@ en:
           internet_explorer: Internet Explorer
           opera: Opera Browser
           safari: Apple Safari
+        browser_plugin:
+          flash: Adobe Flash
+          silverlight: Microsoft Silverlight
         charge_unit:
           floating_license: The number of floating licenses
           user_account: The number of user accounts
@@ -64,6 +69,8 @@ en:
         communication_protection:
           https: HTTPS encryption
           vpn: VPN connection
+        country:
+          germany: Germany
         data_capability_operation:
           export: Exporting data
           import: Importing data
@@ -81,6 +88,9 @@ en:
           text: Plain text
           word: Microsoft Word
           xls: Microsoft Excel
+        jurisdiction:
+          european_union: European Union
+          safe_harbour: Safe Harbour
         key_control:
           provider_only: Only the provider controls the encryption keys
           shared: Both user and provider control the encryption keys
@@ -149,14 +159,17 @@ en:
           can_export: Exportable data formats
           can_import: Importable data formats
           cloud_service_model: Cloud service model
+          compatible_browsers: Compatible Browsers
           data_deletion_policy: Data deletion policy
           data_encryption: Service data is encrypted
           data_location: Data location
           documentation: Service documentation URL
           established_in: Established in
-          feature: The service features
+          exportable_data_formats: Exportable data formats
+          features: Features
           feedback_page: Feedback page URL
           future_roadmap: Future roadmap URL
+          importable_data_formats: Importable data formats
           is_billed: Billing and Payment info
           is_charged_by: Charging unit
           is_protected_by: Protection means of service
@@ -166,6 +179,7 @@ en:
           payment_options: Payment options
           provision_end_user_duration: The duration for provisioning an end user.
           public_service_level_agreement: URL of public SLA
+          required_plugins: Required Plugins
           rest_interface: The REST interface
           service_categories: Categories
           service_name: Service name

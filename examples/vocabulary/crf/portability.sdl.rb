@@ -14,14 +14,7 @@ data_format :png
 data_format :jpeg
 data_format :svg
 
-type :data_capability do
-  data_format
-
-  subtype :export_capability
-  subtype :import_capability
-end
-
 service_properties do
-  list_of_export_capabilities :can_export
-  list_of_import_capabilities :can_import
+  list_of_data_formats :exportable_data_formats
+  list_of_data_formats :importable_data_formats
 end

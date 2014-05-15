@@ -40,22 +40,10 @@ type :interface do
   subtype :rest_interface
   subtype :soap_interface
   subtype :xmlrpc_interface
-
-  subtype :browser_interface do
-    list :compatible_browsers do
-      browser
-      string :min_version
-    end
-
-    list :required_plugins do
-      browser_plugin
-      string :min_version
-    end
-  end
 end
 
 service_properties do
-  feature do
+  list :features do
     string :feature_name
     description
   end
@@ -65,5 +53,14 @@ service_properties do
   rest_interface
   soap_interface
   xmlrpc_interface
-  browser_interface
+
+  list :compatible_browsers do
+    browser
+    string :min_version
+  end
+
+  list :required_plugins do
+    browser_plugin
+    string :min_version
+  end
 end

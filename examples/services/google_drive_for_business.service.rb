@@ -21,12 +21,11 @@ payment_option credit_card
 # interop
 documentation 'http://www.google.com/enterprise/apps/business/products.html#drive'
 rest_interface 'https://developers.google.com/drive/'
-browser_interface do
-  compatible_browser firefox, 'recent'
-  compatible_browser chrome, 'recent'
-  compatible_browser safari, '5', annotation: 'on Mac'
-  compatible_browser internet_explorer, '9'
-end
+
+compatible_browser firefox, 'recent'
+compatible_browser chrome, 'recent'
+compatible_browser safari, '5', annotation: 'on Mac'
+compatible_browser internet_explorer, '9'
 
 dynamic do
   # Fetch a list of features from the Google Apps page
@@ -51,7 +50,7 @@ feedback_page 'https://plus.google.com/+GoogleDrive/posts'
   "For drawings" => [:png, :jpeg, :svg, :pdf]
 }.each do |annotation, formats_list|
   formats_list.each do |f|
-    can_export f, annotation: annotation
+    exportable_data_format f, annotation: annotation
   end
 end
 
@@ -59,7 +58,19 @@ end
 is_protected_by https
 
 # reliability
-can_be_used_offline 'https://support.google.com/drive/answer/2375012'
+can_be_used_offline yes, annotation: 'https://support.google.com/drive/answer/2375012'
 
 # reputation
 established_in 2006
+
+# trust
+company_type plc
+employs 49829
+partner_network 'http://www.google.de/intx/de/enterprise/apps/business/partners.html'
+last_years_revenue '59820000000 $'
+report financial_statement, quarterly
+
+reference_customer 'motorola' do
+  url 'https://www.youtube.com/watch?v=56ETTYvGsg4'
+  users 20000
+end

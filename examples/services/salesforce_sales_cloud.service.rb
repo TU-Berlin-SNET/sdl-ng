@@ -28,12 +28,11 @@ documentation 'http://www.salesforce.com/sales-cloud/overview'
 rest_interface
 soap_interface
 xmlrpc_interface
-browser_interface do
-  compatible_browser internet_explorer, '7'
-  compatible_browser firefox, 'recent'
-  compatible_browser chrome, 'recent'
-  compatible_browser safari, '5', annotation: 'on Mac'
-end
+
+compatible_browser internet_explorer, '7'
+compatible_browser firefox, 'recent'
+compatible_browser chrome, 'recent'
+compatible_browser safari, '5', annotation: 'on Mac'
 
 dynamic do
   fetched_features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview', '.slide h3 + *'
@@ -51,13 +50,25 @@ future_roadmap 'http://www.sfdcstatic.com/assets/pdf/misc/summer13_ReleasePrevie
 past_release_notes 'http://www.salesforce.com/newfeatures'
 
 # portability
-can_export csv
+exportable_data_format csv
 
 # protection
 is_protected_by https
 
 # reliability
-can_be_used_offline 'http://help.salesforce.com/apex/HTViewHelpDoc?id=offline_def.htm'
+can_be_used_offline yes, annotation: 'http://help.salesforce.com/apex/HTViewHelpDoc?id=offline_def.htm'
 
 # reputation
 established_in 1999
+
+# trust
+company_type plc
+employs 12000
+partner_network 'http://www.salesforce.com/partners/overview/'
+last_years_revenue '4070000000 $'
+report financial_statement, quarterly
+
+reference_customer 'Philips' do
+  url 'http://www.salesforce.com/customers/stories/philips.jsp'
+  users 7000
+end
