@@ -254,8 +254,8 @@ describe 'Doing type instance definition' do
       multicolored second_color
     end
 
-    expect(first_color.parent_index).to eq 0
-    expect(second_color.parent_index).to eq 1
+    expect(Service[:service_multi_value].multicolored[0].parent_index).to eq 0
+    expect(Service[:service_multi_value].multicolored[1].parent_index).to eq 1
   end
 
   it 'returns the index of a value in a multi-valued property when specifying a list value' do
