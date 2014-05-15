@@ -17,21 +17,25 @@ class SDL::Types::SDLSimpleType
   #
   # Invokes +from_+ methods of subtypes, if +value+ is not subtype of the wrapped Ruby type.
   #
-  # @param[Object] value
+  # @param[Object] raw_value
   #   The instance value. Unless the value class is a subclass of the wrapped Ruby class,
   #   perform conversion by invoking +from_#{classname}+, e.g. +from_string+ or +from_integer+.
   #
   #   Subclasses are expected to implement this conversion function.
-  def initialize(value)
-    @raw_value = value
+  def initialize(raw_value)
+    @raw_value = raw_value
 
-    if value.class <= self.class.wrapped_type
-      @value = value
+    initialize_value
+  end
+
+  def initialize_value
+    if raw_value.class <= self.class.wrapped_type
+      @value = raw_value
     else
       begin
-        send(conversion_method_name(value), value)
+        send(conversion_method_name(raw_value), raw_value)
       rescue NoMethodError
-        raise "Cannot create instance of #{self.class.name} with a #{value.class.name} value. Please implement #{self.class.name}##{conversion_method_name(value)}"
+        raise "Cannot create instance of #{self.class.name} with a #{raw_value.class.name} value. Please implement #{self.class.name}##{conversion_method_name(raw_value)}"
       end
     end
   end
@@ -43,6 +47,20 @@ class SDL::Types::SDLSimpleType
   def to_s
     @value.to_s
   end
+
+  def annotated?
+    ! @annotations.blank?
+  end
+
+  def annotations
+    @annotations ||= []
+  end
+
+  # The index of this type instance in the parent list
+  attr_accessor :parent_index
+
+  # The parent of this type.
+  attr_accessor :parent
 
   private
     def conversion_method_name(value)

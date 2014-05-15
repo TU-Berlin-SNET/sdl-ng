@@ -190,7 +190,7 @@ class SDL::Base::Type
     def subtype(sym, &definition)
       type = define_type(sym, self)
 
-      type.instance_eval(&definition) if definition
+      type.instance_eval(&definition) if block_given?
 
       return type
     end
@@ -198,9 +198,7 @@ class SDL::Base::Type
     ##
     # Define a list of a type, which is defined in the block.
     def list(sym, &block)
-      list_type = define_type(sym.to_s.singularize.to_sym)
-
-      list_type.instance_eval(&block)
+      list_type = SDL::Base::Type.subtype(sym.to_s.singularize.to_sym, &block)
 
       # Designate as list type
       list_type.list_item = true
@@ -233,7 +231,7 @@ class SDL::Base::Type
     end
 
     def respond_to_missing?(symbol, include_all = false)
-      ! symbol.eql? (:uri_mapper)
+      false
     end
 
     def add_property(sym, type, multi)
@@ -292,7 +290,9 @@ class SDL::Base::Type
         SDL::Receivers::TypeInstanceReceiver.new(self).send(value.first[0].to_s, value.first[1])
       else
         # Else, setting values is carried out by a value list, e.g. 1, 2
-        raise "Specified value '#{value}' for non-existing property." unless property
+        unless property
+          raise "Specified value '#{value}' for non-existing property."
+        end
 
         SDL::Receivers::TypeInstanceReceiver.new(self).send(property.name, value)
       end
@@ -328,6 +328,16 @@ class SDL::Base::Type
 
   def annotations
     @annotations ||= []
+  end
+
+  # Two type instances are the same if they either have the same identifier,
+  # or are the same object
+  def ==(other)
+    if(identifier && other.respond_to?(:identifier))
+      identifier == other.identifier
+    else
+      equal? other
+    end
   end
 
   # An identifier for type instances

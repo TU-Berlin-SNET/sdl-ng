@@ -23,7 +23,7 @@ class SDL::Base::ServiceCompendium
     def load_vocabulary_from_string(vocabulary_definition, uri)
       begin
         with_uri uri do
-          eval vocabulary_definition, binding
+          self.instance_eval vocabulary_definition
         end
       rescue Exception => e
         unload uri

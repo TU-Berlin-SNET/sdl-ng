@@ -74,7 +74,7 @@ module SDL::Base
     end
 
     def documentation_key
-      "sdl.instance.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{@identifier}"
+      "sdl.instance.#{SDL::Util::Documentation.walk_the_class_name(self.class)}.#{identifier}"
     end
   end
 
@@ -85,6 +85,8 @@ module SDL::Base
     def documentation_key
       # Search class and ancestors, if any defines a documentation key
       @holder.ancestors.each do |ancestor|
+        next if (ancestor <=> SDL::Base::Type) == nil
+
         break if ancestor.eql?(SDL::Base::Type) || ancestor.eql?(SDL::Types::SDLType)
 
         key = "sdl.property.#{SDL::Util::Documentation.walk_the_class_name(ancestor)}.#{@name}"
