@@ -14,9 +14,13 @@ class SDL::Receivers::TypeInstanceReceiver
         # There are different ways of setting a single valued property
         # -> Specifying a symbol: "Set the value of this property to the instance referred by the symbol"
         # -> Specifying at least a symbol: "Create a new instance of this type and set its properties to the values"
-        define_singleton_method property.name do |*args|
+        define_singleton_method property.name do |*args, &block|
           if property.simple_type?
             type_instance.set_sdl_property property, args[0]
+
+            if args[1]
+              type_instance.get_sdl_value(property).annotations << args[1][:annotation]
+            end
           else
             # Replace all symbols with their type instance
             args.map! {|item| item.is_a?(Symbol) ? refer_or_copy(find_instance!(item)) : item }
@@ -24,14 +28,14 @@ class SDL::Receivers::TypeInstanceReceiver
             begin
               if(args.count == 1 && args[0].class <= property.type)
                 # The first argument refers to a predefined instance of the property type. Set it as value
-                type_instance.set_sdl_property property, args[0]
+                type_instance.set_sdl_property property, refer_or_copy(args[0])
               else
                 # The arguments are values for a new instance
                 property_type_instance = property.type.new
 
                 property_type_instance.set_sdl_values(*args)
 
-                SDL::Receivers::TypeInstanceReceiver.new(property_type_instance).instance_exec(&block) if block_given?
+                SDL::Receivers::TypeInstanceReceiver.new(property_type_instance).instance_eval(&block) if block
 
                 type_instance.set_sdl_property property, property_type_instance
               end
@@ -45,37 +49,41 @@ class SDL::Receivers::TypeInstanceReceiver
       else
         # Multi-valued properties are added to by their singular name,
         # e.g. 'browsers' is set by invoking 'browser'
-        define_singleton_method property.name.singularize do |*property_values, &block|
+        define_singleton_method property.name.singularize do |*arguments, &block|
           existing_list = type_instance.send property.name
 
-          if property_values.length == 1 && (property_values[0].is_a?(Symbol) || property_values[0].is_a?(property.type))
-            # If there is just one parameter for a multi-valued property setter it could be a symbol,
-            # which would resolve to a predefined type instance of the same name or the instance itself
-            if property_values[0].is_a?(Symbol)
-              new_item = refer_or_copy(find_instance(property_values[0]))
+          arguments.map! {|item| item.is_a?(Symbol) ? refer_or_copy(find_instance!(item)) : item }
 
-              raise "Could not find instance :#{property_values[0]} in predefined #{property.type.name} types" unless new_item
-            else
-              new_item = property_values[0]
+          if arguments[0].is_a?(property.type)
+            # The first argument is the value
+            new_item = refer_or_copy(arguments[0])
 
-              new_item.parent_index = existing_list.count
+            arguments.each do |arg|
+              if arg.is_a?(Hash) && arg[:annotation]
+                new_item.annotations << arg[:annotation]
+              end
             end
-
-            existing_list << new_item
           else
-            property_values.map! {|item| item.is_a?(Symbol) ? find_instance!(item) : item }
+            if property.simple_type?
+              new_item = property.type.new
+              new_item.raw_value = arguments[0]
 
-            new_list_item = property.type.new
+              if arguments[1]
+                type_instance.get_sdl_value(property).annotations << arguments[1][:annotation]
+              end
+            else
+              new_item = property.type.new
 
-            new_list_item.set_sdl_values(*property_values) unless property_values.empty?
+              new_item.set_sdl_values(*arguments) unless arguments.empty?
 
-            self.class.new(new_list_item).instance_exec(&block) unless block.nil?
-
-            existing_list << new_list_item
-
-            new_list_item.parent = type_instance
-            new_list_item.parent_index = existing_list.count - 1
+              self.class.new(new_item).instance_exec(&block) if block
+            end
           end
+
+          new_item.parent = type_instance
+          new_item.parent_index = existing_list.count
+
+          existing_list << new_item
         end
       end
     end
@@ -116,10 +124,19 @@ class SDL::Receivers::TypeInstanceReceiver
   end
 
   def refer_or_copy(instance)
-    instance
+    instance.dup
   end
 
   def dynamic(&block)
     instance_eval &block
+  end
+
+  # Shortcuts for using 'yes' and 'no' in SDLs
+  def yes
+    true
+  end
+
+  def no
+    false
   end
 end
