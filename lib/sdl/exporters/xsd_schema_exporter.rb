@@ -30,7 +30,7 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
           document(xml, I18n.t('sdl.xml.service_root'))
         end
 
-        xml['ns'].complexType :name => 'SDLTypeBase' do
+        xml['ns'].complexType :name => 'SDLTypeBase', :abstract => true do
           document(xml, I18n.t('sdl.xml.typebase'))
           xml['ns'].choice do
             xml['ns'].element :name => 'documentation', :minOccurs => 0, :maxOccurs => 'unbounded', :type => 'ns:string' do
@@ -49,24 +49,36 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
         end
 
         SDL::Base::Type.subtypes_recursive.drop(1).each do |type_class|
-          xml['ns'].complexType :name => type_class.xsd_type_name do
-            document(xml, type_class.documentation)
+          xml['ns'].complexType :name => "Abstract#{type_class.xsd_type_name}", :abstract => true do
             xml['ns'].complexContent do
-              xml['ns'].restriction :base => type_class.is_sub? ? type_class.superclass.xsd_type_name : 'SDLTypeBase' do
-                unless type_class.properties.empty?
-                  xml['ns'].sequence do
-                    type_class.properties.each do |property|
-                      extend_property(property, xml) do
-                        document(xml, property.documentation)
-                      end
-                    end
-                  end
-                end
-
-                if(type_class.eql? SDL::Base::Type::Service)
+              xml['ns'].restriction :base => type_class.is_sub? ? "Abstract#{type_class.superclass.xsd_type_name}" : 'SDLTypeBase' do
+                if type_class.eql? SDL::Base::Type::Service
                   xml['ns'].attribute :name => 'uri', :type => 'ns:anyURI'
                 else
                   xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name
+                end
+              end
+            end
+          end
+
+          xml['ns'].complexType :name => type_class.xsd_type_name do
+            document(xml, type_class.documentation)
+            xml['ns'].complexContent do
+              xml['ns'].extension :base => "Abstract#{type_class.xsd_type_name}" do
+                xml['ns'].sequence do
+                  type_class.ancestors.select do |c| c < SDL::Base::Type end.each do |ancestor|
+                    xml['ns'].group :ref => "#{ancestor.xsd_type_name}Properties"
+                  end
+                end
+              end
+            end
+          end
+
+          xml['ns'].group :name => "#{type_class.xsd_type_name}Properties" do
+            xml['ns'].sequence do
+              type_class.properties.each do |property|
+                extend_property(property, xml) do
+                  document(xml, property.documentation)
                 end
               end
             end
