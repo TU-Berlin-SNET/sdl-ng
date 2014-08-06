@@ -1,48 +1,7 @@
 ---
 en:
   sdl:
-    fact:
-      add_on_repository: Service add-on repo
-      audit_option: Audit option
-      bill: Billing & Payment
-      charge_unit: Charge unit
-      cloud_service_model: Cloud service model
-      communication_protection: The communication with the service is protected
-      continuous_service_improvement: The service has continuous service improvement
-        means
-      data_capability: Supports operation
-      data_deletion_policy: The service allows for complete deletion of user data
-        after termination of contract
-      data_encryption: The service applies encrpytion on user data
-      data_location: The service offers to locate service data at runtime
-      data_location_transparency: The provider makes the location of service data
-        transparent
-      documentation: The service has public documentation
-      duration: Generic duration of something.
-      establishing_year: The establishing year of the service is known
-      feature: A service feature
-      interface: An interface to service functionality
-      interface_browser_interface: Browser interface
-      interface_rest_interface: The service has a RESTful interface
-      interface_soap_interface: The service has a SOAP interface
-      interface_xmlrpc_interface: The service has an XMLRPC interface
-      maintenance: The service has maintenance information
-      maintenance_maintenance_free: The service is maintenance free
-      maintenance_maintenance_window: The service has a maintenance window
-      name: ''
-      offline_capability: Service functionality can be used offline
-      payment_option: The service can be payed by a payment option, e.g. credit card.
-      service_category: The service belongs to a category
-      service_level_agreement: The service has a kind of service level agreement
-      service_level_agreement_public_service_level_agreement: The service has a publicibly
-        accessible service level agreement
-      service_tag: The service is tagged
-      status_page: The service has a status page
     instance:
-      fact:
-        add_on_repository: 'There are #{number_of_add_ons} add-ons available at #{url}'
-        documentation: 'The documentation URL is #{url}'
-        name: 'The service name is: #{name}'
       type:
         audit_option:
           audit_log: Audit log
@@ -69,6 +28,8 @@ en:
         communication_protection:
           https: HTTPS encryption
           vpn: VPN connection
+        company_type:
+          plc: Public Limited Company
         country:
           germany: Germany
         data_capability_operation:
@@ -102,6 +63,17 @@ en:
         payment_term:
           after_use: Payment is done after service consumption
           in_advance: Payment is done in advance of service consumption
+        period:
+          bimonthly: Bimonthly
+          biweekly: Biweekly
+          daily: Daily
+          halfyearly: Halfyearly
+          monthly: Monthly
+          quarterly: Quarterly
+          weekly: Weekly
+          yearly: Yearly
+        report:
+          financial_statement: The financial statement
     markdown:
       header: 'The following facts are known about the service:'
     property:
@@ -134,6 +106,8 @@ en:
         feature:
           description: Description
           feature_name: Name
+        initiative:
+          url: The initiative homepage
         interface:
           interface_documentation: The documentation of the interface
         interface_browser_interface:
@@ -148,38 +122,58 @@ en:
           timespan: The maintenance window
         offline_capability:
           documentation: Information about service offline capability
+        provider:
+          company_type: Company type
+          employs: Number of employees
+          initiatives: Participatory initiatives
+          last_years_revenue: Last years revenue
+          partner_network: Partner network
+          provider_location: Location
+          provider_name: Name
+          reference_customers: Reference customers
+          reports: Published reports
+        reference_customer:
+          description: Description
+          name: Customer name
+          url: Customer URL
+          users: Service Users
+        reporting_information:
+          period: Period
+          report: Report
         required_plugin:
           browser_plugin: The plugin, which is required
           min_version: The minimum version
         service:
-          add_on_repository: Service Add-On Repository
+          add_on_repository: The service add-on repositories
           audit_options: The audit options
           browser_interface: The browser interface
           can_be_used_offline: Offline capability information
           can_export: Exportable data formats
           can_import: Importable data formats
-          cloud_service_model: Cloud service model
+          cloud_service_model: The cloud service model
           compatible_browsers: Compatible Browsers
-          data_deletion_policy: Data deletion policy
-          data_encryption: Service data is encrypted
-          data_location: Data location
+          data_deletion_policy: The data deletion policy
+          data_encryption: Details about service data encryption
+          data_location: Service data storage location
           documentation: Service documentation URL
-          established_in: Established in
+          established_in: Service established in
           exportable_data_formats: Exportable data formats
-          features: Features
+          features: Service features
           feedback_page: Feedback page URL
           future_roadmap: Future roadmap URL
           importable_data_formats: Importable data formats
           is_billed: Billing and Payment info
           is_charged_by: Charging unit
-          is_protected_by: Protection means of service
+          is_protected_by: Service protection means
+          location_enabled: The service supports location-based computing
           maintenance_free: The service is maintenance free
           maintenance_window: The service has a maintenance window
           past_release_notes: Past release notes URL
           payment_options: Payment options
+          provider: The service provider
           provision_end_user_duration: The duration for provisioning an end user.
           public_service_level_agreement: URL of public SLA
-          required_plugins: Required Plugins
+          required_plugins: Required Browser-Plugins
           rest_interface: The REST interface
           service_categories: Categories
           service_name: Service name
@@ -202,6 +196,7 @@ en:
       charge_unit: The charge unit
       cloud_service_model: A cloud service model
       communication_protection: A communication protection means
+      company_type: The company type
       compatible_browser: Compatible browser information
       country: A country
       data_capability: Data capability
@@ -211,6 +206,7 @@ en:
       data_encryption: Data encryption means
       data_format: The data format
       feature: A service feature
+      initiative: An business initiative
       interface: A service interface
       interface_browser_interface: A browser interface
       interface_rest_interface: A RESTful interface
@@ -226,6 +222,11 @@ en:
       offline_capability: Offline capability information
       payment_option: The payment option
       payment_term: The payment terms, i.e., in advance and after use.
+      period: Period
+      provider: A service provider
+      reference_customer: A reference Customer
+      report: A published report
+      reporting_information: Published reporting information
       required_plugin: The required plugins
       service: A service
       service_category: The category of a service
