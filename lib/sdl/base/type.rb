@@ -207,6 +207,10 @@ class SDL::Base::Type
     end
 
     def method_missing(name, *args, &block)
+      if [:to_ary, :to_a].include?(name)
+        raise NoMethodError
+      end
+
       sym = args[0] || name.to_sym
 
       if name =~ /list_of_/
@@ -238,6 +242,7 @@ class SDL::Base::Type
       properties.delete_if { |p| (p.name == sym.to_s) && puts("Warning: Overwritten property definition of #{p.to_s}").nil? }
 
       property = SDL::Base::Property.new(sym, type, self, multi)
+      property.loaded_from = SDL::Base::ServiceCompendium.instance.current_uri
 
       (@properties ||= []) << property
 
@@ -271,6 +276,10 @@ class SDL::Base::Type
       define_method sym do
         instance_variable_get "@#{sym.to_s}"
       end
+    end
+
+    def sdl_ancestors
+      ancestors.select{|a| a < SDL::Base::Type}
     end
   end
 

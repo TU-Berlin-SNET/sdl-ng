@@ -11,7 +11,7 @@ class SDL::Base::ServiceCompendium
     def load_vocabulary_from_path(path_or_filename)
       to_files_array(path_or_filename, '.sdl.rb').each do |filename|
         with_uri filename do
-          load_vocabulary_from_string File.read(filename), filename
+          load_vocabulary_from_string File.read(filename), filename, filename
         end
       end
     end
@@ -20,10 +20,11 @@ class SDL::Base::ServiceCompendium
     # Loads a vocabulary from a string. The URI is used with ServiceCompendium#with_uri.
     # @param [String] vocabulary_definition The vocabulary definition
     # @param [String] uri The URI
-    def load_vocabulary_from_string(vocabulary_definition, uri)
+    # @param [String] filename An optional filename
+    def load_vocabulary_from_string(vocabulary_definition, uri, filename = nil)
       begin
         with_uri uri do
-          self.instance_eval vocabulary_definition
+          self.instance_eval vocabulary_definition, filename
         end
       rescue Exception => e
         unload uri
