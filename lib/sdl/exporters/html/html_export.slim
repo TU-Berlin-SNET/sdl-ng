@@ -1,0 +1,39 @@
+html
+  head
+    title HTML Export
+  body
+    table
+      tr
+        td Type
+        td Property
+        td Type
+        td Description
+
+      - SDL::Base::Type.subtypes_recursive.collect(&:properties).flatten.group_by(&:loaded_from).each do |file, properties|
+        tr
+          td[colspan="4" style="border-bottom: 2px solid black" ]
+            p= file[/\w+\/\w+.\w+.rb/]
+        - properties.each do |property|
+          tr[style="#{property.holder.eql?(SDL::Base::Type::Service) ? 'background: #EEE' : ''}" ]
+            td
+              p= property.holder.local_name
+            td
+              p= property.name
+            td
+              p
+                = property.type.name.to_s.demodulize
+                = property.multi? ? '[]' : ''
+            td= property.documentation
+
+    table
+      tr
+        td Type
+        td Instance
+        td Documentation
+
+        - SDL::Base::Type.subtypes_recursive.collect(&:instances).collect(&:values).flatten.each do |instance|
+          - next if instance.class.eql? SDL::Base::Type::Service
+          tr
+            td= instance.class.local_name
+            td= instance.identifier
+            td= instance.documentation

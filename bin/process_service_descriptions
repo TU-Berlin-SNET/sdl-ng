@@ -41,13 +41,10 @@ I18n.load_path << File.join(Dir.pwd, 'translations', 'en.yml')
 compendium = SDL::Base::ServiceCompendium.new
 
 # Load SDL
-Dir.glob(File.join(Dir.pwd, '**', '*.sdl.rb')).sort.each do |filename|
-  compendium.instance_eval do
-    eval(File.read(filename), binding, filename)
-  end
-end
-
+compendium.load_vocabulary_from_path(Dir.pwd)
 compendium.register_classes_globally
+
+puts "Loaded vocabulary with #{Type.subtypes_recursive.drop(2).count} types, #{Service.properties.count} service properties and #{compendium.type_instances.values.map(&:count).sum} type instances."
 
 # Load Service Definitions
 Dir.glob(File.join(Dir.pwd, '**', '*.service.rb')) do |filename|
@@ -58,17 +55,20 @@ end
 
 puts "Loaded Service Compendium with #{compendium.services.count} services. Generating output"
 
-%w[xml rdf].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
+%w[xml rdf html].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
 
-schema_exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
+xsd_schema_exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
+html_schema_exporter = SDL::Exporters::HTML::HTMLExporter.new(compendium)
 service_exporter = SDL::Exporters::XMLServiceExporter.new(compendium)
 rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
 
-schema_dir = Dir.pwd + '/output/xml/schema.xsd'
-File.open(schema_dir, 'w') {|f|
-  f.write(schema_exporter.export_schema)
-  puts "Written Service Compendium XSD schema into #{schema_dir}"
-}
+xsd_schema_path = Dir.pwd + '/output/xml/schema.xsd'
+xsd_schema_exporter.export_schema_to_file(xsd_schema_path)
+puts "Written Service Compendium XSD schema into #{xsd_schema_path}"
+
+html_schema_path = Dir.pwd + '/output/html/schema.html'
+html_schema_exporter.export_schema_to_file(html_schema_path)
+puts "Written Service Compendium HTML schema into #{html_schema_path}"
 
 compendium.services.each do |name, service|
   xml_output_file = Dir.pwd + "/output/xml/#{name}.xml"
