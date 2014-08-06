@@ -33,7 +33,7 @@ type :reporting_information do
   period
 end
 
-service_properties do
+type :provider do
   company_type
   number :employs
   url :partner_network

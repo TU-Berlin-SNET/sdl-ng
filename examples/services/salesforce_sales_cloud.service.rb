@@ -62,13 +62,15 @@ can_be_used_offline yes, annotation: 'http://help.salesforce.com/apex/HTViewHelp
 established_in 1999
 
 # trust
-company_type plc
-employs 12000
-partner_network 'http://www.salesforce.com/partners/overview/'
-last_years_revenue '4070000000 $'
-report financial_statement, quarterly
+provider do
+  company_type plc
+  employs 12000
+  partner_network 'http://www.salesforce.com/partners/overview/'
+  last_years_revenue '4070000000 $'
+  report financial_statement, quarterly
 
-reference_customer 'Philips' do
-  url 'http://www.salesforce.com/customers/stories/philips.jsp'
-  users 7000
+  reference_customer 'Philips' do
+    url 'http://www.salesforce.com/customers/stories/philips.jsp'
+    users 7000
+  end
 end

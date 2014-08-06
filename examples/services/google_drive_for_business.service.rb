@@ -64,13 +64,15 @@ can_be_used_offline yes, annotation: 'https://support.google.com/drive/answer/23
 established_in 2006
 
 # trust
-company_type plc
-employs 49829
-partner_network 'http://www.google.de/intx/de/enterprise/apps/business/partners.html'
-last_years_revenue '59820000000 $'
-report financial_statement, quarterly
+provider do
+  company_type plc
+  employs 49829
+  partner_network 'http://www.google.de/intx/de/enterprise/apps/business/partners.html'
+  last_years_revenue '59820000000 $'
+  report financial_statement, quarterly
 
-reference_customer 'motorola' do
-  url 'https://www.youtube.com/watch?v=56ETTYvGsg4'
-  users 20000
+  reference_customer 'motorola' do
+    url 'https://www.youtube.com/watch?v=56ETTYvGsg4'
+    users 20000
+  end
 end

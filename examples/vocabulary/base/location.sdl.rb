@@ -25,3 +25,7 @@ type :location do
     jurisdiction
   end
 end
+
+type :provider do
+  specific_location :provider_location
+end
