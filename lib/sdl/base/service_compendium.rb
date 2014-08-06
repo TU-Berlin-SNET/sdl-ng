@@ -10,6 +10,10 @@ class SDL::Base::ServiceCompendium
   include VocabularyLoadTransaction
   include ServiceLoadTransaction
 
+  def self.instance
+    @@compendium
+  end
+
   ##
   # An enumerator of all registered +Type+ classes
   # @!attribute [r] types
@@ -90,6 +94,8 @@ class SDL::Base::ServiceCompendium
     @current_uri = :default
 
     type :service
+
+    @@compendium = self
   end
 
   ##
@@ -242,7 +248,7 @@ class SDL::Base::ServiceCompendium
   module ServiceCompendiumMixin
     attr_accessor :loaded_from
 
-    [SDL::Base::Type, SDL::Base::Type.class].each do |klass|
+    [SDL::Base::Type, SDL::Base::Type.class, SDL::Base::Property].each do |klass|
       klass.instance_eval do
         include SDL::Base::ServiceCompendium::ServiceCompendiumMixin
       end
