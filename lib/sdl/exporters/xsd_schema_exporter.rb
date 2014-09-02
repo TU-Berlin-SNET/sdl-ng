@@ -53,7 +53,7 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
             xml['ns'].complexContent do
               xml['ns'].restriction :base => type_class.is_sub? ? "Abstract#{type_class.superclass.xsd_type_name}" : 'SDLTypeBase' do
                 if type_class.eql? SDL::Base::Type::Service
-                  xml['ns'].attribute :name => 'uri', :type => 'ns:anyURI'
+                  build_abstract_service_attributes(xml, type_class)
                 else
                   xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name
                 end
@@ -69,6 +69,9 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
                   type_class.ancestors.select do |c| c < SDL::Base::Type end.each do |ancestor|
                     xml['ns'].group :ref => "#{ancestor.xsd_type_name}Properties"
                   end
+                end
+                if type_class.eql? SDL::Base::Type::Service
+                  build_service_attributes(xml, type_class)
                 end
               end
             end
@@ -94,6 +97,8 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
             end
           end unless type_class.eql? SDL::Base::Type::Service
         end
+
+        build_additional_types(xml)
       end
     end
   end
@@ -129,5 +134,17 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
     xml['ns'].annotation do
       xml['ns'].documentation documentation
     end
+  end
+
+  def build_abstract_service_attributes(xml, service_class)
+    xml['ns'].attribute :name => 'uri', :type => 'ns:anyURI'
+  end
+
+  def build_service_attributes(xml, service_class)
+
+  end
+
+  def build_additional_types(xml)
+
   end
 end

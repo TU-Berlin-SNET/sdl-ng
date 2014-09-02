@@ -7,8 +7,15 @@ class SDL::Exporters::XMLServiceExporter < SDL::Exporters::ServiceExporter
     builder.to_xml
   end
 
+  def service_xml_attributes(service)
+    {
+        'xmlns' => 'http://www.open-service-compendium.org',
+        'uri' => service.uri
+    }
+  end
+
   def build_service(service, xml)
-    xml.service('xmlns' => 'http://www.open-service-compendium.org', 'uri' => service.uri) do
+    xml.service(service_xml_attributes(service)) do
       serialize_type_instance service, xml
     end
   end
