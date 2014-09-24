@@ -58,6 +58,7 @@ puts "Loaded Service Compendium with #{compendium.services.count} services. Gene
 %w[xml rdf html].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
 
 xsd_schema_exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
+xsd_simple_schema_exporter = SDL::Exporters::XSDSimpleSchemaExporter.new(compendium)
 html_schema_exporter = SDL::Exporters::HTML::HTMLExporter.new(compendium)
 service_exporter = SDL::Exporters::XMLServiceExporter.new(compendium)
 rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
@@ -65,6 +66,10 @@ rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
 xsd_schema_path = Dir.pwd + '/output/xml/schema.xsd'
 xsd_schema_exporter.export_schema_to_file(xsd_schema_path)
 puts "Written Service Compendium XSD schema into #{xsd_schema_path}"
+
+xsd_simple_schema_path = Dir.pwd + '/output/xml/schema_simple.xsd'
+xsd_simple_schema_exporter.export_schema_to_file(xsd_simple_schema_path)
+puts "Written Service Compendium simple XSD schema into #{xsd_simple_schema_path}"
 
 html_schema_path = Dir.pwd + '/output/html/schema.html'
 html_schema_exporter.export_schema_to_file(html_schema_path)

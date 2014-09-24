@@ -10,12 +10,24 @@ describe 'The exporters' do
     SDL::Exporters::XSDSchemaExporter.new
   end
 
+  let :simple_xsd_exporter do
+    SDL::Exporters::XSDSimpleSchemaExporter.new
+  end
+
   let :schema do
     xsd_exporter.export_schema
   end
 
+  let :simple_schema do
+    simple_xsd_exporter.export_schema
+  end
+
   let :parsed_schema do
     Nokogiri::XML::Schema(schema)
+  end
+
+  let :parsed_simple_schema do
+    Nokogiri::XML::Schema(simple_schema)
   end
 
   context 'The XSD exporter' do
@@ -26,14 +38,24 @@ describe 'The exporters' do
     end
   end
 
+  context 'The simple XSD exporter' do
+    it 'creates a valid XML Schema Definition' do
+      expect {
+        parsed_simple_schema
+      }.to_not raise_exception
+    end
+  end
+
   context 'The XML exporter' do
-    it 'creates valid XML documents according to the schema' do
+    it 'creates valid XML documents according to both schemas' do
       compendium.services.each do |name, service|
         xml_export = service.to_xml
 
-        errors = parsed_schema.validate(Nokogiri::XML::Document.parse(xml_export))
+        schema_errors = parsed_schema.validate(Nokogiri::XML::Document.parse(xml_export))
+        simple_schema_errors = parsed_simple_schema.validate(Nokogiri::XML::Document.parse(xml_export))
 
-        expect(errors).to be_empty
+        expect(schema_errors).to be_empty
+        expect(simple_schema_errors).to be_empty
       end
     end
   end
@@ -57,6 +79,19 @@ describe 'The exporters' do
 
       begin
         xsd_exporter.export_schema_to_file file.path
+        expect(file.read).to eq xsd_export
+      ensure
+        file.close
+        file.unlink
+      end
+    end
+
+    it 'contains the simple XSD export' do
+      file = Tempfile.new('simple_export.xsd')
+      xsd_export = simple_xsd_exporter.export_schema
+
+      begin
+        simple_xsd_exporter.export_schema_to_file file.path
         expect(file.read).to eq xsd_export
       ensure
         file.close

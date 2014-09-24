@@ -1,15 +1,13 @@
 require 'nokogiri'
 
 ##
-# The XSD schema exporter creates an XML Schema Definition for consuming service descriptions using the XML provided
-# by the XMLServiceExporter.
+# The XSD simple schema exporter creates an XML Schema Definition for consuming service
+# descriptions using the XML provided by the XMLServiceExporter.
 #
-# The schema consists of the following main components:
-#   - The definition of the root node, i.e., a service. The service contains an arbitrary number of elements of
-#     service fact types.
-#   - The definition of service fact classes and SDL types
-#   - The definition of a type base, containing annotations and documentation
-class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
+# It is different from the XSDSchemaExporter that it does not combine restriction and
+# enumeration and therefore prevents challenges with some XSD tools.
+#
+class SDL::Exporters::XSDSimpleSchemaExporter < SDL::Exporters::SchemaExporter
   def export_schema
     export_schema_xml.to_xml
   end
@@ -35,38 +33,29 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
           xml['ns'].attribute :name => 'annotation', :type => 'ns:string' do
             document(xml, I18n.t('sdl.xml.annotation'))
           end
-          xml['ns'].attribute :name => 'identifier' do
-            document(xml, I18n.t('sdl.xml.identifier'))
-          end
           xml['ns'].attribute :name => 'uri' do
             document(xml, I18n.t('sdl.xml.identifier'))
           end
         end
 
         SDL::Base::Type.subtypes_recursive.drop(1).each do |type_class|
-          xml['ns'].complexType :name => "Abstract#{type_class.xsd_type_name}", :abstract => true do
-            xml['ns'].complexContent do
-              xml['ns'].restriction :base => type_class.is_sub? ? "Abstract#{type_class.superclass.xsd_type_name}" : 'SDLTypeBase' do
-                if type_class.eql? SDL::Base::Type::Service
-                  build_abstract_service_attributes(xml, type_class)
-                else
-                  xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name
-                end
-              end
-            end
-          end
-
           xml['ns'].complexType :name => type_class.xsd_type_name do
             document(xml, type_class.documentation)
             xml['ns'].complexContent do
-              xml['ns'].extension :base => "Abstract#{type_class.xsd_type_name}" do
+              xml['ns'].extension :base => "SDLTypeBase" do
                 xml['ns'].sequence do
                   type_class.ancestors.select do |c| c < SDL::Base::Type end.each do |ancestor|
                     xml['ns'].group :ref => "#{ancestor.xsd_type_name}Properties"
                   end
                 end
+
                 if type_class.eql? SDL::Base::Type::Service
+                  build_abstract_service_attributes(xml, type_class)
                   build_service_attributes(xml, type_class)
+                else
+                  xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name do
+                    document(xml, I18n.t('sdl.xml.identifier'))
+                  end
                 end
               end
             end
@@ -132,7 +121,7 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
   end
 
   def build_abstract_service_attributes(xml, service_class)
-    xml['ns'].attribute :name => 'uri', :type => 'ns:anyURI'
+
   end
 
   def build_service_attributes(xml, service_class)
