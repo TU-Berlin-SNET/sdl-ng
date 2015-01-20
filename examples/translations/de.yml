@@ -1,0 +1,217 @@
+---
+de:
+  sdl:
+    instance:
+      type:
+        audit_option:
+          audit_log: Audit-Protokoll
+        billing_term:
+          annually: Jährlich
+          monthly: Monatlich
+        charge_unit:
+          floating_license: Floating-Lizenz
+          user_account: Nutzerlizenz
+        communication_protection:
+          https: Verschlüsselung per HTTPS
+          vpn: VPN Verbindung
+        company_type:
+          plc: PLC (Aktiengesellschaft)
+        country:
+          germany: Deutschland
+        data_capability_operation:
+          export: Datenexport
+          import: Datenimport
+        data_format:
+          csv: Kommaseparierte Daten (CSV)
+          text: Text
+        jurisdiction:
+          european_union: Europäische Union
+        key_control:
+          provider_only: Nur durch den Anbieter
+          shared: Geteilte Kontrolle durch Nutzer und Anbieter
+          user_only: Nur durch den Nutzer
+        payment_option:
+          credit_card: Kreditkarte
+          invoice: Rechnung
+        payment_term:
+          after_use: Nach Nutzung
+          in_advance: Im Voraus
+        period:
+          bimonthly: Zweimonatlich
+          biweekly: Zweiwöchentlich
+          daily: Täglich
+          halfyearly: Halbjährlich
+          monthly: Monatlich
+          quarterly: Vierteljährlich
+          weekly: Wöchentlich
+          yearly: Jährlich
+        report:
+          financial_statement: Bilanz
+    markdown:
+      header: 'Das folgende ist über den Service bekannt:'
+    property:
+      type:
+        add_on_repository:
+          number_of_add_ons: Anzahl an Add-Ons
+          url: URL
+        address:
+          address_lines: Anschrift
+        billing_and_payment:
+          billing_term: Rechnungslegung
+          payment_term: Zahlungsarten
+        browser:
+          browser_name: Browser-Name
+          url: Homepage
+        browser_plugin:
+          plugin_name: Plugin-Name
+          url: Plugin-URL
+        compatible_browser:
+          browser: Der Browser
+          min_version: Mindestversion
+        country:
+          jurisdiction: Die Jurisdiktion des Landes
+        data_capability:
+          data_format: Datenformat
+        data_encryption:
+          key_control: Schlüsselkontrolle
+        data_format:
+          mime_type: MIME-Typ
+        feature:
+          description: Beschreibung
+          feature_name: Name
+        initiative:
+          url: Homepage der Initiative
+        interface:
+          interface_documentation: Schnittstellen-Doku
+        interface_browser_interface:
+          compatible_browsers: Kompatible Browser
+          required_plugins: Notwendige Plugins
+        location_specific_location:
+          address: Postalische Adresse
+          country: Land
+        location_unspecific_location:
+          jurisdiction: Die Jurisdiktion des Service-Betriebs
+        maintenance_window:
+          timespan: Das Wartungsfenster
+        offline_capability:
+          documentation: Offline-Fähigkeit
+        provider:
+          company_type: Unternehmensform
+          employs: Mitarbeiteranzahl
+          initiatives: Initiativen
+          last_years_revenue: Betriebseinnahmen im letzten Jahr
+          partner_network: Partner-Netzwerk
+          provider_location: Ort
+          provider_name: Name
+          reference_customers: Referenzkunden
+          reports: Veröffentlichte Berichte
+        reference_customer:
+          description: Beschreibung
+          name: Name
+          url: URL
+          users: Anzahl an Dienstnutzern
+        reporting_information:
+          period: Periode
+          report: Bericht
+        required_plugin:
+          browser_plugin: Das erforderliche Plugin
+          min_version: Mindestversion
+        service:
+          add_on_repository: Service Add-On Verzeichnisse
+          audit_options: Auditierungsmöglichkeiten
+          browser_interface: Web-Interface
+          can_be_used_offline: Offlinefähigkeiten
+          can_export: Exportierbare Datenformate
+          can_import: Importierbare Datenformate
+          cloud_service_model: Cloud Service-Modell
+          compatible_browsers: Kompatible Browser
+          data_deletion_policy: Löschrichtlinie
+          data_encryption: Datenverschlüsselung
+          data_location: Daten-Speicherort
+          documentation: Dokumentations-URL
+          established_in: Service existiert seit
+          exportable_data_formats: Exportierbare Datenformate
+          features: Service-Features
+          feedback_page: Feedback-Formular
+          future_roadmap: Entwicklungs-Roadmap
+          importable_data_formats: Importierbare Datenformate
+          is_billed: Abrechnung und Zahlung
+          is_charged_by: Abrechnungseinheit
+          is_protected_by: Service-Schutzmaßnahmen
+          location_enabled: Lokationsbasierte Funktionen
+          maintenance_free: Der Service besitzt kein Wartungsfenster
+          maintenance_window: Wartungsfenster
+          past_release_notes: Versionshinweise
+          payment_options: Zahlungsmöglichkeiten
+          provider: Anbieter-Informationen
+          provision_end_user_duration: Dauer der Provisionierung eines Endnutzers
+          public_service_level_agreement: Öffentliche Dienstgütevereinbarung
+          required_plugins: Erforderliche Plugins
+          rest_interface: REST-Schnittstelle
+          service_categories: Kategorien
+          service_name: Service-Name
+          service_tags: Schlagwörter
+          set_up_consumption_duration: Dauer der erstmaligen Einrichtung des Dienstes
+          soap_interface: SOAP-Schnittstelle
+          status_page: Statusseite
+          xmlrpc_interface: XMLRPC-Interface
+        timespan:
+          end: Beginn
+          start: Ende
+    type:
+      add_on_repository: A service add-on repo
+      address: A postal address
+      audit_option: An option to audit a service
+      billing_and_payment: Billing and payment information
+      billing_term: The billing term, e.g. "per month".
+      browser: A browser
+      browser_plugin: A browser plugin
+      charge_unit: The charge unit
+      cloud_service_model: A cloud service model
+      communication_protection: A communication protection means
+      company_type: The company type
+      compatible_browser: Compatible browser information
+      country: A country
+      data_capability: Data capability
+      data_capability_export_capability: Data export capability
+      data_capability_import_capability: Data import capability
+      data_capability_operation: The data capability operation
+      data_encryption: Data encryption means
+      data_format: The data format
+      feature: A service feature
+      initiative: An business initiative
+      interface: A service interface
+      interface_browser_interface: A browser interface
+      interface_rest_interface: A RESTful interface
+      interface_soap_interface: A SOAP interface
+      interface_xmlrpc_interface: An XMLRPC interface
+      jurisdiction: A jurisdictional area
+      key_control: One possibility of key control
+      location: Location information
+      location_specific_location: Specific location information
+      location_unspecific_location: Unspecific location information
+      maintenance_free: Information about service maintenance
+      maintenance_window: The maintenance window
+      offline_capability: Offline capability information
+      payment_option: The payment option
+      payment_term: The payment terms, i.e., in advance and after use.
+      period: Period
+      provider: A service provider
+      reference_customer: A reference Customer
+      report: A published report
+      reporting_information: Published reporting information
+      required_plugin: The required plugins
+      service: A service
+      service_category: The category of a service
+      service_tag: A Service tag
+      timespan: An arbitrary timespan
+    xml:
+      annotation: An arbitrary annotation to be displayed for the description consumer.
+      documentation: The documentation of this type or fact instance.
+      identifier: An identifier for a type instance. Two instances are the same, if
+        they share the same identifier.
+      service_class: A service. It contains an arbitrary number of facts.
+      service_root: The root element of a service.
+      services_root: A list of services.
+      typebase: The base type of all SDL types and facts. Contains annotations and
+        documentation.

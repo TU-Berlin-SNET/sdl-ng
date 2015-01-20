@@ -243,7 +243,7 @@ class SDL::Base::Type
 
       property = SDL::Base::Property.new(sym, type, self, multi)
       property.loaded_from = SDL::Base::ServiceCompendium.instance.current_uri
-
+      
       (@properties ||= []) << property
 
       add_property_setters(sym, type, multi)

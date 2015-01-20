@@ -13,6 +13,7 @@ module SDL
     extend ActiveSupport::Autoload
 
     autoload :Property
+    autoload :PropertyClassification
     autoload :ServiceCompendium
     autoload :Type
     autoload :URIMappedResource

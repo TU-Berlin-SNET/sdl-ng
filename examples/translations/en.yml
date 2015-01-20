@@ -6,8 +6,8 @@ en:
         audit_option:
           audit_log: Audit log
         billing_term:
-          annually: Annually billing
-          monthly: Monthly billing
+          annually: Annually
+          monthly: Monthly
         browser:
           chrome: Google Chrome
           firefox: Mozilla Firefox
@@ -61,8 +61,8 @@ en:
           credit_card: Credit card
           invoice: Invoice
         payment_term:
-          after_use: Payment is done after service consumption
-          in_advance: Payment is done in advance of service consumption
+          after_use: Post-Paid
+          in_advance: Pre-Paid
         period:
           bimonthly: Bimonthly
           biweekly: Biweekly
@@ -83,9 +83,6 @@ en:
           url: Repository URL
         address:
           address_lines: The address lines
-        billing_and_payment:
-          billing_term: Billing
-          payment_term: Payment
         browser:
           browser_name: The name of the browser
           url: Homepage
@@ -162,7 +159,8 @@ en:
           feedback_page: Feedback page URL
           future_roadmap: Future roadmap URL
           importable_data_formats: Importable data formats
-          is_billed: Billing and Payment info
+          is_billed: Billing
+          is_charged: Pre-/Post-Paid
           is_charged_by: Charging unit
           is_protected_by: Service protection means
           location_enabled: The service supports location-based computing
@@ -189,7 +187,6 @@ en:
       add_on_repository: A service add-on repo
       address: A postal address
       audit_option: An option to audit a service
-      billing_and_payment: Billing and payment information
       billing_term: The billing term, e.g. "per month".
       browser: A browser
       browser_plugin: A browser plugin

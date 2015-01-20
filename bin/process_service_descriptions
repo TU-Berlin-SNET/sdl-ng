@@ -12,7 +12,7 @@ OptionParser.new do |opts|
   opts.on('-d', '--dynamic', 'Fetch dynamic data') do |m|
     options[:dynamic] = true
   end
-end.parse
+end.parse!
 
 if options[:profile]
   require 'ruby-prof'
@@ -47,12 +47,7 @@ compendium.register_classes_globally
 puts "Loaded vocabulary with #{Type.subtypes_recursive.drop(2).count} types, #{Service.properties.count} service properties and #{compendium.type_instances.values.map(&:count).sum} type instances."
 
 # Load Service Definitions
-Dir.glob(File.join(Dir.pwd, '**', '*.service.rb')) do |filename|
-  service = compendium.service filename.match(%r[.+/(.+).service.rb])[1] do
-    eval(File.read(filename), binding, filename)
-  end
-end
-
+compendium.load_service_from_path(Dir.pwd)
 puts "Loaded Service Compendium with #{compendium.services.count} services. Generating output"
 
 %w[xml rdf html].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end

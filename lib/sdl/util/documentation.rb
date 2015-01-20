@@ -63,7 +63,7 @@ module SDL
   end
 
   module Base
-    [Type, Property].each do |m| m.class_eval do include SDL::Util::Documentation end end
+    [Type, Property, PropertyClassification].each do |m| m.class_eval do include SDL::Util::Documentation end end
   end
 end
 
@@ -96,6 +96,15 @@ module SDL::Base
 
       # Return default key
       return "sdl.property.#{SDL::Util::Documentation.walk_the_class_name(@parent)}.#{@name}"
+    end
+  end
+
+  class PropertyClassification::PropertyCategory
+    # The documentation for the property category is derived from the
+    # category_key, e.g. "crf.charging" yields
+    # "sdl.property.categories.crf.charging"
+    def documentation_key
+      "sdl.property.categories.#{category_key}"
     end
   end
 end

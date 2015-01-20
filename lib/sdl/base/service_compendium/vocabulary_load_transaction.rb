@@ -29,7 +29,7 @@ class SDL::Base::ServiceCompendium
       rescue Exception => e
         unload uri
 
-        raise "Error while loading vocabulary from #{uri}: #{e}"
+        raise RuntimeError, "Error while loading vocabulary from #{uri}: #{e}", (e.backtrace.concat(caller))
       end
     end
   end
