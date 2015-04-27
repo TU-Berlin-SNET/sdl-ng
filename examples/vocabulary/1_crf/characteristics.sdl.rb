@@ -1,6 +1,8 @@
 type :cloud_service_model
 type :service_category
 
+service_category :storage
+
 cloud_service_model :saas
 cloud_service_model :paas
 cloud_service_model :iaas

@@ -1,6 +1,45 @@
 ##
 # Receiver for setting the properties of Type instances
 class SDL::Receivers::TypeInstanceReceiver
+  class InstanceReference
+    attr :identifier
+
+    attr :possible_instances
+
+    def initialize(sym)
+      @identifier = sym
+
+      @possible_instances = SDL::Base::Type.instances_recursive.each_with_object([]) do |kv, list|
+        list.push(kv[1]) if kv[0] == sym
+      end
+    end
+
+    def resolveable?
+      @possible_instances.count > 0
+    end
+
+    # Returns all possible instances for this property
+    def resolve(property)
+      @possible_instances.find_all do |instance|
+        instance.class <= property.type
+      end
+    end
+
+    # Returns the matching instance for this property or raises an error if zero or more than one instances are found
+    def resolve!(property)
+      matching_instances = resolve(property)
+
+      case matching_instances.count
+        when 1
+          return matching_instances.first
+        when 0
+          raise "Cannot find an instance named #{@identifier}, which would match the type of #{property}."
+        else
+          raise "Ambiguous reference to #{@identifier} for property #{property}."
+      end
+    end
+  end
+
   attr_accessor :instance
 
   ##
@@ -14,26 +53,32 @@ class SDL::Receivers::TypeInstanceReceiver
         # There are different ways of setting a single valued property
         # -> Specifying a symbol: "Set the value of this property to the instance referred by the symbol"
         # -> Specifying at least a symbol: "Create a new instance of this type and set its properties to the values"
-        define_singleton_method property.name do |*args, &block|
+        define_singleton_method property.name do |*arguments, &block|
           if property.simple_type?
-            type_instance.set_sdl_property property, args[0]
+            type_instance.set_sdl_property property, arguments[0]
 
-            if args[1]
-              type_instance.get_sdl_value(property).annotations << args[1][:annotation]
+            if arguments[1]
+              type_instance.get_sdl_value(property).annotations << arguments[1][:annotation]
             end
           else
-            # Replace all symbols with their type instance
-            args.map! {|item| item.is_a?(Symbol) ? refer_or_copy(find_instance!(item)) : item }
-
             begin
-              if(args.count == 1 && args[0].class <= property.type)
-                # The first argument refers to a predefined instance of the property type. Set it as value
-                type_instance.set_sdl_property property, refer_or_copy(args[0])
+              # There are two possibilities here:
+              if(arguments.first.is_a?(InstanceReference) && arguments.first.resolve(property).count == 1)
+                # 1. The user provides a predefined instance for this property
+                resolved_instance_copy = refer_or_copy(arguments.first.resolve!(property))
+
+                arguments.each do |arg|
+                  if arg.is_a?(Hash) && arg[:annotation]
+                    new_item.annotations << arg[:annotation]
+                  end
+                end
+
+                type_instance.set_sdl_property property, resolved_instance_copy
               else
                 # The arguments are values for a new instance
                 property_type_instance = property.type.new
 
-                property_type_instance.set_sdl_values(*args)
+                property_type_instance.set_sdl_values(*arguments)
 
                 SDL::Receivers::TypeInstanceReceiver.new(property_type_instance).instance_eval(&block) if block
 
@@ -52,26 +97,27 @@ class SDL::Receivers::TypeInstanceReceiver
         define_singleton_method property.name.singularize do |*arguments, &block|
           existing_list = type_instance.send property.name
 
-          arguments.map! {|item| item.is_a?(Symbol) ? refer_or_copy(find_instance!(item)) : item }
+          if property.simple_type?
+            # Add to a list of simple types by using the first argument as the raw_value of a new item
+            new_item = property.type.new
+            new_item.raw_value = arguments[0]
 
-          if arguments[0].is_a?(property.type)
-            # The first argument is the value
-            new_item = refer_or_copy(arguments[0])
-
-            arguments.each do |arg|
-              if arg.is_a?(Hash) && arg[:annotation]
-                new_item.annotations << arg[:annotation]
-              end
+            if arguments[1]
+              type_instance.get_sdl_value(property).annotations << arguments[1][:annotation]
             end
           else
-            if property.simple_type?
-              new_item = property.type.new
-              new_item.raw_value = arguments[0]
+            # There are two possibilities here:
+            if(arguments.first.is_a?(InstanceReference) && arguments.first.resolve(property).count == 1)
+              # 1. The user provides a predefined instance for this property
+              new_item = refer_or_copy(arguments.first.resolve!(property))
 
-              if arguments[1]
-                type_instance.get_sdl_value(property).annotations << arguments[1][:annotation]
+              arguments.each do |arg|
+                if arg.is_a?(Hash) && arg[:annotation]
+                  new_item.annotations << arg[:annotation]
+                end
               end
             else
+              # 2. The user provides property values for a new instance of the type class of this property
               new_item = property.type.new
 
               new_item.set_sdl_values(*arguments) unless arguments.empty?
@@ -94,33 +140,16 @@ class SDL::Receivers::TypeInstanceReceiver
   end
 
   ##
-  # Catches calls to methods named similarily to possible predefined type instances
+  # Catches calls to methods named similarily to possible predefined type instances by returning a InstanceReference
+  # instance or raising an exception.
   def method_missing(name, *args)
-    instance = find_instance(name.to_sym)
+    reference = InstanceReference.new(name.to_sym)
 
-    if (instance)
-      refer_or_copy(instance)
+    if reference.resolveable?
+      return reference
     else
-      raise Exception.new("I do not know what to do with '#{name}'.")
+      raise Exception.new("There is no predefined instance named '#{name}'.")
     end
-  end
-
-  def find_instance(symbol)
-    instance_key_value_pair = SDL::Base::Type.instances_recursive.find do |key, value|
-      key == symbol
-    end
-
-    if instance_key_value_pair
-      instance_key_value_pair[1]
-    else
-      nil
-    end
-  end
-
-  def find_instance!(symbol)
-    instance = find_instance(symbol)
-
-    instance ? instance : raise("Cannot find predefined instance #{symbol.to_s}!")
   end
 
   def refer_or_copy(instance)

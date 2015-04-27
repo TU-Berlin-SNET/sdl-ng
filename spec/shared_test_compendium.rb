@@ -55,41 +55,41 @@ shared_context 'the default compendium' do
         hex_value '#FF0'
       end
 
-      color :text do
-        hex_value '#000'
-      end
-
       something_other :text do
         some_text 'This is some text'
+      end
+
+      color :text do
+        hex_value '#000'
       end
     end
 
     @compendium.service :blue_service do
-      is_colored :blue, 'Blue'
+      is_colored blue, 'Blue'
     end
 
     @compendium.service :red_service do
-      is_colored :red
+      is_colored red
     end
 
     @compendium.service :complex_service do
       name 'Complex Service'
 
-      multicolored :red
-      multicolored :green
-      multicolored :blue
-      multicolored :yellow
-      multicolored :text
+      multicolored red
+      multicolored green
+      multicolored blue
+      multicolored yellow
+      multicolored text
 
       favourite_color do
-        color :blue
+        color blue
         rating 5
 
         annotation 'Mathias'
       end
 
       favourite_color do
-        color :green
+        color green
         rating 10
 
         annotation 'Sabrina'

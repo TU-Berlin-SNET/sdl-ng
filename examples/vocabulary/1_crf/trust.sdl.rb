@@ -8,6 +8,7 @@ end
 type :company_type
 
 company_type :plc
+company_type :incorporated
 
 type :initiative do
   url

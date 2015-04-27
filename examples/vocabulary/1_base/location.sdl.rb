@@ -8,7 +8,7 @@ type :country do
 end
 
 country :germany do
-  jurisdiction :european_union
+  jurisdiction european_union
 end
 
 type :address do

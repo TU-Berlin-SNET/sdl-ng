@@ -24,7 +24,7 @@ class SDL::Base::ServiceCompendium
     def load_vocabulary_from_string(vocabulary_definition, uri, filename = nil)
       begin
         with_uri uri do
-          self.instance_eval vocabulary_definition, filename
+          self.instance_eval vocabulary_definition, filename, 1
         end
       rescue Exception => e
         unload uri

@@ -42,10 +42,10 @@ past_release_notes 'https://plus.google.com/+GoogleDrive/posts'
 feedback_page 'https://plus.google.com/+GoogleDrive/posts'
 
 # portability
-{ "For documents" => [:html, :rtf, :word, :open_office, :pdf, :text],
-  "For spreadsheets" => [:csv, :html, :odf, :pdf, :xls, :text],
-  "For presentations" => [:pdf, :pptx, :text],
-  "For drawings" => [:png, :jpeg, :svg, :pdf]
+{ "For documents" => [html, rtf, word, open_office, pdf, text],
+  "For spreadsheets" => [csv, html, odf, pdf, xls, text],
+  "For presentations" => [pdf, pptx, text],
+  "For drawings" => [png, jpeg, svg, pdf]
 }.each do |annotation, formats_list|
   formats_list.each do |f|
     exportable_data_format f, annotation: annotation

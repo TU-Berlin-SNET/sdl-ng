@@ -11,6 +11,7 @@ payment_term :after_use
 payment_option :credit_card
 payment_option :cheque
 payment_option :invoice
+payment_option :paypal
 
 service_properties do
   billing_term :is_billed
