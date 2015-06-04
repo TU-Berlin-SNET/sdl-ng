@@ -14,6 +14,10 @@ describe 'The exporters' do
     SDL::Exporters::XSDSimpleSchemaExporter.new
   end
 
+  let :json_exporter do
+    SDL::Exporters::JSONExporter.new
+  end
+
   let :schema do
     xsd_exporter.export_schema
   end
@@ -68,6 +72,14 @@ describe 'The exporters' do
         RDF::RDFXML::Reader.new(rdf_export, :validate => true) do |reader|
           expect(reader.valid?)
         end
+      end
+    end
+  end
+
+  context 'The JSON exporter' do
+    it 'creates valid JSON documents' do
+      compendium.services.each do |name, service|
+        expect do JSON.parse(json_exporter.export_service(service)) end.not_to raise_exception
       end
     end
   end

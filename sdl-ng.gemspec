@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'monetize', '~> 1.2'
   spec.add_runtime_dependency 'slim', '~> 3.0'
 
+  spec.add_development_dependency 'ruby-prof', '~>0.15'
   spec.add_development_dependency 'yard', '~> 0.8.7'
   spec.add_development_dependency 'yard-redcarpet-ext', '~> 0.0.3'
   spec.add_development_dependency 'redcarpet', '~> 3.2'

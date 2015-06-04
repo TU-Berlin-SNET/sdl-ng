@@ -196,14 +196,14 @@ describe 'Doing type instance definition' do
         second_level_type
       end
 
-      third_level_type :third
+      third_level_type :third_instance
 
-      second_level_type :second do
-        third_level_type third
+      second_level_type :second_instance do
+        third_level_type third_instance
       end
 
-      first_level_type :first do
-        second_level_type second
+      first_level_type :first_instance do
+        second_level_type second_instance
       end
     end
 
@@ -212,7 +212,7 @@ describe 'Doing type instance definition' do
     end
 
     service = compendium.service :service_with_children do
-      first first
+      first first_instance
     end
 
     first_level = service.first
@@ -224,22 +224,28 @@ describe 'Doing type instance definition' do
   end
 
   it 'returns nil for #parent_index, if the type is used as value of a single-valued property' do
-    New_color = SDL::Base::Type::Color.new
-
-    compendium.service :service_single_value do
-      is_colored New_color
+    compendium.type_instances_definition do
+      color :new_color
     end
 
-    expect(New_color.parent_index).to eq nil
+    compendium.service :service_single_value do
+      is_colored new_color
+    end
+
+    new_color = SDL::Base::Type::Color[:new_color]
+
+    expect(new_color.parent_index).to eq nil
   end
 
   it 'returns the index of a value in a multi-valued property when giving a compatible value for the list' do
-    First_color = SDL::Base::Type::Color.new
-    Second_color = SDL::Base::Type::Color.new
+    compendium.type_instances_definition do
+      color :first_color
+      color :second_color
+    end
 
     compendium.service :service_multi_value do
-      multicolored First_color
-      multicolored Second_color
+      multicolored first_color
+      multicolored second_color
     end
 
     expect(Service[:service_multi_value].multicolored[0].parent_index).to eq 0
