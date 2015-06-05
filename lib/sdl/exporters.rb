@@ -13,5 +13,4 @@ module SDL::Exporters
 
   ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'exporters', 'xml_mapping.rb')
   ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'exporters', 'rdf_mapping.rb')
-  ActiveSupport::Dependencies::Loadable.require_dependency File.join(__dir__, 'exporters', 'json_mapping.rb')
 end
