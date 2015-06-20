@@ -1,9 +1,8 @@
 # base
-service_name "Microsoft Azure"
+service_name 'Microsoft Azure'
 
 # characteristics
 cloud_service_model iaas
-
 
 # charging
 is_charged_by user_account

@@ -1,5 +1,5 @@
 # base
-service_name "AT&T"
+service_name 'AT&T'
 
 # characteristics
 cloud_service_model iaas
@@ -20,7 +20,7 @@ payment_option credit_card
 # dynamics
 
 # interop
-#documentation 'https://developer.att.com/apis'
+documentation 'https://developer.att.com/apis'
 
 compatible_browser internet_explorer, annotation:'optimized for AT&T powered by Yahoo!' #can not find the version
 compatible_browser firefox, 'recent'
@@ -49,13 +49,12 @@ established_in 2004
 # trust
 provider do
   company_type plc
-  employs 243,620
-  partner_network
+  employs 243620
+  #partner_network
   last_years_revenue '6224000000 $'
   report financial_statement, quarterly
 
   #reference_customer '' do
   # url
   #users
-end
 end
