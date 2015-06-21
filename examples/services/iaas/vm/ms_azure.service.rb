@@ -51,8 +51,31 @@ provider do
   partner_network   last_years_revenue '4600000000 $'
   report financial_statement, quarterly
 
-  reference_customer 'Philips' do
-    url 'http://www.salesforce.com/customers/stories/philips.jsp'
-    users 7000
+  reference_customer 'Easyjet' do
+    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-easyjet/'
+  end
+
+  reference_customer 'all3media' do
+    url 'http://azure.microsoft.com/en-us/case-studies/all3media/'
+  end
+
+  reference_customer 'Towers Watson' do
+    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-towerswatson/'
+  end
+
+  reference_customer 'MYOB' do
+    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-myob/'
+  end
+
+  reference_customer 'Portal Solutions' do
+    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-portalsolutions/'
+  end
+
+  reference_customer 'Presence Health' do
+    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-presencehealth/'
+  end
+
+  reference_customer 'Dillen Bouwteam' do
+    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-dillenbouwteam/'
   end
 end
