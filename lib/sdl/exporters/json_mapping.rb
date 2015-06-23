@@ -24,7 +24,7 @@ end
 class SDL::Base::Type::Service
   def as_json(options = { })
     # We cannot just call "super(...)" as this could also be overwritten by MongoDB or some other serializers
-    as_sdl_json(ignore_identifier: true)
+    {'uri' => uri}.merge(as_sdl_json(ignore_identifier: true))
   end
 end
 
