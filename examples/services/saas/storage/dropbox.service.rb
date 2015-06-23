@@ -1,5 +1,5 @@
 # base
-service_name 'Dropbox for Business'
+service_name 'Dropbox'
 
 service_category storage
 
@@ -61,46 +61,19 @@ provider do
   partner_network 'https://www.dropbox.com/business/customers'
   #last_years_revenue '59820000000 $'
   #report financial_statement, quarterly
-
-  reference_customer 'BCBG MAX AZRIA GROUP', 'https://www.dropbox.com/business/customers/case-study-bcbg'
-  reference_customer 'Vita Coco', 'https://www.dropbox.com/business/customers/case-study-vita-coco'
-  reference_customer 'CentricProjects', 'https://www.dropbox.com/business/customers/case-study-centric-project'
-  reference_customer 'Kayak', 'https://www.dropbox.com/business/customers/case-study-kayak'
-  reference_customer 'foursquare', 'https://www.dropbox.com/business/customers/case-study-foursquare'
-  reference_customer 'Asana', 'https://www.dropbox.com/business/customers/case-study-asana'
-  reference_customer 'Huge', 'https://www.dropbox.com/business/customers/case-study-huge'
-  reference_customer 'USA Gymnastics', 'https://www.dropbox.com/business/customers/case-study-usa-gymnastics'
-  reference_customer 'appen', 'https://www.dropbox.com/business/customers/case-study-appen-butler-hill'
-  reference_customer 'Valiant', 'https://www.dropbox.com/business/customers/case-study-valiant-entertainment'
-  reference_customer 'Radiolab', 'https://www.dropbox.com/business/customers/case-study-radiolab'
-  reference_customer 'Refinery29', 'https://www.dropbox.com/business/customers/case-study-refinery-29'
-
-  reference_customer 'National Geographic'
-  reference_customer 'Spotify'
-  reference_customer 'zendesk'
-  reference_customer 'Citizen'
-  reference_customer 'Rockstar'
-  reference_customer 'dictonary.com'
-  reference_customer 'Eventbrite'
 end
 
 security do
   authentication do
     two_factor_auth yes
-    sso yes
   end
 
   authorization do
     file_locking no
     permission_revocation yes
-    granular_permission yes
   end
 
-  audit_option audit_log
-
   certification sas_70_ii
-
-  monitoring yes
 
   data_encryption provider_only, directory_based, aes
   transmission_encryption 'TLS', '1.2'
@@ -117,9 +90,6 @@ storage_properties do
   #location :data_location
 
   max_file_size "storage size"
-  max_storage_capacity "∞"
-
-  version_control yes, annotation: 'unlimited'
   compression yes
 end
 
@@ -149,5 +119,80 @@ storage_features do
     mobile_device ipad
     mobile_device kindle
     mobile_device windows_phone
+  end
+end
+
+variant :free do
+  service_name 'Dropbox Free'
+
+  public_service_level_agreement 'https://www.dropbox.com/terms#terms'
+
+  security do
+    authentication do
+      sso no
+    end
+
+    authorization do
+      granular_permission no
+    end
+
+    monitoring no
+  end
+
+  storage_properties do
+    max_storage_capacity "100 GB"
+
+    version_control yes, annotation: '30 days'
+  end
+end
+
+variant :business do
+  service_name 'Dropbox for Business'
+
+  add_on_repository 'https://www.dropbox.com/business/resources/app-integrations', 300000
+
+  public_service_level_agreement 'https://www.dropbox.com/terms#business_agreement'
+
+  provider do
+    reference_customer 'BCBG MAX AZRIA GROUP', 'https://www.dropbox.com/business/customers/case-study-bcbg'
+    reference_customer 'Vita Coco', 'https://www.dropbox.com/business/customers/case-study-vita-coco'
+    reference_customer 'CentricProjects', 'https://www.dropbox.com/business/customers/case-study-centric-project'
+    reference_customer 'Kayak', 'https://www.dropbox.com/business/customers/case-study-kayak'
+    reference_customer 'foursquare', 'https://www.dropbox.com/business/customers/case-study-foursquare'
+    reference_customer 'Asana', 'https://www.dropbox.com/business/customers/case-study-asana'
+    reference_customer 'Huge', 'https://www.dropbox.com/business/customers/case-study-huge'
+    reference_customer 'USA Gymnastics', 'https://www.dropbox.com/business/customers/case-study-usa-gymnastics'
+    reference_customer 'appen', 'https://www.dropbox.com/business/customers/case-study-appen-butler-hill'
+    reference_customer 'Valiant', 'https://www.dropbox.com/business/customers/case-study-valiant-entertainment'
+    reference_customer 'Radiolab', 'https://www.dropbox.com/business/customers/case-study-radiolab'
+    reference_customer 'Refinery29', 'https://www.dropbox.com/business/customers/case-study-refinery-29'
+
+    reference_customer 'National Geographic'
+    reference_customer 'Spotify'
+    reference_customer 'zendesk'
+    reference_customer 'Citizen'
+    reference_customer 'Rockstar'
+    reference_customer 'dictonary.com'
+    reference_customer 'Eventbrite'
+  end
+
+  security do
+    authentication do
+      sso yes
+    end
+
+    authorization do
+      granular_permission yes
+    end
+
+    audit_option audit_log
+
+    monitoring yes
+  end
+
+  storage_properties do
+    max_storage_capacity "∞"
+
+    version_control yes, annotation: 'unlimited'
   end
 end

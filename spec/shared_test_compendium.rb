@@ -6,6 +6,8 @@ shared_context 'the default compendium' do
 
     @compendium.clear!
 
+    @compendium.load_vocabulary_from_path File.join(__dir__, '..', 'examples', 'vocabulary', '1_base')
+
     @compendium.instance_eval do
       type :color do
         string :hex_value
