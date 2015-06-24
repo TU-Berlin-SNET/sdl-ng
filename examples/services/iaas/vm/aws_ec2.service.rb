@@ -42,9 +42,7 @@ past_release_notes 'https://aws.amazon.com/releasenotes/Amazon-EC2'
 # protection
  is_protected_by https
 
-
 # reliability
-
 
 # reputation
  established_in 2006
@@ -52,29 +50,22 @@ past_release_notes 'https://aws.amazon.com/releasenotes/Amazon-EC2'
 # trust
 provider do
    company_type plc
-
    partner_network 'http://aws.amazon.com/solutions/case-studies/'
-
    reference_customer 'Foursquare' do
       url 'http://aws.amazon.com/solutions/case-studies/foursquare/'
    end
-
-  reference_customer 'Bankinter' do
+   reference_customer 'Bankinter' do
     url 'http://aws.amazon.com/solutions/case-studies/bankinter/'
-  end
-
+   end
    reference_customer 'Netflix' do
      url 'http://aws.amazon.com/solutions/case-studies/netflix/'
    end
-#
-  reference_customer 'Nasa/JPL Mars Curiosity Mission' do
+   reference_customer 'Nasa/JPL Mars Curiosity Mission' do
      url 'http://aws.amazon.com/solutions/case-studies/nasa-jpl-curiosity/'
-  end
-
+   end
    reference_customer 'Autodesk' do
      url 'http://aws.amazon.com/solutions/case-studies/autodesk/'
    end
-
    reference_customer 'Animoto' do
      url 'http://aws.amazon.com/solutions/case-studies/animoto/'
    end
@@ -86,13 +77,11 @@ provider do
      two_factor_auth yes
      sso yes
    end
-#
+
    authorization do
      permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
      granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_EC2'
    end
-
-
  end
 
 # storage properties

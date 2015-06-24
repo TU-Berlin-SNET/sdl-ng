@@ -48,34 +48,14 @@ established_in 2006
 provider do
   company_type plc
   employs 12000
-  partner_network   last_years_revenue '4600000000 $'
+  last_years_revenue '4600000000 $'
   report financial_statement, quarterly
 
-  reference_customer 'Easyjet' do
-    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-easyjet/'
-  end
-
-  reference_customer 'all3media' do
-    url 'http://azure.microsoft.com/en-us/case-studies/all3media/'
-  end
-
-  reference_customer 'Towers Watson' do
-    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-towerswatson/'
-  end
-
-  reference_customer 'MYOB' do
-    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-myob/'
-  end
-
-  reference_customer 'Portal Solutions' do
-    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-portalsolutions/'
-  end
-
-  reference_customer 'Presence Health' do
-    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-presencehealth/'
-  end
-
-  reference_customer 'Dillen Bouwteam' do
-    url 'http://azure.microsoft.com/en-us/case-studies/customer-stories-dillenbouwteam/'
-  end
+  reference_customer 'Easyjet', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-easyjet/'
+  reference_customer 'all3media','http://azure.microsoft.com/en-us/case-studies/all3media/'
+  reference_customer 'Towers Watson', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-towerswatson/'
+  reference_customer 'MYOB' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-myob/'
+  reference_customer 'Portal Solutions' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-portalsolutions/'
+  reference_customer 'Presence Health' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-presencehealth/'
+  reference_customer 'Dillen Bouwteam' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-dillenbouwteam/'
 end

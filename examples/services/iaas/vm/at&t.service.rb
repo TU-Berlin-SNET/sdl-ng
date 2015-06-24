@@ -31,8 +31,6 @@ compatible_browser safari, annotation: 'on Mac' #'5' cannot find the version
 
 # optimizing
 maintenance_free
-#documentation 'http://attd ircontracts.com/documents/AT&T%20Cloud%20Solutions%20Service%20Guide.pdf'
-
 
 # portability
 
@@ -41,7 +39,6 @@ is_protected_by https
 
 # reliability
 can_be_used_offline yes
-#http://www.business.att.com/content/productbrochures/STaaS_w_EFSS_brief_2_2014.pdf
 
 # reputation
 established_in 2004
@@ -50,11 +47,6 @@ established_in 2004
 provider do
   company_type plc
   employs 243620
-  #partner_network
   last_years_revenue '6224000000 $'
   report financial_statement, quarterly
-
-  #reference_customer '' do
-  # url
-  #users
 end

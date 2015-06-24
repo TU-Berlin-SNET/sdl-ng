@@ -1,7 +1,6 @@
 # base
 service_name 'IBM SoftLayer'
 
-
 # characteristics
 cloud_service_model iaas
 
@@ -12,7 +11,6 @@ cloud_service_model iaas
 public_service_level_agreement 'http://static.softlayer.com/SoftLayer4/pdfs/sla.pdf'
 #SLA is incorporated into MSA (Master Services Agreement): http://cdn.softlayer.com/SoftLayer_MSA.pdf
 #To Do: Introduce MSA (Master Services Agreement)
-
 
 # delivery
 is_billed monthly
@@ -29,10 +27,8 @@ rest_interface 'http://sldn.softlayer.com/article/rest'
 xmlrpc_interface 'http://sldn.softlayer.com/article/XML-RPC'
 soap_interface 'http://sldn.softlayer.com/article/SOAP'
 
-
-
 # optimizing
-#maintenance_window, annotation: 'http://status.softlayer.com/'
+#maintenance_window '', annotation: 'http://status.softlayer.com/'
 feedback_page 'http://forums.softlayer.com/'
 #To Do: Decide 'http://status.softlayer.com/' is status_page or maintenance
 #To DO: Include Customer Support
@@ -51,7 +47,6 @@ provider do
   #To Do: Find more company info
 
   partner_network 'http://www.softlayer.com/customer-stories'
-
 
   reference_customer 'Ahrefs', 'http://cdn.softlayer.com/case-studies/Ahrefs_Case-Study.pdf'
   reference_customer 'BodyLogicMD', 'http://cdn.softlayer.com/case-studies/BodyLogic_Case-Study.pdf'
@@ -94,12 +89,10 @@ security do
   end
   #To DO: Star Registrant? EU Model Clauses? PCI Compliance?
 
-
   transmission_encryption 'SSL'
   #To Do: SSL certificates
   #To Do: Firewalls
 end
-
 
 storage_features do
   multi_tenancy yes

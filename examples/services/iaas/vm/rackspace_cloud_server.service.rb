@@ -97,6 +97,6 @@ storage_features do
     mobile_device ipad
     mobile_device windows_phone
 
-    end
   end
+end
   
