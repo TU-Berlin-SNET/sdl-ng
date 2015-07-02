@@ -7,6 +7,9 @@ cloud_service_model iaas
 # charging
 #To do: Charging by user account?
 
+minimum_billing_cycle per_hour, '$0.038'
+minimum_billing_cycle per_month, '$25.00'
+
 # compliance
 public_service_level_agreement 'http://static.softlayer.com/SoftLayer4/pdfs/sla.pdf'
 #SLA is incorporated into MSA (Master Services Agreement): http://cdn.softlayer.com/SoftLayer_MSA.pdf

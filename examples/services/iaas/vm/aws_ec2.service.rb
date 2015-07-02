@@ -7,6 +7,13 @@ service_category virtual_machine
 
 # charging
 is_charged_by user_account
+discounts yes, annotation: 'Upto 75% for Reserved instances'
+
+#procurement
+procurement_model on_demand
+procurement_model reserved
+procurement_model spot
+
 
 # compliance
 status_page 'http://status.aws.amazon.com'
