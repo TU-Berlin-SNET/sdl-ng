@@ -5,6 +5,9 @@ en:
       type:
         audit_option:
           audit_log: Audit log
+        billing_cycle:
+          per_hour: Per hour
+          per_month: Per month
         billing_term:
           annually: Annually
           monthly: Monthly
@@ -72,8 +75,15 @@ en:
           quarterly: Quarterly
           weekly: Weekly
           yearly: Yearly
+        procurement_model:
+          on_demand: On demand
+          reserved: Reserved
+          spot: Bidding
         report:
           financial_statement: The financial statement
+        service_category:
+          storage: Storage
+          virtual_machine: Virtual Machine
     markdown:
       header: 'The following facts are known about the service:'
     property:
@@ -83,6 +93,9 @@ en:
           url: Repository URL
         address:
           address_lines: The address lines
+        minimum_billing_cycle:
+          billing_cycle: Billing Cycle
+          billing_rate: Billing Rate
         browser:
           browser_name: The name of the browser
           url: Homepage
@@ -166,8 +179,10 @@ en:
           location_enabled: The service supports location-based computing
           maintenance_free: The service is maintenance free
           maintenance_window: The service has a maintenance window
+          minimum_billing_cycles: Available Billing Cycles
           past_release_notes: Past release notes URL
           payment_options: Payment options
+          procurement_models: Available Purchasing Options
           provider: The service provider
           provision_end_user_duration: The duration for provisioning an end user.
           public_service_level_agreement: URL of public SLA
@@ -202,6 +217,7 @@ en:
       data_capability_operation: The data capability operation
       data_encryption: Data encryption means
       data_format: The data format
+      discount: Discount available
       feature: A service feature
       initiative: An business initiative
       interface: A service interface
@@ -232,8 +248,7 @@ en:
     xml:
       annotation: An arbitrary annotation to be displayed for the description consumer.
       documentation: The documentation of this type or fact instance.
-      identifier: An identifier for a type instance. Two instances are the same, if
-        they share the same identifier.
+      identifier: An identifier for a type instance. Two instances are the same, if they share the same identifier.
       service_class: A service. It contains an arbitrary number of facts.
       service_root: The root element of a service.
       services_root: A list of services.
