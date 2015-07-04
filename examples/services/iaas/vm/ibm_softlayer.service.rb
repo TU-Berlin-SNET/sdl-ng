@@ -14,6 +14,7 @@ minimum_billing_cycle per_month, '$25.00'
 public_service_level_agreement 'http://static.softlayer.com/SoftLayer4/pdfs/sla.pdf'
 #SLA is incorporated into MSA (Master Services Agreement): http://cdn.softlayer.com/SoftLayer_MSA.pdf
 #To Do: Introduce MSA (Master Services Agreement)
+status_page 'http://status.softlayer.com/'
 
 # delivery
 is_billed monthly
@@ -31,13 +32,15 @@ xmlrpc_interface 'http://sldn.softlayer.com/article/XML-RPC'
 soap_interface 'http://sldn.softlayer.com/article/SOAP'
 
 # optimizing
-#maintenance_window '', annotation: 'http://status.softlayer.com/'
 feedback_page 'http://forums.softlayer.com/'
-#To Do: Decide 'http://status.softlayer.com/' is status_page or maintenance
+maintenance_notification user_portal
 #To DO: Include Customer Support
 
 # protection
 is_protected_by vpn
+
+#provider management
+free_trial yes, '1 month'
 
 # reliability
 
@@ -50,6 +53,7 @@ provider do
   #To Do: Find more company info
 
   partner_network 'http://www.softlayer.com/customer-stories'
+  provider_announcement 'http://www.softlayer.com/press'
 
   reference_customer 'Ahrefs', 'http://cdn.softlayer.com/case-studies/Ahrefs_Case-Study.pdf'
   reference_customer 'BodyLogicMD', 'http://cdn.softlayer.com/case-studies/BodyLogic_Case-Study.pdf'

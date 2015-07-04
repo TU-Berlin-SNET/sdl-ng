@@ -45,10 +45,14 @@ compatible_browser safari, '6+', annotation: 'on Mac'
 compatible_browser internet_explorer, '8+'
 
 # optimizing
+maintenance_notification email
 past_release_notes 'https://aws.amazon.com/releasenotes/Amazon-EC2'
 
 # protection
  is_protected_by https
+
+#provider management
+free_trial yes, '12 months'
 
 # reliability
 
@@ -59,6 +63,8 @@ past_release_notes 'https://aws.amazon.com/releasenotes/Amazon-EC2'
 provider do
    company_type plc
    partner_network 'http://aws.amazon.com/solutions/case-studies/'
+   provider_announcement 'http://aws.amazon.com/new/'
+
    reference_customer 'Foursquare' do
       url 'http://aws.amazon.com/solutions/case-studies/foursquare/'
    end
