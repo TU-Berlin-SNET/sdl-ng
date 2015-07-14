@@ -13,10 +13,10 @@ type :minimum_billing_cycle do
   string :billing_rate
 end
 
-
 service_properties do
   charge_unit :is_charged_by
   list_of_minimum_billing_cycles
   boolean :discounts
+  boolean :free_outbound_data_transfer
 end
 

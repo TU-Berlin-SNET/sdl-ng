@@ -12,4 +12,6 @@ end
 service_properties do
   free_trial
   support_availability
+  boolean :data_center_migration
+  boolean :provider_consulting
 end
