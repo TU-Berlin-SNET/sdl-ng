@@ -2,6 +2,7 @@ require_relative 'spec_helper'
 require_relative 'shared_test_compendium'
 
 require 'rspec'
+require 'json-schema'
 
 describe 'The exporters' do
   include_context 'the default compendium'
@@ -16,6 +17,10 @@ describe 'The exporters' do
 
   let :json_exporter do
     SDL::Exporters::JSONExporter.new
+  end
+
+  let :json_schema_exporter do
+    SDL::Exporters::JSONSchemaExporter.new
   end
 
   let :schema do
@@ -80,6 +85,15 @@ describe 'The exporters' do
     it 'creates valid JSON documents' do
       compendium.services.each do |name, service|
         expect do JSON.parse(json_exporter.export_service(service)) end.not_to raise_exception
+      end
+    end
+
+    it 'creates valid JSON documents following the schema' do
+      puts json_schema_exporter.schema_hash
+
+      compendium.services.each do |name, service|
+        puts service.as_json
+        expect do JSON::Validator.validate!(json_schema_exporter.schema_hash, service.as_json, :validate_schema => true) end.not_to raise_exception
       end
     end
   end

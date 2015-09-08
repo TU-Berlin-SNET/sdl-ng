@@ -3,6 +3,7 @@ service_name 'IBM SoftLayer'
 
 # characteristics
 cloud_service_model iaas
+service_category vm
 
 # charging
 #To do: Charging by user account?

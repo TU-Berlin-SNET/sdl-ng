@@ -3,7 +3,7 @@ service_name 'Amazon Elastic Compute Cloud (Amazon EC2)'
 
 # characteristics
 cloud_service_model iaas
-service_category virtual_machine
+service_category vm
 
 # charging
 is_charged_by user_account

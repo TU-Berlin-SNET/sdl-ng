@@ -42,5 +42,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.4'
   spec.add_development_dependency 'fuubar', '~> 2.0'
   spec.add_development_dependency 'simplecov', '~> 0.10'
-  spec.add_development_dependency 'minitest', '~> 5.7'
+  spec.add_development_dependency 'minitest', '~> 5'
+  spec.add_development_dependency 'json-schema', '~> 2'
 end

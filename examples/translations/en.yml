@@ -63,6 +63,7 @@ en:
           cheque: Cheque
           credit_card: Credit card
           invoice: Invoice
+          paypal: PayPal
         payment_term:
           after_use: Post-Paid
           in_advance: Pre-Paid
@@ -83,7 +84,7 @@ en:
           financial_statement: The financial statement
         service_category:
           storage: Storage
-          virtual_machine: Virtual Machine
+          vm: Virtual Machine
     markdown:
       header: 'The following facts are known about the service:'
     property:

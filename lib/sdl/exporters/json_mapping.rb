@@ -39,3 +39,16 @@ module URI
     to_s
   end
 end
+
+class SDL::Types::SDLSimpleType
+  def self.json_type
+    case name.demodulize
+      when "SDLBoolean"
+        'boolean'
+      when "SDLNumber"
+        'number'
+      else
+        'string'
+    end
+  end
+end

@@ -3,7 +3,7 @@ service_name 'AT&T'
 
 # characteristics
 cloud_service_model iaas
-
+service_category vm
 
 # charging
 is_charged_by user_account
