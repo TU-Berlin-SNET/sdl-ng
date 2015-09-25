@@ -91,10 +91,6 @@ security do
   certification iso_27001
   #Softlayer provides soc1,2,3 reports. Same as soc certificates?
 
-  us do
-    jurisdiction safe_harbor
-    jurisdiction hipaa
-  end
   #To DO: Star Registrant? EU Model Clauses? PCI Compliance?
 
   transmission_encryption 'SSL'

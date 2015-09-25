@@ -5,6 +5,9 @@ end
 
 type :provider do
   string :provider_name
+
+  location :headquarters
+  list_of_locations :subsidiaries
 end
 
 type :service do
@@ -23,4 +26,6 @@ service_properties do
 
   list_of_variants
   list_of_service_categories
+
+  list_of_locations :datacenters
 end

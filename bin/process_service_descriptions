@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+Encoding.default_internal = Encoding::UTF_8
+Encoding.default_external = Encoding::UTF_8
+
 require 'optparse'
 
 options = {}
@@ -45,6 +48,13 @@ compendium.load_vocabulary_from_path(Dir.pwd)
 compendium.register_classes_globally
 
 puts "Loaded vocabulary with #{Type.subtypes_recursive.drop(2).count} types, #{Service.properties.count} service properties and #{compendium.type_instances.values.map(&:count).sum} type instances."
+
+# Load mappers
+Dir["rdf_mappers/*.rb"].each do |file|
+  load file
+
+  puts "Loaded RDF mapper from file #{file}"
+end
 
 # Load Service Definitions
 compendium.load_service_from_path(Dir.pwd)

@@ -126,7 +126,7 @@ class SDL::Receivers::TypeInstanceReceiver
             end
           end
 
-          new_item.parent = type_instance
+          new_item.parent_object = type_instance
           new_item.parent_index = existing_list.count
 
           existing_list << new_item

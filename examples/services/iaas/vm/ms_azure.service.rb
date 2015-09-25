@@ -47,6 +47,8 @@ established_in 2006
 
 # trust
 provider do
+  provider_name "Microsoft"
+
   company_type plc
   employs 12000
   last_years_revenue '4600000000 $'
@@ -59,4 +61,36 @@ provider do
   reference_customer 'Portal Solutions' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-portalsolutions/'
   reference_customer 'Presence Health' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-presencehealth/'
   reference_customer 'Dillen Bouwteam' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-dillenbouwteam/'
+
+  headquarters do
+    name "Microsoft Corporation, Corporate Headquarters"
+    country_code "US"
+    region "Washington"
+    locality "Redmond"
+    postal_code "98052-6399"
+    street_address "One Microsoft Way"
+  end
+
+  subsidiary do
+    name "Microsoft Ireland Operations Limited"
+    country_code "IE"
+    locality "Dublin"
+    postal_code "18"
+    street_address "Block B, Atrium Building, Sandyford Industrial Estate, Carmanhall Rd"
+  end
+end
+
+datacenter do
+  country_code "US"
+  region "Iowa"
+end
+
+datacenter do
+  country_code "NL"
+  locality "Amsterdam"
+end
+
+datacenter do
+  country_code "JP"
+  locality "Tokyo"
 end

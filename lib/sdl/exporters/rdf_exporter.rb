@@ -2,8 +2,6 @@ require 'rdf'
 require 'rdf/rdfxml'
 
 class SDL::Exporters::RDFExporter < SDL::Exporters::ServiceExporter
-  @@s = RDF::Vocabulary('http://www.open-service-compendium.org/')
-
   def export_service(service)
     graph = RDF::Graph.new
 
@@ -13,9 +11,13 @@ class SDL::Exporters::RDFExporter < SDL::Exporters::ServiceExporter
   end
 
   def expand_properties(type_instance, graph)
+    unless type_instance.class.rdf_type.nil?
+      graph << [RDF::URI.new(type_instance.uri), RDF.type, type_instance.class.rdf_type]
+    end
+
     type_instance.property_values.each do |property, value|
       [value].flatten.each do |v|
-        graph << [RDF::URI.new(type_instance.uri), @@s["#{property.name.underscore}"], v.rdf_object] unless v.nil?
+        graph << [RDF::URI.new(type_instance.uri), property.rdf_url, v.rdf_object] unless v.nil?
       end
 
       if property.type < SDL::Base::Type

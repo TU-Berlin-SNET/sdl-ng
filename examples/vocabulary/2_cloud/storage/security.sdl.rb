@@ -35,13 +35,6 @@ jurisdiction :fisma
 jurisdiction :ferpa
 jurisdiction :safe_harbor
 
-country :us do
-  jurisdiction safe_harbor
-  jurisdiction hipaa
-  jurisdiction fisma
-  jurisdiction ferpa
-end
-
 type :security do
   authentication do
     boolean :two_factor_auth
