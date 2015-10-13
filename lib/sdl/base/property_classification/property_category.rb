@@ -12,10 +12,6 @@
 # The class is also responsible for holding maps of category keys,
 # category instances and their associated properties.
 class SDL::Base::PropertyClassification::PropertyCategory < SDL::Base::PropertyClassification
-  # Regex matching the last directory name plus the filename
-  # without extension, e.g. "crf/charging".
-  @@loaded_from_regex = %r[([^/]+?)/([^/]+?)(?=\..*?$)]
-
   # Maps from key to category instance and category instance
   # to properties.
   @@key_category_map, @@category_properties_map = {}, {}
@@ -33,17 +29,17 @@ class SDL::Base::PropertyClassification::PropertyCategory < SDL::Base::PropertyC
   # represented by the same PropertyCategory instances.
   def self.for_property(property)
     if property.loaded_from
-      for_key(property.loaded_from[@@loaded_from_regex].sub('/', '.'), property)
+      for_key(property.loaded_from.sub('/', '.'), property)
     else
       for_key('unclassified', property)
     end
   end
 
   # The category key, e.g. "crf.portability"
-  attr :category_key
+  attr :key
 
   def to_s
-    "Property category '#{category_key}'"
+    "Property category '#{key}'"
   end
 
   # All properties belonging to this category
@@ -62,7 +58,7 @@ class SDL::Base::PropertyClassification::PropertyCategory < SDL::Base::PropertyC
       category_instance
     end
 
-    def initialize(category_key)
-      @category_key = category_key
+    def initialize(key)
+      @key = key
     end
 end

@@ -32,7 +32,8 @@ class SDL::Exporters::JSONSchemaExporter < SDL::Exporters::SchemaExporter
       {
           'type' => 'array',
           'items' => single_property_definition_hash(property),
-          'description' => property.documentation
+          'description' => property.documentation,
+          'category' => property.category.key
       }
     else
       single_property_definition_hash(property)
@@ -43,7 +44,8 @@ class SDL::Exporters::JSONSchemaExporter < SDL::Exporters::SchemaExporter
     if property.simple_type?
       {
           'type' => property.type.json_type,
-          'description' => property.documentation
+          'description' => property.documentation,
+          'category' => property.category.key
       }
     else
       instances_hash = property.type.subtypes_recursive.collect {|t| t.instances}.reduce{|a, b| a.merge(b)}
@@ -54,12 +56,14 @@ class SDL::Exporters::JSONSchemaExporter < SDL::Exporters::SchemaExporter
           'oneOf' => property.type.subtypes_recursive.collect{|subtype|
             {'$ref' => "#/definitions/#{subtype.local_name}"}
           },
-          'description' => property.documentation
+          'description' => property.documentation,
+          'category' => property.category.key
         }
       else
         return {
             'enum' => instances_hash.keys.concat([{'description' => Hash[*instances_hash.collect{|k, v| [k, v.documentation]}.flatten]}]),
-            'description' => property.documentation
+            'description' => property.documentation,
+            'category' => property.category.key
         }
       end
     end

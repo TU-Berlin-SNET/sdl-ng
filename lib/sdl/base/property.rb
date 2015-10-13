@@ -35,7 +35,13 @@ class SDL::Base::Property
   # The list of property classifications, e.g. PropertyCategory.
   # @!attribute[r] classifications
   # @return [Array[PropertyClassification]]
-  attr_accessor :classifications
+  attr_reader :classifications
+
+  ##
+  # The category of this property
+  # @!attribute[r] category
+  # @return [PropertyCategory]
+  attr_reader :category
 
   ##
   # Is this Property single-valued
@@ -64,8 +70,12 @@ class SDL::Base::Property
 
   def classifications
     if loaded_from
-      SDL::Base::PropertyClassification::PropertyCategory.for_property(self) + @classifications
+      [category] + @classifications
     end
+  end
+
+  def category
+    SDL::Base::PropertyClassification::PropertyCategory.for_property(self)
   end
 
   # Define a property by its name and type
