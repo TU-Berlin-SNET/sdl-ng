@@ -5,12 +5,12 @@ class SDL::Exporters::RDFExporter < SDL::Exporters::ServiceExporter
   def export_service(service)
     graph = RDF::Graph.new
 
-    expand_properties(service, graph)
+    self.class.expand_properties(service, graph)
 
     graph.dump(:rdf)
   end
 
-  def expand_properties(type_instance, graph)
+  def self.expand_properties(type_instance, graph)
     unless type_instance.class.rdf_type.nil?
       graph << [RDF::URI.new(type_instance.uri), RDF.type, type_instance.class.rdf_type]
     end
