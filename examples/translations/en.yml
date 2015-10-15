@@ -5,9 +5,12 @@ en:
       type:
         audit_option:
           audit_log: Audit log
+        billing_cycle:
+          per_hour: Per hour
+          per_month: Per month
         billing_term:
-          annually: Annually billing
-          monthly: Monthly billing
+          annually: Annually
+          monthly: Monthly
         browser:
           chrome: Google Chrome
           firefox: Mozilla Firefox
@@ -60,9 +63,10 @@ en:
           cheque: Cheque
           credit_card: Credit card
           invoice: Invoice
+          paypal: PayPal
         payment_term:
-          after_use: Payment is done after service consumption
-          in_advance: Payment is done in advance of service consumption
+          after_use: Post-Paid
+          in_advance: Pre-Paid
         period:
           bimonthly: Bimonthly
           biweekly: Biweekly
@@ -72,8 +76,15 @@ en:
           quarterly: Quarterly
           weekly: Weekly
           yearly: Yearly
+        procurement_model:
+          on_demand: On demand
+          reserved: Reserved
+          spot: Bidding
         report:
           financial_statement: The financial statement
+        service_category:
+          storage: Storage
+          vm: Virtual Machine
     markdown:
       header: 'The following facts are known about the service:'
     property:
@@ -83,9 +94,9 @@ en:
           url: Repository URL
         address:
           address_lines: The address lines
-        billing_and_payment:
-          billing_term: Billing
-          payment_term: Payment
+        minimum_billing_cycle:
+          billing_cycle: Billing Cycle
+          billing_rate: Billing Rate
         browser:
           browser_name: The name of the browser
           url: Homepage
@@ -162,14 +173,17 @@ en:
           feedback_page: Feedback page URL
           future_roadmap: Future roadmap URL
           importable_data_formats: Importable data formats
-          is_billed: Billing and Payment info
+          is_billed: Billing
+          is_charged: Pre-/Post-Paid
           is_charged_by: Charging unit
           is_protected_by: Service protection means
           location_enabled: The service supports location-based computing
           maintenance_free: The service is maintenance free
           maintenance_window: The service has a maintenance window
+          minimum_billing_cycles: Available Billing Cycles
           past_release_notes: Past release notes URL
           payment_options: Payment options
+          procurement_models: Available Purchasing Options
           provider: The service provider
           provision_end_user_duration: The duration for provisioning an end user.
           public_service_level_agreement: URL of public SLA
@@ -189,7 +203,6 @@ en:
       add_on_repository: A service add-on repo
       address: A postal address
       audit_option: An option to audit a service
-      billing_and_payment: Billing and payment information
       billing_term: The billing term, e.g. "per month".
       browser: A browser
       browser_plugin: A browser plugin
@@ -205,6 +218,7 @@ en:
       data_capability_operation: The data capability operation
       data_encryption: Data encryption means
       data_format: The data format
+      discount: Discount available
       feature: A service feature
       initiative: An business initiative
       interface: A service interface
@@ -235,8 +249,7 @@ en:
     xml:
       annotation: An arbitrary annotation to be displayed for the description consumer.
       documentation: The documentation of this type or fact instance.
-      identifier: An identifier for a type instance. Two instances are the same, if
-        they share the same identifier.
+      identifier: An identifier for a type instance. Two instances are the same, if they share the same identifier.
       service_class: A service. It contains an arbitrary number of facts.
       service_root: The root element of a service.
       services_root: A list of services.

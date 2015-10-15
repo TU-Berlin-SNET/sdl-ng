@@ -31,7 +31,7 @@ class SDL::Base::ServiceCompendium
   def load_service_from_string(service_definition, service_name, uri)
     with_uri uri do
       service service_name do
-        eval service_definition, binding, uri
+        eval service_definition, binding, uri, 1
       end
     end
   end

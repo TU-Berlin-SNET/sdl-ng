@@ -1,5 +1,4 @@
 type :cloud_service_model
-type :service_category
 
 cloud_service_model :saas
 cloud_service_model :paas

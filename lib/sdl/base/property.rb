@@ -1,5 +1,5 @@
 ##
-# A property of a Fact or Type. It has a #name and an associated Type.
+# A property of a Type. It has a #name and an associated Type.
 class SDL::Base::Property
   ##
   # The Property name
@@ -32,6 +32,18 @@ class SDL::Base::Property
   attr_accessor :holder
 
   ##
+  # The list of property classifications, e.g. PropertyCategory.
+  # @!attribute[r] classifications
+  # @return [Array[PropertyClassification]]
+  attr_reader :classifications
+
+  ##
+  # The category of this property
+  # @!attribute[r] category
+  # @return [PropertyCategory]
+  attr_reader :category
+
+  ##
   # Is this Property single-valued
   # @return [Boolean]
   def single?
@@ -56,9 +68,21 @@ class SDL::Base::Property
     type <= SDL::Types::SDLSimpleType
   end
 
+  def classifications
+    if loaded_from
+      [category] + @classifications
+    end
+  end
+
+  def category
+    SDL::Base::PropertyClassification::PropertyCategory.for_property(self)
+  end
+
   # Define a property by its name and type
   def initialize(name, type, parent, multi = false)
     @name, @type, @parent, @multi = name.to_s, type, parent, multi
+
+    @classifications = []
   end
 
   def to_s

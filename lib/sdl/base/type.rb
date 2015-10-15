@@ -243,7 +243,7 @@ class SDL::Base::Type
 
       property = SDL::Base::Property.new(sym, type, self, multi)
       property.loaded_from = SDL::Base::ServiceCompendium.instance.current_uri
-
+      
       (@properties ||= []) << property
 
       add_property_setters(sym, type, multi)
@@ -261,7 +261,7 @@ class SDL::Base::Type
           else
             instance_variable_set "@#{sym}".to_s, value
 
-            value.parent = self
+            value.parent_object = self
           end
         end
       else
@@ -356,5 +356,5 @@ class SDL::Base::Type
   attr_accessor :parent_index
 
   # The parent of this type.
-  attr_accessor :parent
+  attr_accessor :parent_object
 end

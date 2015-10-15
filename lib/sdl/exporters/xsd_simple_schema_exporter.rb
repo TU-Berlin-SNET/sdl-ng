@@ -55,7 +55,7 @@ class SDL::Exporters::XSDSimpleSchemaExporter < SDL::Exporters::SchemaExporter
                 else
                   xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name do
                     document(xml, I18n.t('sdl.xml.identifier'))
-                  end
+                  end unless type_class.instances.empty?
                 end
               end
             end
@@ -79,7 +79,7 @@ class SDL::Exporters::XSDSimpleSchemaExporter < SDL::Exporters::SchemaExporter
                 end
               end
             end
-          end unless type_class.eql? SDL::Base::Type::Service
+          end unless type_class.eql?(SDL::Base::Type::Service) || type_class.instances.empty?
         end
 
         build_additional_types(xml)

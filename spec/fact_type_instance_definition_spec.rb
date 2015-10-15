@@ -34,18 +34,6 @@ describe 'Doing type instance definition' do
     compendium.register_classes_globally
   end
 
-  context 'With identifiers as symbolic names' do
-    it_should_behave_like 'it can use identifiers for predefined types' do
-      let :red_identifier do
-        ':red'
-      end
-
-      let :green_identifier do
-        ':green'
-      end
-    end
-  end
-
   context 'With identifiers as regular names (i.e. method calls)' do
     it_should_behave_like 'it can use identifiers for predefined types' do
       let :red_identifier do
@@ -87,19 +75,19 @@ describe 'Doing type instance definition' do
   it 'raises an error, if multiple predefined type instances with the same name are found by #method_missing' do
     expect do
       compendium.service :service_with_ambiguous_reference do
-        color text
+        is_colored text
       end
-    end.to raise_exception
+    end.not_to raise_exception
+
+    puts compendium
   end
 
   it 'raises an error, if a value with an invalid type is given for multi valued properties' do
     expect {
       service = compendium.service(:invalid_service) do
-        multicolored do
-          color "Blue"
-        end
+        multicolored Object.new
       end
-    }.to raise_exception
+    }.to raise_exception(RuntimeError, /with a Object value/)
   end
 
   it 'can be done through multiple arguments and associative hashes' do
@@ -139,7 +127,7 @@ describe 'Doing type instance definition' do
   context 'the #to_s method of a fact' do
     it 'gives out the Fact class local name when no same-named property than the class exists' do
       compendium.service :blue_service do
-        is_colored :blue
+        is_colored blue
       end
 
       expect(compendium.services[:blue_service].is_colored.to_s).to eq 'SDL::Base::Type::ServiceColor'
@@ -148,7 +136,7 @@ describe 'Doing type instance definition' do
 
   it 'lets facts be annotated by arbitrary values' do
     compendium.service :yellow_service do
-      is_colored :yellow, annotation: "Yuck!"
+      is_colored yellow, annotation: "Yuck!"
     end
 
     expect(compendium.services[:yellow_service].is_colored.annotated?).to eq true
@@ -157,8 +145,8 @@ describe 'Doing type instance definition' do
 
   it 'lets fact have list types' do
     compendium.service :favourite_service do
-      favourite_color :red, 5
-      favourite_color :green, 10
+      favourite_color red, 5
+      favourite_color green, 10
     end
 
     expect(compendium.services[:favourite_service].favourite_colors[0].class.list_item?).to eq true
@@ -171,7 +159,7 @@ describe 'Doing type instance definition' do
 
   it 'returns the values of all properties by calling #property_values on a type' do
     service = compendium.service :imaginative_service do
-      is_colored :yellow, 'Yellow'
+      is_colored yellow, 'Yellow'
     end
 
     property_values = service.property_values
@@ -208,14 +196,14 @@ describe 'Doing type instance definition' do
         second_level_type
       end
 
-      third_level_type :third
+      third_level_type :third_instance
 
-      second_level_type :second do
-        third_level_type :third
+      second_level_type :second_instance do
+        third_level_type third_instance
       end
 
-      first_level_type :first do
-        second_level_type :second
+      first_level_type :first_instance do
+        second_level_type second_instance
       end
     end
 
@@ -224,7 +212,7 @@ describe 'Doing type instance definition' do
     end
 
     service = compendium.service :service_with_children do
-      first :first
+      first first_instance
     end
 
     first_level = service.first
@@ -236,18 +224,24 @@ describe 'Doing type instance definition' do
   end
 
   it 'returns nil for #parent_index, if the type is used as value of a single-valued property' do
-    new_color = SDL::Base::Type::Color.new
+    compendium.type_instances_definition do
+      color :new_color
+    end
 
     compendium.service :service_single_value do
       is_colored new_color
     end
 
+    new_color = SDL::Base::Type::Color[:new_color]
+
     expect(new_color.parent_index).to eq nil
   end
 
   it 'returns the index of a value in a multi-valued property when giving a compatible value for the list' do
-    first_color = SDL::Base::Type::Color.new
-    second_color = SDL::Base::Type::Color.new
+    compendium.type_instances_definition do
+      color :first_color
+      color :second_color
+    end
 
     compendium.service :service_multi_value do
       multicolored first_color

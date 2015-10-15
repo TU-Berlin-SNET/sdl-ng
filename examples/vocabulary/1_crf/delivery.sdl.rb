@@ -1,10 +1,6 @@
 type :billing_term
 type :payment_term
 type :payment_option
-type :billing_and_payment do
-  billing_term
-  payment_term
-end
 
 billing_term :monthly
 billing_term :annually
@@ -15,8 +11,11 @@ payment_term :after_use
 payment_option :credit_card
 payment_option :cheque
 payment_option :invoice
+payment_option :paypal
 
 service_properties do
-  billing_and_payment :is_billed
+  billing_term :is_billed
+  payment_term :is_charged
+
   list_of_payment_options
 end

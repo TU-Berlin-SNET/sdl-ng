@@ -8,6 +8,7 @@ end
 type :company_type
 
 company_type :plc
+company_type :incorporated
 
 type :initiative do
   url
@@ -41,4 +42,5 @@ type :provider do
   money :last_years_revenue
   list_of_initiatives
   list_of_reporting_information :reports
+  url :provider_announcement
 end

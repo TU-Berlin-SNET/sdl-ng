@@ -16,7 +16,8 @@ status_page 'http://trust.salesforce.com/trust/status'
 public_service_level_agreement 'http://www.salesforce.com/assets/pdf/misc/salesforce_MSA.pdf'
 
 # delivery
-is_billed annually, in_advance
+is_billed annually
+is_charged in_advance
 payment_option credit_card
 payment_option cheque
 payment_option invoice
@@ -30,18 +31,16 @@ soap_interface
 xmlrpc_interface
 
 compatible_browser internet_explorer, '7'
-compatible_browser firefox, 'recent'
-compatible_browser chrome, 'recent'
+compatible_browser firefox
+compatible_browser chrome
 compatible_browser safari, '5', annotation: 'on Mac'
 
 dynamic do
-  fetched_features = fetch_from_url 'http://www.salesforce.com/sales-cloud/overview', '.slide h3 + *'
+  feature_headers = fetch_from_url 'http://www.salesforce.com/sales-cloud/features/', 'h3'
 
-  feature 'Mobile', fetched_features[0]
-  feature 'Contact Management', fetched_features[1]
-  feature 'Opportunity Management', fetched_features[2]
-  feature 'Chatter', fetched_features[3]
-  feature 'Email Integration', fetched_features[4]
+  feature_headers.to_a[1..-1].each do |feature_header|
+    feature feature_header.content.strip, feature_header.search('~p')[0]
+  end
 end
 
 # optimizing
@@ -63,6 +62,7 @@ established_in 1999
 
 # trust
 provider do
+  provider_name "Salesforce.com"
   company_type plc
   employs 12000
   partner_network 'http://www.salesforce.com/partners/overview/'

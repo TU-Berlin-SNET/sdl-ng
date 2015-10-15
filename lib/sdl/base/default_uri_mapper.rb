@@ -14,7 +14,7 @@ module SDL::Base
           if object.identifier
             "#{object.class.uri}/#{object.identifier.to_s}"
           else
-            "#{object.parent.uri}/#{object.class.local_name}/#{object.parent_index}"
+            "#{object.parent_object.uri}/#{object.class.local_name}#{object.parent_index ? '/' + object.parent_index.to_s : ''}"
           end
         else
           raise "Cannot infer URI of object: #{object}"

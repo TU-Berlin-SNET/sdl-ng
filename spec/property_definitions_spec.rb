@@ -17,7 +17,7 @@ describe 'The definition of properties' do
 
     expect(defined_property.name).to eq "my_string_property"
     expect(defined_property.type).to be SDL::Types::SDLString
-    expect(defined_property.multi).to be_false
+    expect(defined_property.multi).to be_falsey
   end
 
   it 'allows the definition of properties, omitting the name if it should be the same as the type' do
@@ -27,7 +27,7 @@ describe 'The definition of properties' do
 
     expect(defined_property.name).to eq 'url'
     expect(defined_property.type).to be SDL::Types::SDLUrl
-    expect(defined_property.multi).to be_false
+    expect(defined_property.multi).to be_falsey
   end
 
   it 'allows the definition of list properties' do
@@ -37,7 +37,7 @@ describe 'The definition of properties' do
 
     expect(defined_property.name).to eq("my_integer_list")
     expect(defined_property.type).to be SDL::Types::SDLNumber
-    expect(defined_property.multi?).to be_true
+    expect(defined_property.multi?).to be_truthy
   end
 
   it 'does not handle unknown types' do

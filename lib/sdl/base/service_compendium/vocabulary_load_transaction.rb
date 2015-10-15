@@ -10,8 +10,10 @@ class SDL::Base::ServiceCompendium
     # @param path_or_filename[String] Either a filename or a path
     def load_vocabulary_from_path(path_or_filename)
       to_files_array(path_or_filename, '.sdl.rb').each do |filename|
-        with_uri filename do
-          load_vocabulary_from_string File.read(filename), filename, filename
+        relative_uri = filename.gsub(%r[#{path_or_filename}|.sdl.rb|\d_], '')[1..-1]
+
+        with_uri relative_uri do
+          load_vocabulary_from_string File.read(filename), relative_uri, filename
         end
       end
     end
@@ -24,12 +26,12 @@ class SDL::Base::ServiceCompendium
     def load_vocabulary_from_string(vocabulary_definition, uri, filename = nil)
       begin
         with_uri uri do
-          self.instance_eval vocabulary_definition, filename
+          self.instance_eval vocabulary_definition, filename, 1
         end
       rescue Exception => e
         unload uri
 
-        raise "Error while loading vocabulary from #{uri}: #{e}"
+        raise RuntimeError, "Error while loading vocabulary from #{uri}: #{e}", (e.backtrace.concat(caller))
       end
     end
   end

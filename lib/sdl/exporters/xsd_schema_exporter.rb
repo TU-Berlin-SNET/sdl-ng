@@ -50,7 +50,7 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
                 if type_class.eql? SDL::Base::Type::Service
                   build_abstract_service_attributes(xml, type_class)
                 else
-                  xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name
+                  xml['ns'].attribute :name => 'identifier', :type => type_class.xsd_type_identifier_name unless type_class.instances.empty?
                 end
               end
             end
@@ -90,7 +90,7 @@ class SDL::Exporters::XSDSchemaExporter < SDL::Exporters::SchemaExporter
                 end
               end
             end
-          end unless type_class.eql? SDL::Base::Type::Service
+          end unless type_class.eql?(SDL::Base::Type::Service ) || type_class.instances.empty?
         end
 
         build_additional_types(xml)

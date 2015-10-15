@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+Encoding.default_internal = Encoding::UTF_8
+Encoding.default_external = Encoding::UTF_8
+
 require 'optparse'
 
 options = {}
@@ -12,7 +15,7 @@ OptionParser.new do |opts|
   opts.on('-d', '--dynamic', 'Fetch dynamic data') do |m|
     options[:dynamic] = true
   end
-end.parse
+end.parse!
 
 if options[:profile]
   require 'ruby-prof'
@@ -46,22 +49,25 @@ compendium.register_classes_globally
 
 puts "Loaded vocabulary with #{Type.subtypes_recursive.drop(2).count} types, #{Service.properties.count} service properties and #{compendium.type_instances.values.map(&:count).sum} type instances."
 
-# Load Service Definitions
-Dir.glob(File.join(Dir.pwd, '**', '*.service.rb')) do |filename|
-  service = compendium.service filename.match(%r[.+/(.+).service.rb])[1] do
-    eval(File.read(filename), binding, filename)
-  end
+# Load mappers
+Dir["rdf_mappers/*.rb"].each do |file|
+  load file
+
+  puts "Loaded RDF mapper from file #{file}"
 end
 
+# Load Service Definitions
+compendium.load_service_from_path(Dir.pwd)
 puts "Loaded Service Compendium with #{compendium.services.count} services. Generating output"
 
-%w[xml rdf html].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
+%w[xml rdf html json].each do |directory| FileUtils.mkdir_p File.join(Dir.pwd, 'output', directory) end
 
 xsd_schema_exporter = SDL::Exporters::XSDSchemaExporter.new(compendium)
 xsd_simple_schema_exporter = SDL::Exporters::XSDSimpleSchemaExporter.new(compendium)
 html_schema_exporter = SDL::Exporters::HTML::HTMLExporter.new(compendium)
 service_exporter = SDL::Exporters::XMLServiceExporter.new(compendium)
 rdf_exporter = SDL::Exporters::RDFExporter.new(compendium)
+json_exporter = SDL::Exporters::JSONExporter.new(compendium)
 
 xsd_schema_path = Dir.pwd + '/output/xml/schema.xsd'
 xsd_schema_exporter.export_schema_to_file(xsd_schema_path)
@@ -83,6 +89,10 @@ compendium.services.each do |name, service|
   rdf_output_file = Dir.pwd + "/output/rdf/#{name}.rdf"
   rdf_exporter.export_service_to_file service, rdf_output_file
   puts "Wrote RDF export of service '#{name}' to #{rdf_output_file}"
+
+  json_output_file = Dir.pwd + "/output/json/#{name}.json"
+  json_exporter.export_service_to_file service, json_output_file
+  puts "Wrote JSON export of service '#{name}' to #{json_output_file}"
 end
 
 all_needed_translations = {
