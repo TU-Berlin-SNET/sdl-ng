@@ -219,8 +219,8 @@ describe 'Doing type instance definition' do
     second_level = first_level.second_level_type
     third_level = second_level.third_level_type
 
-    expect(third_level.parent).to eq second_level
-    expect(second_level.parent).to eq first_level
+    expect(third_level.parent_object).to eq second_level
+    expect(second_level.parent_object).to eq first_level
   end
 
   it 'returns nil for #parent_index, if the type is used as value of a single-valued property' do

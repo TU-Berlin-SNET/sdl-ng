@@ -1,4 +1,5 @@
 require 'json-schema'
+require 'sparsify'
 
 ##
 # A JSON Schema exporter
@@ -13,6 +14,9 @@ class SDL::Exporters::JSONSchemaExporter < SDL::Exporters::SchemaExporter
       'type' => 'object',
       '$ref' => '#/definitions/Service',
       'definitions' => definitions_schema_hash,
+      'translations' => {
+          'category' => Sparsify(I18n.config.backend.send(:translations)[:en][:sdl][:category])
+      }
     }.merge(properties_schema_hash(SDL::Base::Type::Service))
   end
 

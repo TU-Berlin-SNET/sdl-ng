@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'money', '~> 6.5'
   spec.add_runtime_dependency 'monetize', '~> 1.2'
   spec.add_runtime_dependency 'slim', '~> 3.0'
+  spec.add_runtime_dependency 'sparsify', '~> 1.0'
 
   spec.add_development_dependency 'ruby-prof', '~>0.15'
   spec.add_development_dependency 'yard', '~> 0.8.7'

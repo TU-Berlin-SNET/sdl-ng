@@ -1,6 +1,8 @@
 require 'rdf/vocab/schema'
 
 class SDL::Base::Type::Location
+  require 'sdl/exporters/rdf_mapping'
+
   map_rdf_type(RDF::SCHEMA.PostalAddress)
 
   map_rdf_property('name', RDF::SCHEMA.name)

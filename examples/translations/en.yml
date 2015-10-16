@@ -1,6 +1,34 @@
 ---
 en:
   sdl:
+    category:
+      base:
+        location: Location
+        base: Basic
+      crf:
+        characteristics: Cloud Characteristics
+        charging: Charging
+        compliance: Compliance
+        delivery: Delivery
+        dynamics: Dynamics
+        interop: Interoperatibility
+        optimizing: Optimization
+        portability: Portability
+        protection: Protection
+        provider_management: Provider Management
+        reliability: Reliability
+        reputation: Reputation
+        trust: Trust
+      cloud:
+        storage:
+          features: Storage Features
+          properties: Storage Properties
+          security: Storage Security
+        vm:
+          flexibility: VM Flexibility
+          procurement: VM Procurement
+      tresor:
+        functionality: TRESOR Functionality
     instance:
       type:
         audit_option:

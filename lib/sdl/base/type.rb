@@ -182,7 +182,11 @@ class SDL::Base::Type
     end
 
     def define_type(sym, superklass = SDL::Base::Type)
-      eval class_definition_string(sym, superklass)
+      begin
+        eval class_definition_string(sym, superklass)
+      rescue SyntaxError => e
+        raise e
+      end
 
       SDL::Base::Type.const_get(sym.to_s.camelize)
     end
