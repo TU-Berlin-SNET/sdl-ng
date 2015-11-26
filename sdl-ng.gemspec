@@ -1,16 +1,12 @@
 # coding: utf-8
-lib = File.expand_path('lib', __dir__)
+lib = File.expand_path('lib', File.dirname(__FILE__))
 $:.unshift(lib) unless $:.include?(lib)
 
-begin
-  require 'sdl'
-rescue Exception => e
-  puts e
-end
+require 'sdl/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'sdl-ng'
-  spec.version       = SDL::NG::VERSION
+  spec.version       = SDL::VERSION
   spec.authors       = ['Mathias Slawik']
   spec.email         = ['mathias.slawik@tu-berlin.de']
   spec.description   = %q{Next Generation Service Description Language}
@@ -39,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard-redcarpet-ext', '~> 0.0.3'
   spec.add_development_dependency 'redcarpet', '~> 3.2'
   spec.add_development_dependency 'rspec', '~> 3.3'
-  spec.add_development_dependency 'bundler', '~> 1.9'
+  spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.4'
   spec.add_development_dependency 'fuubar', '~> 2.0'
   spec.add_development_dependency 'simplecov', '~> 0.10'
