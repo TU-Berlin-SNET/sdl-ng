@@ -6,7 +6,7 @@ require 'sdl/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'sdl-ng'
-  spec.version       = SDL::VERSION
+  spec.version       = SDL_NG_VERSION
   spec.authors       = ['Mathias Slawik']
   spec.email         = ['mathias.slawik@tu-berlin.de']
   spec.description   = %q{Next Generation Service Description Language}

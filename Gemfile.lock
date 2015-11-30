@@ -106,7 +106,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bundler (~> 1.9)
+  bundler (~> 1.7)
   fuubar (~> 2.0)
   json-schema (~> 2)
   minitest (~> 5)
