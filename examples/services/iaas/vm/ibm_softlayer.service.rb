@@ -82,27 +82,21 @@ provider do
 
 end
 
-#Security
-security do
-
 #To Do: Get more information on authorization and authentication
-  monitoring yes, annotation:'http://www.softlayer.com/server-monitoring'
+monitoring yes, annotation:'http://www.softlayer.com/server-monitoring'
 
-  certification iso_27001
-  #Softlayer provides soc1,2,3 reports. Same as soc certificates?
+certification iso_27001
+#Softlayer provides soc1,2,3 reports. Same as soc certificates?
 
-  #To DO: Star Registrant? EU Model Clauses? PCI Compliance?
+#To DO: Star Registrant? EU Model Clauses? PCI Compliance?
 
-  transmission_encryption 'SSL'
-  #To Do: SSL certificates
-  #To Do: Firewalls
-end
+transmission_encryption 'SSL'
+#To Do: SSL certificates
+#To Do: Firewalls
 
-storage_features do
-  multi_tenancy yes
-  platform_compatibility do
-    #How to show different Linux distributions? Seperately or as shown below?
-     compatible_operating_system windows, 'Microsoft Windows Server'
-     compatible_operating_system linux, 'CentOS, CloudLinux, Debian GNU/Linux, Ubuntu, Red Hat Enterprise, Vyatta'
-   end
-end
+multi_tenancy yes
+platform_compatibility do
+  #How to show different Linux distributions? Seperately or as shown below?
+   compatible_operating_system windows, 'Microsoft Windows Server'
+   compatible_operating_system linux, 'CentOS, CloudLinux, Debian GNU/Linux, Ubuntu, Red Hat Enterprise, Vyatta'
+ end

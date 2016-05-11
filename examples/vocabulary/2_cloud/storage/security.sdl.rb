@@ -35,7 +35,7 @@ jurisdiction :fisma
 jurisdiction :ferpa
 jurisdiction :safe_harbor
 
-type :security do
+service_properties do
   authentication do
     boolean :two_factor_auth
     boolean :sso
@@ -53,8 +53,4 @@ type :security do
 
   data_encryption
   transmission_encryption
-end
-
-service_properties do
-  security
 end

@@ -69,7 +69,6 @@ established_in 2005
 #   reference_customer 'Land Rover'
 # end
 
-security do
   authentication do
     two_factor_auth no
     sso no
@@ -90,9 +89,9 @@ security do
 
   data_encryption user_only, container_based, blowfish
   transmission_encryption 'TLS', '1.2'
-end
 
-storage_properties do
+
+
   deduplication_type file_level
   deduplication_type single_user
   deduplication_type client_side
@@ -107,12 +106,12 @@ storage_properties do
 
   #version_control no
   compression no
-end
+
 
 #availability "%"
 #reliability "%"
 
-storage_features do
+
   multi_tenancy no
   platform_compatibility do
     compatible_operating_system windows, 'recent'
@@ -122,4 +121,3 @@ storage_features do
     mobile_device iphone
     mobile_device ipad
   end
-end

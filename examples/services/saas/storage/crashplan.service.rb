@@ -91,7 +91,6 @@ provider do
   reference_customer 'Jive'
 end
 
-security do
   authentication do
     two_factor_auth yes
     sso yes
@@ -113,9 +112,9 @@ security do
 
   data_encryption user_only, directory_based, blowfish
   transmission_encryption 'SSL', 'AES-128'
-end
 
-storage_properties do
+
+
   deduplication_type block_level
   deduplication_type single_user
   deduplication_type server_side
@@ -130,12 +129,12 @@ storage_properties do
 
   version_control yes
   compression yes
-end
+
 
 #availability "%"
 #reliability "%"
 
-storage_features do
+
   # sharing public_link
 
   multi_tenancy yes
@@ -144,4 +143,3 @@ storage_features do
     compatible_operating_system mac_osx, 'recent'
     compatible_operating_system linux, 'recent'
   end
-end

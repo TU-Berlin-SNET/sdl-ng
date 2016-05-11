@@ -69,7 +69,6 @@ can_be_used_offline yes
 #   reference_customer 'Land Rover'
 # end
 
-security do
   authentication do
     two_factor_auth no
     sso no
@@ -87,9 +86,9 @@ security do
 
   data_encryption provider_only, directory_based, aes
   transmission_encryption 'SSL', 'AES'
-end
 
-storage_properties do
+
+
   #deduplication_type
   replication yes
   #delta_encoding yes
@@ -101,12 +100,12 @@ storage_properties do
 
   version_control yes
   #compression yes
-end
+
 
 availability '99.9%'
 reliability '99.99999999%'
 
-storage_features do
+
   sharing public_link
   sharing collaboration
 
@@ -121,4 +120,3 @@ storage_features do
     mobile_device ipad
     mobile_device windows_phone
   end
-end

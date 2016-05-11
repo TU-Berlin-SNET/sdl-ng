@@ -64,7 +64,6 @@ established_in 2006
 #   reference_customer 'Land Rover'
 # end
 
-security do
   authentication do
     two_factor_auth yes
     sso yes
@@ -82,9 +81,9 @@ security do
 
   data_encryption provider_only, container_based, aes
   transmission_encryption 'TLS', '1.2'
-end
 
-storage_properties do
+
+
   deduplication_type block_level
   deduplication_type single_user
   deduplication_type server_side
@@ -99,12 +98,12 @@ storage_properties do
 
   version_control yes
   compression yes
-end
+
 
 availability "99.9 %"
 #reliability "%"
 
-storage_features do
+
 
   multi_tenancy yes
   platform_compatibility do
@@ -118,4 +117,4 @@ storage_features do
     interface python
     interface javascript
   end
-end
+

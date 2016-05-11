@@ -63,7 +63,6 @@ provider do
   #report financial_statement, quarterly
 end
 
-security do
   authentication do
     two_factor_auth yes
   end
@@ -77,9 +76,9 @@ security do
 
   data_encryption provider_only, directory_based, aes
   transmission_encryption 'TLS', '1.2'
-end
 
-storage_properties do
+
+
   deduplication_type file_level
   deduplication_type single_user
   deduplication_type server_side
@@ -91,12 +90,12 @@ storage_properties do
 
   max_file_size "storage size"
   compression yes
-end
+
 
 #availability "%"
 #reliability "%"
 
-storage_features do
+
   sharing public_link
   sharing collaboration
 
@@ -120,30 +119,27 @@ storage_features do
     mobile_device kindle
     mobile_device windows_phone
   end
-end
+
 
 variant :free do
   service_name 'Dropbox Free'
 
   public_service_level_agreement 'https://www.dropbox.com/terms#terms'
 
-  security do
-    authentication do
-      sso no
-    end
-
-    authorization do
-      granular_permission no
-    end
-
-    monitoring no
+  authentication do
+    sso no
   end
 
-  storage_properties do
-    max_storage_capacity "100 GB"
-
-    version_control yes, annotation: '30 days'
+  authorization do
+    granular_permission no
   end
+
+  monitoring no
+
+
+  max_storage_capacity "100 GB"
+
+  version_control yes, annotation: '30 days'
 end
 
 variant :business do
@@ -176,23 +172,19 @@ variant :business do
     reference_customer 'Eventbrite'
   end
 
-  security do
-    authentication do
-      sso yes
-    end
-
-    authorization do
-      granular_permission yes
-    end
-
-    audit_option audit_log
-
-    monitoring yes
+  authentication do
+    sso yes
   end
 
-  storage_properties do
-    max_storage_capacity "∞"
-
-    version_control yes, annotation: 'unlimited'
+  authorization do
+    granular_permission yes
   end
+
+  audit_option audit_log
+
+  monitoring yes
+
+  max_storage_capacity "∞"
+
+  version_control yes, annotation: 'unlimited'
 end

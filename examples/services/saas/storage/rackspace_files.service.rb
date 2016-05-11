@@ -64,7 +64,6 @@ provider do
   reference_customer 'Welcome to Yorkshire', 'http://www.rackspace.com/de/customers/welcome-yorkshire'
 end
 
-security do
   authentication do
     two_factor_auth yes
     sso yes
@@ -81,9 +80,9 @@ security do
   monitoring yes
 
   transmission_encryption 'SSL'
-end
 
-storage_properties do
+
+
   #deduplication_type
   replication yes
   delta_encoding yes
@@ -95,12 +94,12 @@ storage_properties do
 
   version_control no
   compression yes
-end
+
 
 availability "99.9%"
 #reliability "%"
 
-storage_features do
+
   sharing public_link
 
   multi_tenancy yes, 50
@@ -111,4 +110,3 @@ storage_features do
     interface python
     interface ruby
   end
-end

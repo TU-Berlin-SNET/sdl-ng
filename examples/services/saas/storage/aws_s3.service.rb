@@ -85,7 +85,6 @@ provider do
 end
 
 #storage security
-security do
   authentication do
     two_factor_auth yes
     sso yes
@@ -102,10 +101,10 @@ security do
   audit_option audit_log
   monitoring yes
   transmission_encryption 'TLS', '1.2'
-end
+
 
 #storage properties
-storage_properties do
+
   deduplication_type block_level
   deduplication_type single_user
   deduplication_type server_side
@@ -120,13 +119,13 @@ storage_properties do
 
   version_control yes
   compression yes
-end
+
 
 availability '99.99%'
 reliability '99.999999999%'
 
 #storage features
-storage_features do
+
   sharing public_link
 
   multi_tenancy yes
@@ -144,4 +143,3 @@ storage_features do
 
     #mobile_device kindle
   end
-end

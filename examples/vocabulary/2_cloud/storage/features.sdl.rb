@@ -44,12 +44,10 @@ type :multi_tenancy do
   number :max_user
 end
 
-type :storage_features do
-  list_of_sharings
-  multi_tenancy
-  platform_compatibility
-end
-
 service_properties do
-  storage_features
+  list_of_sharings
+
+  multi_tenancy
+
+  platform_compatibility
 end

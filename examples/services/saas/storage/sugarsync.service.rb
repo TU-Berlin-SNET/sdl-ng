@@ -62,7 +62,6 @@ provider do
   #report financial_statement, quarterly
 end
 
-security do
   authentication do
     two_factor_auth no
     sso no
@@ -78,9 +77,9 @@ security do
 
   data_encryption provider_only, directory_based, aes
   transmission_encryption 'SSL', '3.3'
-end
 
-storage_properties do
+
+
   #deduplication_type
   #replication yes
   #delta_encoding no
@@ -92,12 +91,12 @@ storage_properties do
 
   version_control yes
   #compression yes
-end
+
 
 #availability "%"
 #reliability "%"
 
-storage_features do
+
   sharing public_link
   sharing collaboration
 
@@ -111,4 +110,3 @@ storage_features do
     mobile_device ipad
     mobile_device kindle
   end
-end

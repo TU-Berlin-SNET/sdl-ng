@@ -63,7 +63,6 @@ provider do
 end
 
 #security
-security do
   authentication do
     two_factor_auth yes
   end
@@ -79,15 +78,15 @@ security do
   monitoring yes
 
   transmission_encryption 'SSL'
-end
+
 
 #storage properties
-storage_properties do
+
   max_storage_capacity "∞"
-end
+
 
 #storage_features
-storage_features do
+
   platform_compatibility do
     compatible_operating_system windows, 'Windows Server 2008, Windows Server 2011'
     compatible_operating_system linux, 'recent'
@@ -98,5 +97,5 @@ storage_features do
     mobile_device windows_phone
 
   end
-end
+
   

@@ -86,17 +86,15 @@ provider do
  end
 
 # storage security
- security do
-   authentication do
-     two_factor_auth yes
-     sso yes
-   end
+authentication do
+ two_factor_auth yes
+ sso yes
+end
 
-   authorization do
-     permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
-     granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_EC2'
-   end
- end
+authorization do
+ permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
+ granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_EC2'
+end
 
 # storage properties
 

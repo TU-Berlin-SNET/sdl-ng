@@ -69,7 +69,6 @@ established_in 2007
 #   reference_customer 'Land Rover'
 # end
 
-security do
   authentication do
     two_factor_auth yes
     sso yes
@@ -88,9 +87,9 @@ security do
   monitoring yes
 
   transmission_encryption 'SSL'
-end
 
-storage_properties do
+
+
   #deduplication_type block_level
 
   replication yes
@@ -103,12 +102,12 @@ storage_properties do
 
   version_control yes
   #compression yes
-end
+
 
 availability "99.9%"
 #reliability "%"
 
-storage_features do
+
   sharing public_link
   sharing collaboration
 
@@ -126,4 +125,3 @@ storage_features do
     mobile_device ipad
     mobile_device windows_phone
   end
-end

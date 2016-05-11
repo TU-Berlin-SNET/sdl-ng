@@ -28,4 +28,7 @@ service_properties do
   list_of_service_categories
 
   list_of_locations :datacenters
+
+  string :availability
+  string :reliability
 end

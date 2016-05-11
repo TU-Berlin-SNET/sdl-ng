@@ -13,7 +13,7 @@ deduplication_user :cross_user
 deduplication_side :server_side
 deduplication_side :client_side
 
-type :storage_properties do
+service_properties do
   list_of_deduplication_types
   boolean :replication
   boolean :delta_encoding
@@ -25,22 +25,12 @@ type :storage_properties do
 
   boolean :version_control
   boolean :compression
-end
 
-type :availability do
   string :sla
-end
 
-type :reliability do
   string :durability
   string :delay
   string :packet_loss
   string :fault_tolerance
   string :bandwidth
-end
-
-service_properties do
-  storage_properties
-  availability
-  reliability
 end
