@@ -95,8 +95,6 @@ transmission_encryption 'SSL'
 #To Do: Firewalls
 
 multi_tenancy yes
-platform_compatibility do
-  #How to show different Linux distributions? Seperately or as shown below?
-   compatible_operating_system windows, 'Microsoft Windows Server'
-   compatible_operating_system linux, 'CentOS, CloudLinux, Debian GNU/Linux, Ubuntu, Red Hat Enterprise, Vyatta'
- end
+#How to show different Linux distributions? Seperately or as shown below?
+compatible_operating_system windows, 'Microsoft Windows Server'
+compatible_operating_system linux, 'CentOS, CloudLinux, Debian GNU/Linux, Ubuntu, Red Hat Enterprise, Vyatta'

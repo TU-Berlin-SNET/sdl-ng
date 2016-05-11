@@ -29,16 +29,6 @@ mobile_device :ipad
 mobile_device :kindle
 mobile_device :windows_phone
 
-type :platform_compatibility do
-  list :compatible_operating_systems do
-    operating_system
-    string :min_version
-  end
-
-  list_of_interfaces
-  list_of_mobile_devices
-end
-
 type :multi_tenancy do
   boolean :has_multi_tenancy
   number :max_user
@@ -49,5 +39,11 @@ service_properties do
 
   multi_tenancy
 
-  platform_compatibility
+  list :compatible_operating_systems do
+    operating_system
+    string :min_version
+  end
+
+  list_of_interfaces
+  list_of_mobile_devices
 end

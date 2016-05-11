@@ -138,8 +138,8 @@ end
   # sharing public_link
 
   multi_tenancy yes
-  platform_compatibility do
+
     compatible_operating_system windows, 'recent'
     compatible_operating_system mac_osx, 'recent'
     compatible_operating_system linux, 'recent'
-  end
+

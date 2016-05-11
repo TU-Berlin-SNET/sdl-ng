@@ -47,7 +47,7 @@ end
 
 #storage_features
 
-  platform_compatibility do
+
     compatible_operating_system windows, 'Windows Server 2008 SP2, Windows Server 2008 R2'
     compatible_operating_system linux, 'SUSE Linux Enterprise Server 11 v3'
-  end
+

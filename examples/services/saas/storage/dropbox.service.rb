@@ -100,7 +100,7 @@ end
   sharing collaboration
 
   multi_tenancy no
-  platform_compatibility do
+
     compatible_operating_system windows, 'recent'
     compatible_operating_system mac_osx, 'recent'
     compatible_operating_system linux, 'recent'
@@ -118,7 +118,7 @@ end
     mobile_device ipad
     mobile_device kindle
     mobile_device windows_phone
-  end
+
 
 
 variant :free do

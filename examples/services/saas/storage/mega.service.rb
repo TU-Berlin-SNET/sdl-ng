@@ -108,7 +108,7 @@ established_in 2013
   #sharing collaboration
 
   multi_tenancy no
-  platform_compatibility do
+
     compatible_operating_system windows, 'recent'
     compatible_operating_system mac_osx, 'recent'
     compatible_operating_system linux, 'recent'
@@ -118,4 +118,4 @@ established_in 2013
     mobile_device iphone
     mobile_device ipad
     mobile_device windows_phone
-  end
+

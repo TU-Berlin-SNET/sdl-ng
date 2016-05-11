@@ -130,7 +130,7 @@ reliability '99.999999999%'
 
   multi_tenancy yes
 
-  platform_compatibility do
+
 
     interface android
     interface ios
@@ -142,4 +142,4 @@ reliability '99.999999999%'
     interface ruby
 
     #mobile_device kindle
-  end
+

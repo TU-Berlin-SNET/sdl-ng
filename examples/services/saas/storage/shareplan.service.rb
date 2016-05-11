@@ -139,7 +139,7 @@ end
   sharing collaboration
 
   multi_tenancy yes
-  platform_compatibility do
+
     compatible_operating_system windows, 'recent'
     compatible_operating_system mac_osx, 'recent'
     compatible_operating_system linux, 'recent'
@@ -148,4 +148,4 @@ end
     mobile_device iphone
     mobile_device ipad
     mobile_device windows_phone
-  end
+

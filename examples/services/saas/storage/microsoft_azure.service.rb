@@ -106,7 +106,7 @@ availability "99.9 %"
 
 
   multi_tenancy yes
-  platform_compatibility do
+
     compatible_operating_system windows, 'recent'
     compatible_operating_system mac_osx, 'recent'
 
@@ -116,5 +116,5 @@ availability "99.9 %"
     interface ruby
     interface python
     interface javascript
-  end
+
 

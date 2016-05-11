@@ -112,7 +112,7 @@ end
   sharing collaboration
 
   multi_tenancy no, 1
-  platform_compatibility do
+
     compatible_operating_system windows, 'the two latest versions'
     compatible_operating_system mac_osx, 'the two latest versions'
 
@@ -125,4 +125,4 @@ end
     mobile_device iphone
     mobile_device ipad
     mobile_device windows_phone
-  end
+

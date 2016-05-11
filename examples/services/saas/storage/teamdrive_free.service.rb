@@ -108,7 +108,7 @@ reliability "%"
   sharing collaboration
 
   multi_tenancy no
-  platform_compatibility do
+
     compatible_operating_system windows, 'recent'
     compatible_operating_system mac_osx, 'recent'
     compatible_operating_system linux, 'recent'
@@ -116,4 +116,4 @@ reliability "%"
     mobile_device android
     mobile_device iphone
     mobile_device ipad
-  end
+

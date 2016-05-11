@@ -87,7 +87,7 @@ end
 
 #storage_features
 
-  platform_compatibility do
+
     compatible_operating_system windows, 'Windows Server 2008, Windows Server 2011'
     compatible_operating_system linux, 'recent'
 
@@ -96,6 +96,6 @@ end
     mobile_device ipad
     mobile_device windows_phone
 
-  end
+
 
   

@@ -103,10 +103,10 @@ availability "99.9%"
   sharing public_link
 
   multi_tenancy yes, 50
-  platform_compatibility do
+
     interface java
     interface net
     interface php
     interface python
     interface ruby
-  end
+
