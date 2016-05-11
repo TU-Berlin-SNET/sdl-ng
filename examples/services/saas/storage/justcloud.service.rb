@@ -83,7 +83,7 @@ granular_permission yes
 #monitoring yes
 
 data_encryption provider_only, directory_based, aes
-transmission_encryption 'SSL', 'AES'
+transmission_encryption ssl#, 'AES'
 
 
 #deduplication_type

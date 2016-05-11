@@ -77,7 +77,7 @@ audit_option audit_log
 
 monitoring yes
 
-transmission_encryption 'SSL'
+transmission_encryption ssl#
 
 
 #deduplication_type

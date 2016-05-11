@@ -73,7 +73,7 @@ permission_revocation yes
 certification sas_70_ii
 
 data_encryption provider_only, directory_based, aes
-transmission_encryption 'TLS', '1.2'
+transmission_encryption tlsv1_2
 
 
 deduplication_type file_level

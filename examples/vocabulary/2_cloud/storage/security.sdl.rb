@@ -25,10 +25,12 @@ type :data_encryption do
   encryption_algorithm
 end
 
-type :transmission_encryption do
-  string :name
-  string :version
-end
+type :transmission_encryption
+
+transmission_encryption :ssl
+transmission_encryption :sslv3
+transmission_encryption :tlsv1
+transmission_encryption :tlsv1_2
 
 jurisdiction :hipaa
 jurisdiction :fisma

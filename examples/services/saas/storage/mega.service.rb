@@ -81,8 +81,7 @@ granular_permission no
 #monitoring yes
 
 data_encryption user_only, directory_based, aes
-transmission_encryption 'TLS'
-
+transmission_encryption tlsv1
 
 #deduplication_type
 #replication yes

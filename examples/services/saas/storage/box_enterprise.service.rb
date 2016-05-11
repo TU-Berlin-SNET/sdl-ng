@@ -82,7 +82,7 @@ granular_permission yes
 
 monitoring yes
 
-transmission_encryption 'SSL', 'SHA-265'
+transmission_encryption ssl#, 'SHA-265'
 
 
 # deduplication_type block_level

@@ -90,7 +90,7 @@ certification iso_27001
 
 #To DO: Star Registrant? EU Model Clauses? PCI Compliance?
 
-transmission_encryption 'SSL'
+transmission_encryption ssl#
 #To Do: SSL certificates
 #To Do: Firewalls
 

@@ -98,7 +98,7 @@ certification sas_70_ii
 
 audit_option audit_log
 monitoring yes
-transmission_encryption 'TLS', '1.2'
+transmission_encryption tlsv1_2
 
 
 #storage properties

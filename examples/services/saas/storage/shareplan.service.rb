@@ -109,7 +109,7 @@ certification soc_2_ssae_16
 certification iso_27001
 
 data_encryption user_only, directory_based, blowfish
-transmission_encryption 'SSL', 'AES-128'
+transmission_encryption ssl#, 'AES-128'
 
 
 deduplication_type block_level

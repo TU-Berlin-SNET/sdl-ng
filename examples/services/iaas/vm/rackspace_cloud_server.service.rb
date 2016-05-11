@@ -75,7 +75,7 @@ audit_option audit_log
 
 monitoring yes
 
-transmission_encryption 'SSL'
+transmission_encryption ssl#
 
 
 #storage properties

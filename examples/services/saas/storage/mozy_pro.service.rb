@@ -86,7 +86,7 @@ certification iso_27001
 monitoring yes
 
 data_encryption user_only, container_based, blowfish
-transmission_encryption 'TLS', '1.2'
+transmission_encryption tlsv1_2
 
 
 deduplication_type file_level

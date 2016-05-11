@@ -81,8 +81,7 @@ certification iso_27001
 monitoring yes
 
 data_encryption user_only, container_based, aes
-transmission_encryption 'TLS'
-
+transmission_encryption tlsv1
 
 #deduplication_type
 replication yes

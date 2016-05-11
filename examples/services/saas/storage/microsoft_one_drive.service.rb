@@ -84,7 +84,7 @@ certification iso_27001
 
 monitoring yes
 
-transmission_encryption 'SSL'
+transmission_encryption ssl#
 
 
 #deduplication_type block_level

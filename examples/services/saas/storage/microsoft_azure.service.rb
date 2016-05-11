@@ -78,7 +78,7 @@ audit_option audit_log
 monitoring yes
 
 data_encryption provider_only, container_based, aes
-transmission_encryption 'TLS', '1.2'
+transmission_encryption tlsv1_2
 
 
 deduplication_type block_level
