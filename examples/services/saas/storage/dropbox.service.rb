@@ -63,14 +63,12 @@ provider do
   #report financial_statement, quarterly
 end
 
-authentication do
-  two_factor_auth yes
-end
+two_factor_auth yes
 
-authorization do
-  file_locking no
-  permission_revocation yes
-end
+
+file_locking no
+permission_revocation yes
+
 
 certification sas_70_ii
 
@@ -124,21 +122,19 @@ variant :free do
 
   public_service_level_agreement 'https://www.dropbox.com/terms#terms'
 
-  authentication do
-    sso no
-  end
-
-  authorization do
-    granular_permission no
-  end
-
-  monitoring no
-
-
-  max_storage_capacity "100 GB"
-
-  version_control yes, annotation: '30 days'
+  sso no
 end
+
+granular_permission no
+
+
+monitoring no
+
+
+max_storage_capacity "100 GB"
+
+version_control yes, annotation: '30 days'
+
 
 variant :business do
   service_name 'Dropbox for Business'
@@ -170,19 +166,17 @@ variant :business do
     reference_customer 'Eventbrite'
   end
 
-  authentication do
-    sso yes
-  end
-
-  authorization do
-    granular_permission yes
-  end
-
-  audit_option audit_log
-
-  monitoring yes
-
-  max_storage_capacity "∞"
-
-  version_control yes, annotation: 'unlimited'
+  sso yes
 end
+
+granular_permission yes
+
+
+audit_option audit_log
+
+monitoring yes
+
+max_storage_capacity "∞"
+
+version_control yes, annotation: 'unlimited'
+

@@ -69,16 +69,14 @@ established_in 2013
 #   reference_customer 'Land Rover'
 # end
 
-authentication do
-  two_factor_auth no
-  sso no
-end
+two_factor_auth no
+sso no
 
-authorization do
-  file_locking no
-  permission_revocation no
-  granular_permission no
-end
+
+file_locking no
+permission_revocation no
+granular_permission no
+
 
 #monitoring yes
 

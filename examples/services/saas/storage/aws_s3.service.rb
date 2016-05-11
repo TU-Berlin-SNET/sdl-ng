@@ -85,16 +85,14 @@ provider do
 end
 
 #storage security
-authentication do
-  two_factor_auth yes
-  sso yes
-end
+two_factor_auth yes
+sso yes
 
-authorization do
-  file_locking no, annotation: 'https://forums.aws.amazon.com/thread.jspa?threadID=14189'
-  permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
-  granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_S3'
-end
+
+file_locking no, annotation: 'https://forums.aws.amazon.com/thread.jspa?threadID=14189'
+permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
+granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_S3'
+
 
 certification sas_70_ii
 

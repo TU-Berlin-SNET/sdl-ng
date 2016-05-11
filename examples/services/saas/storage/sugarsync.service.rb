@@ -62,16 +62,14 @@ provider do
   #report financial_statement, quarterly
 end
 
-authentication do
-  two_factor_auth no
-  sso no
-end
+two_factor_auth no
+sso no
 
-authorization do
-  file_locking no
-  permission_revocation yes
-  granular_permission yes
-end
+
+file_locking no
+permission_revocation yes
+granular_permission yes
+
 
 monitoring yes
 

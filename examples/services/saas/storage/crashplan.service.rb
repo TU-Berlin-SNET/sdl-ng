@@ -91,16 +91,14 @@ provider do
   reference_customer 'Jive'
 end
 
-authentication do
-  two_factor_auth yes
-  sso yes
-end
+two_factor_auth yes
+sso yes
 
-authorization do
-  file_locking yes, annotation: 'https://twitter.com/crashplan/status/136203049197764608'
-  permission_revocation yes
-  granular_permission yes
-end
+
+file_locking yes, annotation: 'https://twitter.com/crashplan/status/136203049197764608'
+permission_revocation yes
+granular_permission yes
+
 
 audit_option audit_log
 

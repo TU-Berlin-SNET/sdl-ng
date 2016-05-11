@@ -63,15 +63,13 @@ provider do
 end
 
 #security
-authentication do
-  two_factor_auth yes
-end
+two_factor_auth yes
 
-authorization do
-  file_locking no
-  permission_revocation yes
-  granular_permission yes
-end
+
+file_locking no
+permission_revocation yes
+granular_permission yes
+
 
 audit_option audit_log
 

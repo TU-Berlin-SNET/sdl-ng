@@ -69,16 +69,14 @@ provider do
   reference_customer 'Grey Group'
 end
 
-authentication do
-  two_factor_auth yes
-  sso no
-end
+two_factor_auth yes
+sso no
 
-authorization do
-  file_locking no
-  permission_revocation no
-  granular_permission no
-end
+
+file_locking no
+permission_revocation no
+granular_permission no
+
 
 #audit_option audit_log
 

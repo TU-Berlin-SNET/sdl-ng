@@ -36,16 +36,12 @@ jurisdiction :ferpa
 jurisdiction :safe_harbor
 
 service_properties do
-  authentication do
-    boolean :two_factor_auth
-    boolean :sso
-  end
+  boolean :two_factor_auth
+  boolean :sso
 
-  authorization do
-    boolean :file_locking
-    boolean :permission_revocation
-    boolean :granular_permission
-  end
+  boolean :file_locking
+  boolean :permission_revocation
+  boolean :granular_permission
 
   list_of_audit_options
   list_of_certifications

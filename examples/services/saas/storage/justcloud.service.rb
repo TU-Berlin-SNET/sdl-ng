@@ -69,16 +69,14 @@ can_be_used_offline yes
 #   reference_customer 'Land Rover'
 # end
 
-authentication do
-  two_factor_auth no
-  sso no
-end
+two_factor_auth no
+sso no
 
-authorization do
-  file_locking no
-  permission_revocation yes
-  granular_permission yes
-end
+
+file_locking no
+permission_revocation yes
+granular_permission yes
+
 
 #audit_option audit_log
 
