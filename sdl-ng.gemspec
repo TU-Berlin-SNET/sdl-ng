@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'activesupport', '~> 4.2'
-  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6.8.rc3'
   spec.add_runtime_dependency 'verbs', '~> 2.1'
   spec.add_runtime_dependency 'rdf', '~> 1.1'
   spec.add_runtime_dependency 'rdf-rdfxml', '~> 1.1'
