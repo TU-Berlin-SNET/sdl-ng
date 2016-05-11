@@ -69,60 +69,59 @@ provider do
   reference_customer 'Grey Group'
 end
 
-  authentication do
-    two_factor_auth yes
-    sso yes, annotation: 'one integration'
-  end
+authentication do
+  two_factor_auth yes
+  sso yes, annotation: 'one integration'
+end
 
-  authorization do
-    file_locking yes
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking yes
+  permission_revocation yes
+  granular_permission yes
+end
 
-  #audit_option audit_log
+#audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  transmission_encryption 'SSL', 'SHA-265'
+transmission_encryption 'SSL', 'SHA-265'
 
 
+# deduplication_type block_level
+# deduplication_type single_user
+# deduplication_type server_side
 
-  # deduplication_type block_level
-  # deduplication_type single_user
-  # deduplication_type server_side
+replication no
+delta_encoding no
 
-  replication no
-  delta_encoding no
+#location :data_location
 
-  #location :data_location
+max_file_size '5 GB'
+max_storage_capacity '∞'
 
-  max_file_size '5 GB'
-  max_storage_capacity '∞'
-
-  version_control yes, annotation: '50'
-  compression no
+version_control yes, annotation: '50'
+compression no
 
 
 #availability "%"
 #reliability "%"
 
 
-  sharing public_link
-  sharing collaboration
+sharing public_link
+sharing collaboration
 
-  multi_tenancy yes
+multi_tenancy yes
 
-    compatible_operating_system windows, 'the two latest versions'
-    compatible_operating_system mac_osx, 'the two latest versions'
+compatible_operating_system windows, 'the two latest versions'
+compatible_operating_system mac_osx, 'the two latest versions'
 
-    interface android
-    interface ios
-    interface osx
+interface android
+interface ios
+interface osx
 
-    mobile_device android
-    mobile_device blackberry
-    mobile_device iphone
-    mobile_device ipad
-    mobile_device windows_phone
+mobile_device android
+mobile_device blackberry
+mobile_device iphone
+mobile_device ipad
+mobile_device windows_phone
 

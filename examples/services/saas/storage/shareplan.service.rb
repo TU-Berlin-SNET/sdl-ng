@@ -91,61 +91,60 @@ provider do
   reference_customer 'Jive'
 end
 
-  authentication do
-    two_factor_auth yes
-    sso yes
-  end
+authentication do
+  two_factor_auth yes
+  sso yes
+end
 
-  authorization do
-    file_locking yes, annotation: 'https://twitter.com/crashplan/status/136203049197764608'
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking yes, annotation: 'https://twitter.com/crashplan/status/136203049197764608'
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  certification soc_1_ssae_16
-  certification soc_2_ssae_16
-  certification iso_27001
+certification soc_1_ssae_16
+certification soc_2_ssae_16
+certification iso_27001
 
-  data_encryption user_only, directory_based, blowfish
-  transmission_encryption 'SSL', 'AES-128'
+data_encryption user_only, directory_based, blowfish
+transmission_encryption 'SSL', 'AES-128'
 
 
+deduplication_type block_level
+deduplication_type single_user
+deduplication_type client_side
 
-  deduplication_type block_level
-  deduplication_type single_user
-  deduplication_type client_side
+replication yes
+delta_encoding yes
 
-  replication yes
-  delta_encoding yes
+#location :data_location
 
-  #location :data_location
+max_file_size "∞"
+max_storage_capacity "∞"
 
-  max_file_size "∞"
-  max_storage_capacity "∞"
-
-  version_control yes
-  compression yes
+version_control yes
+compression yes
 
 
 #availability "%"
 #reliability "%"
 
 
-  sharing public_link
-  sharing collaboration
+sharing public_link
+sharing collaboration
 
-  multi_tenancy yes
+multi_tenancy yes
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
-    compatible_operating_system linux, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
+compatible_operating_system linux, 'recent'
 
-    mobile_device android
-    mobile_device iphone
-    mobile_device ipad
-    mobile_device windows_phone
+mobile_device android
+mobile_device iphone
+mobile_device ipad
+mobile_device windows_phone
 

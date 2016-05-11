@@ -55,12 +55,12 @@ provider do
   report financial_statement, quarterly
 
   reference_customer 'Easyjet', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-easyjet/'
-  reference_customer 'all3media','http://azure.microsoft.com/en-us/case-studies/all3media/'
+  reference_customer 'all3media', 'http://azure.microsoft.com/en-us/case-studies/all3media/'
   reference_customer 'Towers Watson', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-towerswatson/'
-  reference_customer 'MYOB' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-myob/'
-  reference_customer 'Portal Solutions' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-portalsolutions/'
-  reference_customer 'Presence Health' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-presencehealth/'
-  reference_customer 'Dillen Bouwteam' ,'http://azure.microsoft.com/en-us/case-studies/customer-stories-dillenbouwteam/'
+  reference_customer 'MYOB', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-myob/'
+  reference_customer 'Portal Solutions', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-portalsolutions/'
+  reference_customer 'Presence Health', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-presencehealth/'
+  reference_customer 'Dillen Bouwteam', 'http://azure.microsoft.com/en-us/case-studies/customer-stories-dillenbouwteam/'
 
   headquarters do
     name "Microsoft Corporation, Corporate Headquarters"

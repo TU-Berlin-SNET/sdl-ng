@@ -20,12 +20,12 @@ payment_option credit_card
 # dynamics
 dynamic do
 # Fetch a list of features from the Google Apps page
-   fetch_from_url('http://www.rackspace.com/cloud/servers/features', 'div.maia-col-6.text div.vcenter h2').each do |header|
+  fetch_from_url('http://www.rackspace.com/cloud/servers/features', 'div.maia-col-6.text div.vcenter h2').each do |header|
 # Skip empty features (e.g. "more information...")
-   next if header.search('~p')[0].blank?
+    next if header.search('~p')[0].blank?
 
 # Extract Google Apps Features
-feature header.content.strip, header.search('~p')[0]
+    feature header.content.strip, header.search('~p')[0]
   end
 end
 
@@ -63,38 +63,38 @@ provider do
 end
 
 #security
-  authentication do
-    two_factor_auth yes
-  end
+authentication do
+  two_factor_auth yes
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  transmission_encryption 'SSL'
+transmission_encryption 'SSL'
 
 
 #storage properties
 
-  max_storage_capacity "∞"
+max_storage_capacity "∞"
 
 
 #storage_features
 
 
-    compatible_operating_system windows, 'Windows Server 2008, Windows Server 2011'
-    compatible_operating_system linux, 'recent'
+compatible_operating_system windows, 'Windows Server 2008, Windows Server 2011'
+compatible_operating_system linux, 'recent'
 
-    #Rackspace Mobile Application CPanel
-    mobile_device iphone
-    mobile_device ipad
-    mobile_device windows_phone
+#Rackspace Mobile Application CPanel
+mobile_device iphone
+mobile_device ipad
+mobile_device windows_phone
 
 
 

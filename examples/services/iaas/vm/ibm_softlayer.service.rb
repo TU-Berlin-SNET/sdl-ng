@@ -83,7 +83,7 @@ provider do
 end
 
 #To Do: Get more information on authorization and authentication
-monitoring yes, annotation:'http://www.softlayer.com/server-monitoring'
+monitoring yes, annotation: 'http://www.softlayer.com/server-monitoring'
 
 certification iso_27001
 #Softlayer provides soc1,2,3 reports. Same as soc certificates?

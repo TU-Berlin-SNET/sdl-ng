@@ -64,49 +64,48 @@ provider do
   reference_customer 'Welcome to Yorkshire', 'http://www.rackspace.com/de/customers/welcome-yorkshire'
 end
 
-  authentication do
-    two_factor_auth yes
-    sso yes
-  end
+authentication do
+  two_factor_auth yes
+  sso yes
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  transmission_encryption 'SSL'
+transmission_encryption 'SSL'
 
 
+#deduplication_type
+replication yes
+delta_encoding yes
 
-  #deduplication_type
-  replication yes
-  delta_encoding yes
+#location :data_location
 
-  #location :data_location
+#max_file_size "5 TB"
+max_storage_capacity "∞"
 
-  #max_file_size "5 TB"
-  max_storage_capacity "∞"
-
-  version_control no
-  compression yes
+version_control no
+compression yes
 
 
 availability "99.9%"
 #reliability "%"
 
 
-  sharing public_link
+sharing public_link
 
-  multi_tenancy yes, 50
+multi_tenancy yes, 50
 
-    interface java
-    interface net
-    interface php
-    interface python
-    interface ruby
+interface java
+interface net
+interface php
+interface python
+interface ruby
 

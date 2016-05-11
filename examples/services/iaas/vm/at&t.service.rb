@@ -22,7 +22,7 @@ payment_option credit_card
 # interop
 documentation 'https://developer.att.com/apis'
 
-compatible_browser internet_explorer, annotation:'optimized for AT&T powered by Yahoo!' #can not find the version
+compatible_browser internet_explorer, annotation: 'optimized for AT&T powered by Yahoo!' #can not find the version
 compatible_browser firefox, 'recent'
 compatible_browser chrome, 'recent'
 compatible_browser safari, annotation: 'on Mac' #'5' cannot find the version

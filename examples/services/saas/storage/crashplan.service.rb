@@ -21,13 +21,13 @@ payment_option credit_card
 
 # dynamics
 #dynamic do
-  # Fetch a list of features from the Google Apps page
+# Fetch a list of features from the Google Apps page
 #  fetch_from_url('https://www.google.com/work/apps/business/products/drive/', 'div.maia-col-6.text div.vcenter h2').each do |header|
-    # Skip empty features (e.g. "more information...")
+# Skip empty features (e.g. "more information...")
 #    next if header.search('~p')[0].blank?
 
-    # Extract Google Apps Features
-    #feature header.content.strip, header.search('~p')[0]
+# Extract Google Apps Features
+#feature header.content.strip, header.search('~p')[0]
 #  end
 #end
 
@@ -91,55 +91,54 @@ provider do
   reference_customer 'Jive'
 end
 
-  authentication do
-    two_factor_auth yes
-    sso yes
-  end
+authentication do
+  two_factor_auth yes
+  sso yes
+end
 
-  authorization do
-    file_locking yes, annotation: 'https://twitter.com/crashplan/status/136203049197764608'
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking yes, annotation: 'https://twitter.com/crashplan/status/136203049197764608'
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  certification soc_1_ssae_16
-  certification soc_2_ssae_16
-  certification iso_27001
+certification soc_1_ssae_16
+certification soc_2_ssae_16
+certification iso_27001
 
-  data_encryption user_only, directory_based, blowfish
-  transmission_encryption 'SSL', 'AES-128'
+data_encryption user_only, directory_based, blowfish
+transmission_encryption 'SSL', 'AES-128'
 
 
+deduplication_type block_level
+deduplication_type single_user
+deduplication_type server_side
 
-  deduplication_type block_level
-  deduplication_type single_user
-  deduplication_type server_side
+replication yes
+delta_encoding yes
 
-  replication yes
-  delta_encoding yes
+#location :data_location
 
-  #location :data_location
+max_file_size "∞"
+max_storage_capacity "∞"
 
-  max_file_size "∞"
-  max_storage_capacity "∞"
-
-  version_control yes
-  compression yes
+version_control yes
+compression yes
 
 
 #availability "%"
 #reliability "%"
 
 
-  # sharing public_link
+# sharing public_link
 
-  multi_tenancy yes
+multi_tenancy yes
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
-    compatible_operating_system linux, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
+compatible_operating_system linux, 'recent'
 

@@ -72,54 +72,53 @@ established_in 2011
 #   reference_customer 'Land Rover'
 # end
 
-  authentication do
-    two_factor_auth no
-    sso no
-  end
+authentication do
+  two_factor_auth no
+  sso no
+end
 
-  authorization do
-    file_locking no
-    permission_revocation no
-    granular_permission no
-  end
+authorization do
+  file_locking no
+  permission_revocation no
+  granular_permission no
+end
 
-  #audit_option audit_log
+#audit_option audit_log
 
-  monitoring no
+monitoring no
 
-  #transmission_encryption 'TLS', '1.2'
+#transmission_encryption 'TLS', '1.2'
 
 
+#deduplication_type
+replication no
+delta_encoding no
 
-  #deduplication_type
-  replication no
-  delta_encoding no
+#location sweden
 
-  #location sweden
+max_file_size "2 GB"
+max_storage_capacity "5TB"
 
-  max_file_size "2 GB"
-  max_storage_capacity "5TB"
-
-  version_control no
-  compression no
+version_control no
+compression no
 
 
 #availability "%"
 #reliability "%"
 
 
-  sharing public_link
-  sharing collaboration
+sharing public_link
+sharing collaboration
 
-  multi_tenancy no
+multi_tenancy no
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
-    compatible_operating_system linux, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
+compatible_operating_system linux, 'recent'
 
-    interface java
+interface java
 
-    mobile_device android
-    mobile_device iphone
-    mobile_device ipad
+mobile_device android
+mobile_device iphone
+mobile_device ipad
 

@@ -85,40 +85,40 @@ provider do
 end
 
 #storage security
-  authentication do
-    two_factor_auth yes
-    sso yes
-  end
+authentication do
+  two_factor_auth yes
+  sso yes
+end
 
-  authorization do
-    file_locking no, annotation: 'https://forums.aws.amazon.com/thread.jspa?threadID=14189'
-    permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
-    granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_S3'
-  end
+authorization do
+  file_locking no, annotation: 'https://forums.aws.amazon.com/thread.jspa?threadID=14189'
+  permission_revocation yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html'
+  granular_permission yes, annotation: 'http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_UseCases.html#UseCase_S3'
+end
 
-  certification sas_70_ii
+certification sas_70_ii
 
-  audit_option audit_log
-  monitoring yes
-  transmission_encryption 'TLS', '1.2'
+audit_option audit_log
+monitoring yes
+transmission_encryption 'TLS', '1.2'
 
 
 #storage properties
 
-  deduplication_type block_level
-  deduplication_type single_user
-  deduplication_type server_side
+deduplication_type block_level
+deduplication_type single_user
+deduplication_type server_side
 
-  replication yes
-  delta_encoding no
+replication yes
+delta_encoding no
 
-  #location :data_location
+#location :data_location
 
-  max_file_size '5 TB'
-  max_storage_capacity '∞'
+max_file_size '5 TB'
+max_storage_capacity '∞'
 
-  version_control yes
-  compression yes
+version_control yes
+compression yes
 
 
 availability '99.99%'
@@ -126,20 +126,19 @@ reliability '99.999999999%'
 
 #storage features
 
-  sharing public_link
+sharing public_link
 
-  multi_tenancy yes
+multi_tenancy yes
 
 
+interface android
+interface ios
+interface java
+interface javascript
+interface net
+interface php
+interface python
+interface ruby
 
-    interface android
-    interface ios
-    interface java
-    interface javascript
-    interface net
-    interface php
-    interface python
-    interface ruby
-
-    #mobile_device kindle
+#mobile_device kindle
 

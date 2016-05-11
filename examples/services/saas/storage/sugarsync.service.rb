@@ -62,51 +62,50 @@ provider do
   #report financial_statement, quarterly
 end
 
-  authentication do
-    two_factor_auth no
-    sso no
-  end
+authentication do
+  two_factor_auth no
+  sso no
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  monitoring yes
+monitoring yes
 
-  data_encryption provider_only, directory_based, aes
-  transmission_encryption 'SSL', '3.3'
+data_encryption provider_only, directory_based, aes
+transmission_encryption 'SSL', '3.3'
 
 
+#deduplication_type
+#replication yes
+#delta_encoding no
 
-  #deduplication_type
-  #replication yes
-  #delta_encoding no
+#location :data_location
 
-  #location :data_location
+max_file_size 'unlimited'
+max_storage_capacity "∞"
 
-  max_file_size 'unlimited'
-  max_storage_capacity "∞"
-
-  version_control yes
-  #compression yes
+version_control yes
+#compression yes
 
 
 #availability "%"
 #reliability "%"
 
 
-  sharing public_link
-  sharing collaboration
+sharing public_link
+sharing collaboration
 
-  multi_tenancy yes
+multi_tenancy yes
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
 
-    mobile_device blackberry
-    mobile_device iphone
-    mobile_device ipad
-    mobile_device kindle
+mobile_device blackberry
+mobile_device iphone
+mobile_device ipad
+mobile_device kindle
 

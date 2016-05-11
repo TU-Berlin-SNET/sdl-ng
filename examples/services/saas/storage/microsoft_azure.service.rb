@@ -64,57 +64,55 @@ established_in 2006
 #   reference_customer 'Land Rover'
 # end
 
-  authentication do
-    two_factor_auth yes
-    sso yes
-  end
+authentication do
+  two_factor_auth yes
+  sso yes
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  data_encryption provider_only, container_based, aes
-  transmission_encryption 'TLS', '1.2'
+data_encryption provider_only, container_based, aes
+transmission_encryption 'TLS', '1.2'
 
 
+deduplication_type block_level
+deduplication_type single_user
+deduplication_type server_side
 
-  deduplication_type block_level
-  deduplication_type single_user
-  deduplication_type server_side
+replication yes
+delta_encoding yes
 
-  replication yes
-  delta_encoding yes
+#location :data_location
 
-  #location :data_location
+max_file_size "5 TB"
+max_storage_capacity "∞"
 
-  max_file_size "5 TB"
-  max_storage_capacity "∞"
-
-  version_control yes
-  compression yes
+version_control yes
+compression yes
 
 
 availability "99.9 %"
 #reliability "%"
 
 
+multi_tenancy yes
 
-  multi_tenancy yes
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
-
-    interface net
-    interface java
-    interface php
-    interface ruby
-    interface python
-    interface javascript
+interface net
+interface java
+interface php
+interface ruby
+interface python
+interface javascript
 
 

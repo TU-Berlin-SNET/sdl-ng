@@ -69,48 +69,46 @@ established_in 2013
 #   reference_customer 'Land Rover'
 # end
 
-  authentication do
-    two_factor_auth no
-    sso yes
-  end
+authentication do
+  two_factor_auth no
+  sso yes
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  monitoring yes
+monitoring yes
 
-  transmission_encryption 'TLS', '1.2'
-
-
-
-  #deduplication_type
-  replication yes
-  delta_encoding no
-
-  #location :data_location
-
-  max_file_size "50 GB"
-  max_storage_capacity "50 GB"
-
-  version_control yes
-  compression yes
+transmission_encryption 'TLS', '1.2'
 
 
+#deduplication_type
+replication yes
+delta_encoding no
 
-  sharing public_link
-  sharing collaboration
+#location :data_location
 
-  multi_tenancy yes
+max_file_size "50 GB"
+max_storage_capacity "50 GB"
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
+version_control yes
+compression yes
 
-    mobile_device android
-    mobile_device iphone
-    mobile_device ipad
+
+sharing public_link
+sharing collaboration
+
+multi_tenancy yes
+
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
+
+mobile_device android
+mobile_device iphone
+mobile_device ipad
 

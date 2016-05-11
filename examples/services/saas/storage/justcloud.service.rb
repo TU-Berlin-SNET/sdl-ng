@@ -69,54 +69,53 @@ can_be_used_offline yes
 #   reference_customer 'Land Rover'
 # end
 
-  authentication do
-    two_factor_auth no
-    sso no
-  end
+authentication do
+  two_factor_auth no
+  sso no
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  #audit_option audit_log
+#audit_option audit_log
 
-  #monitoring yes
+#monitoring yes
 
-  data_encryption provider_only, directory_based, aes
-  transmission_encryption 'SSL', 'AES'
+data_encryption provider_only, directory_based, aes
+transmission_encryption 'SSL', 'AES'
 
 
+#deduplication_type
+replication yes
+#delta_encoding yes
 
-  #deduplication_type
-  replication yes
-  #delta_encoding yes
+#location :data_location
 
-  #location :data_location
+max_file_size '10 GB'
+max_storage_capacity "∞"
 
-  max_file_size '10 GB'
-  max_storage_capacity "∞"
-
-  version_control yes
-  #compression yes
+version_control yes
+#compression yes
 
 
 availability '99.9%'
 reliability '99.99999999%'
 
 
-  sharing public_link
-  sharing collaboration
+sharing public_link
+sharing collaboration
 
-  multi_tenancy yes
+multi_tenancy yes
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
-    compatible_operating_system linux, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
+compatible_operating_system linux, 'recent'
 
-    mobile_device blackberry
-    mobile_device iphone
-    mobile_device ipad
-    mobile_device windows_phone
+mobile_device blackberry
+mobile_device iphone
+mobile_device ipad
+mobile_device windows_phone
 

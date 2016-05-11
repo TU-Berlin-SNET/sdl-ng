@@ -63,62 +63,60 @@ provider do
   #report financial_statement, quarterly
 end
 
-  authentication do
-    two_factor_auth yes
-  end
+authentication do
+  two_factor_auth yes
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+end
 
-  certification sas_70_ii
+certification sas_70_ii
 
-  data_encryption provider_only, directory_based, aes
-  transmission_encryption 'TLS', '1.2'
+data_encryption provider_only, directory_based, aes
+transmission_encryption 'TLS', '1.2'
 
 
+deduplication_type file_level
+deduplication_type single_user
+deduplication_type server_side
 
-  deduplication_type file_level
-  deduplication_type single_user
-  deduplication_type server_side
+replication yes
+delta_encoding yes
 
-  replication yes
-  delta_encoding yes
+#location :data_location
 
-  #location :data_location
-
-  max_file_size "storage size"
-  compression yes
+max_file_size "storage size"
+compression yes
 
 
 #availability "%"
 #reliability "%"
 
 
-  sharing public_link
-  sharing collaboration
+sharing public_link
+sharing collaboration
 
-  multi_tenancy no
+multi_tenancy no
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
-    compatible_operating_system linux, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
+compatible_operating_system linux, 'recent'
 
-    interface android
-    interface ios
-    interface java
-    interface osx
-    interface php
-    interface python
-    interface ruby
+interface android
+interface ios
+interface java
+interface osx
+interface php
+interface python
+interface ruby
 
-    mobile_device blackberry
-    mobile_device iphone
-    mobile_device ipad
-    mobile_device kindle
-    mobile_device windows_phone
-
+mobile_device blackberry
+mobile_device iphone
+mobile_device ipad
+mobile_device kindle
+mobile_device windows_phone
 
 
 variant :free do

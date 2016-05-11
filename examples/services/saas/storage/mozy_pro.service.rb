@@ -69,55 +69,54 @@ established_in 2005
 #   reference_customer 'Land Rover'
 # end
 
-  authentication do
-    two_factor_auth no
-    sso no
-  end
+authentication do
+  two_factor_auth no
+  sso no
+end
 
-  authorization do
-    file_locking no
-    permission_revocation yes
-    granular_permission yes
-  end
+authorization do
+  file_locking no
+  permission_revocation yes
+  granular_permission yes
+end
 
-  audit_option audit_log
+audit_option audit_log
 
-  certification soc_1_ssae_16
-  certification iso_27001
+certification soc_1_ssae_16
+certification iso_27001
 
-  monitoring yes
+monitoring yes
 
-  data_encryption user_only, container_based, blowfish
-  transmission_encryption 'TLS', '1.2'
+data_encryption user_only, container_based, blowfish
+transmission_encryption 'TLS', '1.2'
 
 
+deduplication_type file_level
+deduplication_type single_user
+deduplication_type client_side
 
-  deduplication_type file_level
-  deduplication_type single_user
-  deduplication_type client_side
+#replication yes
+delta_encoding no
 
-  #replication yes
-  delta_encoding no
+#location :data_location
 
-  #location :data_location
+max_file_size "1 TB"
+max_storage_capacity "1 TB"
 
-  max_file_size "1 TB"
-  max_storage_capacity "1 TB"
-
-  #version_control no
-  compression no
+#version_control no
+compression no
 
 
 #availability "%"
 #reliability "%"
 
 
-  multi_tenancy no
+multi_tenancy no
 
-    compatible_operating_system windows, 'recent'
-    compatible_operating_system mac_osx, 'recent'
+compatible_operating_system windows, 'recent'
+compatible_operating_system mac_osx, 'recent'
 
-    mobile_device android
-    mobile_device iphone
-    mobile_device ipad
+mobile_device android
+mobile_device iphone
+mobile_device ipad
 
