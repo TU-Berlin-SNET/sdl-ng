@@ -29,7 +29,7 @@ class SDL::Base::PropertyClassification::PropertyCategory < SDL::Base::PropertyC
   # represented by the same PropertyCategory instances.
   def self.for_property(property)
     if property.loaded_from
-      for_key(property.loaded_from.to_s.gsub('/', '.'), property)
+      for_key(property.loaded_from.gsub('/', '.'), property)
     else
       for_key('unclassified', property)
     end
