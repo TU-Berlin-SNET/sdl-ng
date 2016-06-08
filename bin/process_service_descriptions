@@ -81,6 +81,9 @@ html_schema_path = Dir.pwd + '/output/html/schema.html'
 html_schema_exporter.export_schema_to_file(html_schema_path)
 puts "Written Service Compendium HTML schema into #{html_schema_path}"
 
+#Also create complete RDF graph
+graph = RDF::Graph.new
+
 compendium.services.each do |name, service|
   xml_output_file = Dir.pwd + "/output/xml/#{name}.xml"
   service_exporter.export_service_to_file service, xml_output_file
@@ -90,10 +93,16 @@ compendium.services.each do |name, service|
   rdf_exporter.export_service_to_file service, rdf_output_file
   puts "Wrote RDF export of service '#{name}' to #{rdf_output_file}"
 
+  SDL::Exporters::RDFExporter.expand_properties(service, graph)
+
   json_output_file = Dir.pwd + "/output/json/#{name}.json"
   json_exporter.export_service_to_file service, json_output_file
   puts "Wrote JSON export of service '#{name}' to #{json_output_file}"
 end
+
+rdf_graph_output_file = Dir.pwd + "/output/services.rdf"
+File.write(rdf_graph_output_file, graph.dump(:rdf))
+puts "Wrote RDF graph to #{rdf_graph_output_file}"
 
 all_needed_translations = {
     'en' => {
