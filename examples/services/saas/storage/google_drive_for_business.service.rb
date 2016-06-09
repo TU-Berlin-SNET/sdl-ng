@@ -74,4 +74,13 @@ provider do
     url 'https://www.youtube.com/watch?v=56ETTYvGsg4'
     users 20000
   end
+
+  headquarters do
+    name 'Google Inc.'
+    country_code 'US'
+    street_address '1600 Amphitheatre Parkway'
+    locality 'Mountain View'
+    region 'California'
+    postal_code '94043'
+  end
 end

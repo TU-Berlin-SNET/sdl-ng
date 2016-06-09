@@ -69,6 +69,51 @@ established_in 2005
 #   reference_customer 'Land Rover'
 # end
 
+# trust
+provider do
+  provider_name 'EMC Corporation'
+
+  headquarters do
+    name 'EMC Corporation'
+    country_code 'US'
+    street_address '176 South St'
+    locality 'Hopkinton'
+    region 'Massachussets'
+    postal_code '01748'
+  end
+
+  subsidiary do
+    name 'EMC Deutschland GmbH'
+    country_code 'DE'
+    street_address 'Am Kronberger Hang 2a'
+    locality 'Schwalbach/Taunus'
+    postal_code '65824'
+  end
+
+  subsidiary do
+    name 'Mozy, Inc.'
+    country_code 'US'
+    street_address '505 1st Ave S'
+    locality 'Seattle'
+    region 'Washington'
+    postal_code '98104'
+  end
+
+  subsidiary do
+    name 'Mozy International Limited'
+    country_code 'IE'
+    street_address 'IDA Industrial Estate'
+    locality 'Cork'
+  end
+
+end
+
+datacenter do
+  country_code 'US'
+  locality 'Salt Lake City'
+  region 'Utah'
+end
+
 two_factor_auth no
 sso no
 

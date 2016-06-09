@@ -47,7 +47,7 @@ established_in 2006
 
 # trust
 provider do
-  provider_name "Microsoft"
+  provider_name "Microsoft Corporation"
 
   company_type plc
   employs 12000

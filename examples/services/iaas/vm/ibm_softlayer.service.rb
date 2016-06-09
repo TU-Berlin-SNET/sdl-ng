@@ -52,6 +52,7 @@ established_in 2005
 provider do
   #To Do: Include Press and News Release 'http://www.softlayer.com/press'
   #To Do: Find more company info
+  provider_name 'SoftLayer Technologies, Inc.'
 
   partner_network 'http://www.softlayer.com/customer-stories'
   provider_announcement 'http://www.softlayer.com/press'
@@ -80,6 +81,38 @@ provider do
   reference_customer 'Ultra Knowledge', 'http://cdn.softlayer.com/case-studies/ss-Ultra-Knowledge-Case-Study.pdf'
   reference_customer 'WorldTicket', 'http://cdn.softlayer.com/case-studies/WorldTicket-Case-Study.pdf'
 
+  headquarters do
+    name 'SoftLayer Technologies, Inc.'
+    country_code 'US'
+    street_address '14001 North Dallas Parkway, Suite M100'
+    locality 'Dallas'
+    region 'Texas'
+    postal_code '75240'
+  end
+
+  subsidiary do
+    name 'null'
+    country_code 'NL'
+    street_address 'Paul van Vlissingenstraat 16'
+    locality 'Amsterdam'
+    postal_code '1096'
+  end
+
+end
+
+datacenter do
+  country_code 'NL'
+  locality 'Amsterdam'
+end
+
+datacenter do
+  country_code 'DE'
+  locality 'Frankfurt'
+end
+
+datacenter do
+  country_code 'CA'
+  locality 'Toronto'
 end
 
 #To Do: Get more information on authorization and authentication

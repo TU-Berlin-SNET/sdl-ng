@@ -56,11 +56,28 @@ established_in 2007
 
 # trust
 provider do
+    provider_name 'Dropbox, Inc.'
   #company_type plc
   employs 971
   partner_network 'https://www.dropbox.com/business/customers'
   #last_years_revenue '59820000000 $'
   #report financial_statement, quarterly
+
+  headquarters do
+    name 'Dropbox, Inc.'
+    country_code 'US'
+    street_address '333 Brannan St'
+    locality 'Los Angeles'
+    region 'California'
+    postal_code '94107'
+  end
+
+  subsidiary do
+    name 'Dropbox, Inc.'
+    country_code 'US'
+    locality 'Austin'
+    region 'Texas'
+  end
 end
 
 two_factor_auth yes
