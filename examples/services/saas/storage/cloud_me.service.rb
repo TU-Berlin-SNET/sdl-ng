@@ -72,6 +72,23 @@ established_in 2011
 #   reference_customer 'Land Rover'
 # end
 
+# trust
+provider do
+  provider_name 'CloudMe AB'
+
+  headquarters do
+    name 'CloudMe AB'
+    country_code 'SE'
+    street_address 'Drottninggatan 23'
+    locality 'Linköping'
+  end
+
+end
+
+datacenter do
+  country_code 'SE'
+end
+
 two_factor_auth no
 sso no
 

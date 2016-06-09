@@ -56,6 +56,7 @@ established_in 2001
 
 # trust
 provider do
+  provider_name 'Code42'
   company_type plc
   employs 426
   partner_network 'https://www.code42.com/customer-success/'
@@ -89,6 +90,23 @@ provider do
   reference_customer 'National Geographic'
   reference_customer 'Expedia'
   reference_customer 'Jive'
+
+  headquarters do
+    name 'Code42'
+    country_code 'US'
+    street_address '1 SE Main St'
+    locality 'Minneapolis'
+    region 'Minnesota'
+    postal_code '55414'
+  end
+end
+
+datacenter do
+  country_code 'US'
+end
+
+datacenter do
+  country_code 'AU'
 end
 
 two_factor_auth yes

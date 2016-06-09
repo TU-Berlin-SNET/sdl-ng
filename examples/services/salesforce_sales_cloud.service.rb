@@ -73,4 +73,29 @@ provider do
     url 'http://www.salesforce.com/customers/stories/philips.jsp'
     users 7000
   end
+
+  headquarters do
+    name 'salesforce.com inc.'
+    country_code 'US'
+    street_address 'The Landmark @ One Market, Suite 300'
+    locality 'San Francisco'
+    region 'California'
+    postal_code '94105'
+  end
+
+  subsidiary do
+    name 'Salesforce.com Germany GmbH'
+    country_code 'DE'
+    street_address 'Erika-Mann-Str. 63'
+    locality 'München'
+    postal_code '80636'
+  end
+
+  subsidiary do
+    name 'SFDC Mexico S. de R.L. de C.V.'
+    country_code 'MX'
+    street_address 'Alfonso Napoles Gandara #50 – 4th Floor, Col. Peña Blanca Santa Fe'
+    locality 'Mexico DF'
+    postal_code '1210'
+  end
 end

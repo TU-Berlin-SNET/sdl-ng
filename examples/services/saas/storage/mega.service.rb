@@ -69,6 +69,23 @@ established_in 2013
 #   reference_customer 'Land Rover'
 # end
 
+# trust
+provider do
+  provider_name 'Mega'
+
+  headquarters do
+    name 'Mega'
+    country_code 'NZ'
+    locality 'Auckland'
+  end
+
+end
+
+datacenter do
+  country_code 'NZ'
+end
+
+
 two_factor_auth no
 sso no
 

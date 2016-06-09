@@ -64,6 +64,7 @@ provider do
   company_type plc
   partner_network 'http://aws.amazon.com/solutions/case-studies/'
   provider_announcement 'http://aws.amazon.com/new/'
+  provider_name 'Amazon Web Services LLC'
 
   reference_customer 'Foursquare' do
     url 'http://aws.amazon.com/solutions/case-studies/foursquare/'
@@ -83,6 +84,38 @@ provider do
   reference_customer 'Animoto' do
     url 'http://aws.amazon.com/solutions/case-studies/animoto/'
   end
+
+  headquarters do
+    name 'Amazon Web Services LLC'
+    country_code 'US'
+    street_address '1200 12th Avenue South, Ste 1200'
+    locality 'Seattle'
+    region 'Washington'
+    postal_code '98144'
+  end
+
+  subsidiary do
+    name 'Amazon Web Services Luxembourg Sarl'
+    country_code 'LU'
+    street_address 'Rue Plaetis 5'
+    locality 'Luxembourg'
+    postal_code '2338'
+  end
+end
+
+datacenter do
+  country_code 'US'
+  region 'California'
+end
+
+datacenter do
+  country_code 'BR'
+  region 'São Paulo'
+end
+
+datacenter do
+  country_code 'DE'
+  region 'Frankfurt'
 end
 
 # storage security
