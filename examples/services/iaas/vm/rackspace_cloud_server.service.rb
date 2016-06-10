@@ -20,7 +20,7 @@ payment_option credit_card
 # dynamics
 dynamic do
 # Fetch a list of features from the Google Apps page
-  fetch_from_url('http://www.rackspace.com/cloud/servers/features', 'div.maia-col-6.text div.vcenter h2').each do |header|
+  fetch_from_url('https://www.rackspace.com/cloud/servers/features', 'div.maia-col-6.text div.vcenter h2').each do |header|
 # Skip empty features (e.g. "more information...")
     next if header.search('~p')[0].blank?
 

@@ -30,7 +30,7 @@ compatible_browser internet_explorer, '9'
 
 dynamic do
   # Fetch a list of features from the Google Apps page
-  fetch_from_url('https://www.google.com/work/apps/business/products.html', 'h3')[1..4].each do |header|
+  fetch_from_url('https://apps.google.com/products', 'h3')[1..4].each do |header|
     # Extract Google Apps Features
     feature header.content.strip, header.search('~p')[0]
   end

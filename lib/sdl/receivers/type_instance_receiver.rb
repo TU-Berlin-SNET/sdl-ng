@@ -156,8 +156,13 @@ class SDL::Receivers::TypeInstanceReceiver
     instance.dup
   end
 
+  # Ignore errors in dynamic blocks
   def dynamic(&block)
-    instance_eval &block
+    begin
+      instance_eval &block
+    rescue Exception => e
+      puts "Ignoring error #{e.message} in dynamic block in #{e.backtrace[0]}."
+    end
   end
 
   # Shortcuts for using 'yes' and 'no' in SDLs
